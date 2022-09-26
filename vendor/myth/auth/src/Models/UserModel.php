@@ -45,7 +45,6 @@ class UserModel extends Model
         'password_hash' => [
             'required' => 'Password tidak valid',
             'min_length' => 'Password minimal berjumlah 8 karakter',
-
         ],
         'first_name' => [
             'required' => 'Nama depan tidak boleh kosong',
