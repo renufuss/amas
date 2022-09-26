@@ -10,30 +10,28 @@
         <div class="card mb-5 mb-xl-10">
             <div class="card-body pt-9 pb-0">
                 <!--begin::Details-->
-                <div class="d-flex flex-wrap flex-sm-nowrap mb-3">
+                <div class="row">
                     <!--begin: Pic-->
-                    <div class="me-7 mb-4">
-                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative pl-mbl">
+                    <div class="col-md-2 col-12 mb-3" id="picDetailPengguna">
+                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                             <img src="<?= base_url(); ?>/assets/media/avatars/300-1.jpg" alt="image" />
                         </div>
                     </div>
                     <!--end::Pic-->
                     <!--begin::Info-->
-                    <div class="flex-grow-1">
+                    <div class="col-md-8 col-12">
                         <!--begin::Title-->
-                        <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                             <!--begin::User-->
                             <div class="d-flex flex-column">
                                 <!--begin::Name-->
-                                <div class="d-flex align-items-center mb-2 pl-mbl-2">
+                                <div class="col-md-5 col-12 mb-4" id="namaLengkapDetailPengguna">
                                     <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $firstName; ?> <?= $lastName; ?></a>
                                 </div>
                                 <!--end::Name-->
                                 <!--begin::Info-->
-                                <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2 text-center">
                                     <div class="row">
-                                        <div class="col-md-12 col-12">
-                                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
+                                        <div class="col-md-12 col-12 mb-3 infoDetailPengguna">
+                                                <a href="#" class="text-gray-400 text-hover-primary me-5 mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
                                                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
@@ -51,8 +49,8 @@
                                                 <?= $username; ?>
                                             </a>
                                         </div>
-                                        <div class="col-md-12 col-12">
-                                            <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
+                                        <div class="col-md-12 col-12 infoDetailPengguna">
+                                            <a href="#" class="text-gray-400 text-hover-primary mb-2">
                                                 <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
                                                 <span class="svg-icon svg-icon-4 me-1">
                                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -68,35 +66,47 @@
                                                 <!--end::Svg Icon--><?= $email; ?>
                                             </a>
                                         </div>
-                                    </div>
                                 </div>
                                 <!--end::Info-->
                             </div>
                             <!--end::User-->
-                            <!--begin::Actions-->
-                            <div class="d-flex my-4">
-                                <a href="<?= base_url(); ?>/pengguna" class="btn btn-sm btn-light-warning me-2 desktop-only"> &laquo;
-                                    Kembali</a>
-                            </div>
-                            <!--end::Actions-->
-                        </div>
                         <!--end::Title-->
                     </div>
                     <!--end::Info-->
                 </div>
                 <!--end::Details-->
                 <!--begin::Navs-->
-                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
+                <!-- mobile -->
+                <div class="row fs-5 text-gray-500 fw-bold mobile-only" style="padding-left:15px">
+                    <div class="col-md-4 col-4 mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#"><i class="las la-user la-2x"></i></a>
+                    </div>
+                    <div class="col-md-4 col-4 mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="../../demo1/dist/account/overview.html"><i class="las la-user-cog la-2x"></i></a>
+                    </div>
+                    <div class="col-md-4 col-4 mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna"><i class="las la-angle-double-left la-2x"></i></a>
+                    </div>
+                </div>
+
+                <!-- desktop -->
+                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold desktop-only">
                     <!--begin::Nav item-->
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
-                            href="../../demo1/dist/account/overview.html">Detail</a>
+                            href="#">Detail</a>
                     </li>
                     <!--end::Nav item-->
                     <!--begin::Nav item-->
                     <li class="nav-item mt-2">
                         <a class="nav-link text-active-primary ms-0 me-10 py-5"
                             href="../../demo1/dist/account/settings.html">Pengaturan</a>
+                    </li>
+                    <!--end::Nav item-->
+                    <!--begin::Nav item-->
+                    <li class="nav-item mt-2">
+                        <a class="text-gray-500 text-hover-warning ms-0 me-10 py-5"
+                            href="<?= base_url(); ?>/pengguna">&laquo; Kembali</a>
                     </li>
                     <!--end::Nav item-->
                 </ul>
@@ -114,7 +124,7 @@
                 </div>
                 <!--end::Card title-->
                 <!--begin::Action-->
-                <a href="../../demo1/dist/account/settings.html" class="btn btn-primary align-self-center">Edit
+                <a href="../../demo1/dist/account/settings.html" class="btn btn-sm btn-primary align-self-center">Edit
                     Profil</a>
                 <!--end::Action-->
             </div>
