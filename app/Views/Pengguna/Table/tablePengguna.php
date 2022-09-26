@@ -1,3 +1,7 @@
+<!-- begin :: DataTable CSS -->
+<link href="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css"/>
+<!-- end :: DataTable CSS -->
+
 <table class="table align-middle gs-0 gy-4" id="dataTablePengguna">
     <!--begin::Table head-->
     <thead>
@@ -14,11 +18,11 @@
     <!--begin::Table body-->
     <tbody>
         <?php $i = 1;
-        foreach($pengguna as $row) :
-            ?>
+foreach($pengguna as $row) :
+    ?>
         <tr>
             <td class="text-center">
-                <?= $i; ?>
+                <?= $i++; ?>
             </td>
             <td>
                 <div class="d-flex align-items-center">
@@ -31,8 +35,8 @@
                     </div>
                 </div>
             </td>
-            <td class="desktop-only">Admin</td>
-            <td class="desktop-only">Admin</td>
+            <td class="desktop-only"><?= $row->first_name; ?></td>
+            <td class="desktop-only"><?= $row->last_name; ?></td>
             <td class="desktop-only">
                 <span class="badge badge-light-danger fs-7 fw-bold">Admin</span>
             </td>
@@ -64,3 +68,17 @@
     </tbody>
     <!--end::Table body-->
 </table>
+
+<!-- begin :: DataTable Js -->
+<script src="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
+<!-- end :: End DataTable Js -->
+<script>
+    $(document).ready(function () {
+    const table = $('#dataTablePengguna').DataTable();
+
+    $('#search').on('keyup', function () {
+    table.search( this.value ).draw();
+    } );
+    });        
+</script>
+
