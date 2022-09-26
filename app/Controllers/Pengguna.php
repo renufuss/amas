@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use Myth\Auth\Models\GroupModel;
 use Myth\Auth\Models\UserModel;
-use Myth\Auth\Entities\User;
 use Myth\Auth\Password;
 
 class Pengguna extends BaseController
@@ -28,6 +27,19 @@ class Pengguna extends BaseController
             'role' => $this->groupModel->orderBy('name', 'ASC')->findAll(),
         ];
         return view('Pengguna/index', $data);
+    }
+
+    public function table()
+    {
+        if ($this->request->isAJAX()) {
+            $data = [
+                'pengguna' => $this->penggunaModel->orderBy('username', 'ASC')->findAll(),
+            ];
+            $msg = [
+            'table' => view('Pengguna/Table/tablePengguna', $data),
+            ];
+            echo json_encode($msg);
+        }
     }
 
     //begin::CRUD

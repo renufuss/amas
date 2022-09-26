@@ -1,7 +1,11 @@
 const base_url = window.location.origin;
 
+$(document).ready(function () {
+  table();
+});
+
 // begin::Button
-    // begin::btnAdd (Open Add Pengguna Modal)
+    // begin::btnAdd (Add Pengguna)
     $('#btnAdd').click(function (e) { 
         e.preventDefault();
         $.ajax({
@@ -70,6 +74,7 @@ const base_url = window.location.origin;
                   $(`#${key}`).val('');
               });
               toastr.success(response.sukses, "Sukses");
+              table();
             }
 
           },    
@@ -81,3 +86,22 @@ const base_url = window.location.origin;
     // end::btnAdd
 
 // end::Button
+
+// begin::Table
+// Table Pengguna
+function table() {
+  $.ajax({
+    type: "post",
+    url: base_url + "/pengguna",
+    dataType: "json",
+    success: function (response) {
+      if (response.table) {
+        $("#table").html(response.table);
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+// end::Table
