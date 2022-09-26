@@ -18,7 +18,7 @@
             ?>
         <tr>
             <td class="text-center">
-                <?= $i; ?>
+                <?= $i++; ?>
             </td>
             <td>
                 <div class="d-flex align-items-center">

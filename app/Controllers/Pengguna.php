@@ -44,12 +44,13 @@ class Pengguna extends BaseController
 
         if (!$this->validateData($data, $this->penggunaModel->getValidationRules(), $this->penggunaModel->getValidationMessages())) {
             $msg = [
-                'pesan' => $this->validator->listErrors(),
+                'error' => $this->validator->getErrors(),
+                'errormsg'=> 'Gagal menambahkan pengguna',
             ];
         } else {
             $this->penggunaModel->withGroup($data['role'])->save($data);
             $msg = [
-                'pesan' => 'sukses'
+                'sukses' => 'Berhasil menambahkan pengguna'
             ];
         }
         return json_encode($msg);
