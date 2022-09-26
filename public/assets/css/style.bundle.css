@@ -60122,4 +60122,12 @@ html:not([data-theme=dark]) {
     .desktop-only{
         display: none;
     }
+
+    .pl-mbl{
+        padding-left: 65%;
+    }
+
+    .pl-mbl-2{
+        padding-left: 33%;
+    }
 }
