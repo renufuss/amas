@@ -2,19 +2,21 @@
 
 namespace App\Controllers;
 
-use Myth\Auth\Entities\Group;
 use Myth\Auth\Models\GroupModel;
 use Myth\Auth\Models\UserModel;
-use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
+use Myth\Auth\Entities\User;
+use Myth\Auth\Password;
 
 class Pengguna extends BaseController
 {
     protected $penggunaModel;
     protected $groupModel;
+    protected $defaultPassword;
     public function __construct()
     {
         $this->penggunaModel = new UserModel();
         $this->groupModel = new GroupModel();
+        $this->defaultPassword = 'AmasJaya123';
     }
 
     public function index()
@@ -31,24 +33,25 @@ class Pengguna extends BaseController
     //begin::CRUD
     public function add()
     {
-        $validation = \Config\Services::validation();
         $data = [
             'username' => $this->request->getPost('username'),
             'email' => $this->request->getPost('email'),
-            'namaDepan' => $this->request->getPost('namaDepan'),
-            'namaBelakang' => $this->request->getPost('namaBelakang'),
+            'first_name' => $this->request->getPost('first_name'),
+            'last_name' => $this->request->getPost('last_name'),
             'role' => $this->request->getPost('role'),
+            'password_hash' => Password::hash($this->defaultPassword),
         ];
-        if ($validation->run($data, 'pengguna')) {
+
+        if (!$this->validateData($data, $this->penggunaModel->getValidationRules(), $this->penggunaModel->getValidationMessages())) {
+            $msg = [
+                'pesan' => $this->validator->listErrors(),
+            ];
+        } else {
+            $this->penggunaModel->withGroup($data['role'])->save($data);
             $msg = [
                 'pesan' => 'sukses'
             ];
-            echo json_encode($msg);
-        } else {
-            $msg = [
-                'pesan' => 'gagal'
-            ];
-            echo json_encode($msg);
         }
+        return json_encode($msg);
     }
 }

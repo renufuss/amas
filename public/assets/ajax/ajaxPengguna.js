@@ -10,8 +10,8 @@ const base_url = window.location.origin;
           data: {
             username : $('#username').val(),
             email : $('#email').val(),
-            namaDepan : $('#namaDepan').val(),
-            namaBelakang : $('#namaBelakang').val(),
+            first_name : $('#first_name').val(),
+            last_name : $('#last_name').val(),
             role : $('#role').val(),
           },
           dataType: "json",

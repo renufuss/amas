@@ -48,7 +48,7 @@
 		                        </label>
 		                        <!--end::Label-->
 		                        <input type="text" class="form-control form-control-solid" placeholder="Masukkan nama depan"
-		                            name="namaDepan" id="namaDepan" autocomplete="off" />
+		                            name="first_name" id="first_name" autocomplete="off" />
 		                    </div>
 		                    <!-- end::col -->
 		                    <!-- begin::col -->
@@ -59,7 +59,7 @@
 		                        </label>
 		                        <!--end::Label-->
 		                        <input type="text" class="form-control form-control-solid"
-		                            placeholder="Masukkan nama belakang" name="namaBelakang" id="namaBelakang"
+		                            placeholder="Masukkan nama belakang" name="last_name" id="last_name"
 		                            autocomplete="off" />
 		                    </div>
 		                    <!-- end::col -->
@@ -69,7 +69,7 @@
 		                        <select class="form-select form-select-solid" name="role" id="role" data-control="select2" data-hide-search="true" data-placeholder="Pilih Role...">
 									<option value="">Pilih Role...</option>
 									<?php foreach($role as $row): ?>
-		                            <option value="<?= $row->id; ?>"><?= $row->name; ?></option>
+		                            <option value="<?= $row->name; ?>"><?= $row->name; ?></option>
 									<?php endforeach; ?>
 		                        </select>
 		                    </div>
