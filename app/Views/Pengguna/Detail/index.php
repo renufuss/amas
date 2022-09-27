@@ -12,7 +12,7 @@
                 <!--begin::Details-->
                 <div class="row">
                     <!--begin: Pic-->
-                    <div class="col-md-3 col-12 mb-3" id="picDetailPengguna">
+                    <div class="col-lg-3 col-xxl-2 col-md-3 col-12 mb-3" id="picDetailPengguna">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                             <img src="<?= base_url(); ?>/assets/media/avatars/300-1.jpg" alt="image" />
                         </div>

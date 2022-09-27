@@ -60119,12 +60119,12 @@ html:not([data-theme=dark]) {
 }
 
 /* desktop only */
-@media (min-width: 769px) {
+@media (min-width: 769px)  {
     .mobile-only{
         display: none;
     }
 
-  }
+}
 
 
   /*tablet  */
