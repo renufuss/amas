@@ -1,0 +1,204 @@
+<?= $this->extend('Layout/index'); ?>
+
+
+<?= $this->section('content'); ?>
+
+<div id="kt_app_content" class="app-content flex-column-fluid">
+    <!--begin::Content container-->
+    <div id="kt_app_content_container" class="app-container container-xxl">
+        <!--begin::Navbar-->
+        <div class="card mb-5 mb-xl-10">
+            <div class="card-body pt-9 pb-0">
+                <!--begin::Details-->
+                <div class="row">
+                    <!--begin: Pic-->
+                    <div class="col-md-3 col-12 mb-3" id="picDetailPengguna">
+                        <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
+                            <img src="<?= base_url(); ?>/assets/media/avatars/300-1.jpg" alt="image" />
+                        </div>
+                    </div>
+                    <!--end::Pic-->
+                    <!--begin::Info-->
+                    <div class="col-md-9 col-12">
+                        <!--begin::Title-->
+                            <!--begin::User-->
+                            <div class="d-flex flex-column">
+                                <!--begin::Name-->
+                                <div class="col-md-12 col-12 mb-4" id="namaLengkapDetailPengguna">
+                                    <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $firstName; ?> <?= $lastName; ?></a>
+                                </div>
+                                <!--end::Name-->
+                                <!--begin::Info-->
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 mb-3 infoDetailPengguna">
+                                                <a href="#" class="text-gray-400 text-hover-primary me-5 mb-2">
+                                                <!--begin::Svg Icon | path: icons/duotune/communication/com006.svg-->
+                                                <span class="svg-icon svg-icon-4 me-1">
+                                                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M16.5 9C16.5 13.125 13.125 16.5 9 16.5C4.875 16.5 1.5 13.125 1.5 9C1.5 4.875 4.875 1.5 9 1.5C13.125 1.5 16.5 4.875 16.5 9Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M9 16.5C10.95 16.5 12.75 15.75 14.025 14.55C13.425 12.675 11.4 11.25 9 11.25C6.6 11.25 4.57499 12.675 3.97499 14.55C5.24999 15.75 7.05 16.5 9 16.5Z"
+                                                            fill="currentColor" />
+                                                        <rect x="7" y="6" width="4" height="4" rx="2" fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon-->
+                                                <?= $username; ?>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-12 col-12 infoDetailPengguna">
+                                            <a href="#" class="text-gray-400 text-hover-primary mb-2">
+                                                <!--begin::Svg Icon | path: icons/duotune/communication/com011.svg-->
+                                                <span class="svg-icon svg-icon-4 me-1">
+                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path opacity="0.3"
+                                                            d="M21 19H3C2.4 19 2 18.6 2 18V6C2 5.4 2.4 5 3 5H21C21.6 5 22 5.4 22 6V18C22 18.6 21.6 19 21 19Z"
+                                                            fill="currentColor" />
+                                                        <path
+                                                            d="M21 5H2.99999C2.69999 5 2.49999 5.10005 2.29999 5.30005L11.2 13.3C11.7 13.7 12.4 13.7 12.8 13.3L21.7 5.30005C21.5 5.10005 21.3 5 21 5Z"
+                                                            fill="currentColor" />
+                                                    </svg>
+                                                </span>
+                                                <!--end::Svg Icon--><?= $email; ?>
+                                            </a>
+                                        </div>
+                                </div>
+                                <!--end::Info-->
+                            </div>
+                            <!--end::User-->
+                        <!--end::Title-->
+                    </div>
+                    <!--end::Info-->
+                </div>
+                <!--end::Details-->
+                <!--begin::Navs-->
+                <!-- mobile -->
+                <div class="row fs-5 text-gray-500 fw-bold mobile-only" style="padding-left:15px">
+                    <div class="col-md-4 col-4 mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#"><i class="las la-user la-2x"></i></a>
+                    </div>
+                    <div class="col-md-4 col-4 mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="../../demo1/dist/account/overview.html"><i class="las la-user-cog la-2x"></i></a>
+                    </div>
+                    <div class="col-md-4 col-4 mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna"><i class="las la-angle-double-left la-2x"></i></a>
+                    </div>
+                </div>
+
+                <!-- desktop -->
+                <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold desktop-only">
+                    <!--begin::Nav item-->
+                    <li class="nav-item mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5 active"
+                            href="#">Detail</a>
+                    </li>
+                    <!--end::Nav item-->
+                    <!--begin::Nav item-->
+                    <li class="nav-item mt-2">
+                        <a class="nav-link text-active-primary ms-0 me-10 py-5"
+                            href="../../demo1/dist/account/settings.html">Pengaturan</a>
+                    </li>
+                    <!--end::Nav item-->
+                    <!--begin::Nav item-->
+                    <li class="nav-item mt-2">
+                        <a class="text-gray-500 text-hover-warning ms-0 me-10 py-5"
+                            href="<?= base_url(); ?>/pengguna">&laquo; Kembali</a>
+                    </li>
+                    <!--end::Nav item-->
+                </ul>
+                <!--begin::Navs-->
+            </div>
+        </div>
+        <!--end::Navbar-->
+        <!--begin::details View-->
+        <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
+            <!--begin::Card header-->
+            <div class="card-header cursor-pointer">
+                <!--begin::Card title-->
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Detail Pengguna</h3>
+                </div>
+                <!--end::Card title-->
+                <!--begin::Action-->
+                <a href="../../demo1/dist/account/settings.html" class="btn btn-sm btn-primary align-self-center">Edit
+                    Profil</a>
+                <!--end::Action-->
+            </div>
+            <!--begin::Card header-->
+            <!--begin::Card body-->
+            <div class="card-body p-9">
+                <!--begin::Row-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">Username</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-bold fs-6 text-gray-800"><?= $username; ?></span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Row-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">Email</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-semibold text-gray-800 fs-6"><?= $email; ?></span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">NPM</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-semibold text-gray-800 fs-6">20082010051</span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">Nama depan</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-semibold text-gray-800 fs-6"><?= $firstName; ?></span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+                <!--begin::Input group-->
+                <div class="row mb-7">
+                    <!--begin::Label-->
+                    <label class="col-lg-4 fw-semibold text-muted">Nama belakang</label>
+                    <!--end::Label-->
+                    <!--begin::Col-->
+                    <div class="col-lg-8 fv-row">
+                        <span class="fw-semibold text-gray-800 fs-6"><?= $lastName; ?></span>
+                    </div>
+                    <!--end::Col-->
+                </div>
+                <!--end::Input group-->
+            </div>
+            <!--end::Card body-->
+        </div>
+        <!--end::details View-->
+    </div>
+    <!--end::Content container-->
+</div>
+
+
+
+<?= $this->endSection(); ?>
