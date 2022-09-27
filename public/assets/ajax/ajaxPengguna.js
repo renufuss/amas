@@ -4,6 +4,11 @@ $(document).ready(function () {
   table();
 });
 
+$('#kt_app_sidebar_toggle').click(function (e) { 
+  e.preventDefault();
+  table();
+});
+
 // begin::btnAdd (Add Pengguna)
 $('#btnAdd').click(function (e) {
   e.preventDefault();

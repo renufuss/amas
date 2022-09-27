@@ -12,19 +12,19 @@
                 <!--begin::Details-->
                 <div class="row">
                     <!--begin: Pic-->
-                    <div class="col-md-2 col-12 mb-3" id="picDetailPengguna">
+                    <div class="col-md-3 col-12 mb-3" id="picDetailPengguna">
                         <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                             <img src="<?= base_url(); ?>/assets/media/avatars/300-1.jpg" alt="image" />
                         </div>
                     </div>
                     <!--end::Pic-->
                     <!--begin::Info-->
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-9 col-12">
                         <!--begin::Title-->
                             <!--begin::User-->
                             <div class="d-flex flex-column">
                                 <!--begin::Name-->
-                                <div class="col-md-5 col-12 mb-4" id="namaLengkapDetailPengguna">
+                                <div class="col-md-12 col-12 mb-4" id="namaLengkapDetailPengguna">
                                     <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $firstName; ?> <?= $lastName; ?></a>
                                 </div>
                                 <!--end::Name-->
