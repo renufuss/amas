@@ -60123,7 +60123,9 @@ html:not([data-theme=dark]) {
     .mobile-only{
         display: none;
     }
+
   }
+
 
   /*tablet  */
 @media (min-width: 481px) and (max-width: 768px) {
