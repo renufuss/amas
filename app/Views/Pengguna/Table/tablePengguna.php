@@ -45,7 +45,7 @@ foreach($pengguna as $row) :
             </td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                    <a href="<?= base_url(); ?>/pengguna/detail/<?= $row->username; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -60,7 +60,7 @@ foreach($pengguna as $row) :
                         </span>
                         <!--end::Svg Icon-->
                     </a>
-                    <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deletePengguna('<?= $row->id;?>','<?= $row->username;?>')">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -77,7 +77,7 @@ foreach($pengguna as $row) :
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                    </a>
+                    </button>
                 </div>
             </td>
         </tr>

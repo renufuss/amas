@@ -37,8 +37,10 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 $routes->get('/pengguna', 'Pengguna::index');
-$routes->post('/pengguna', 'Pengguna::table');
+$routes->get('/pengguna/table', 'Pengguna::table');
 $routes->post('/pengguna/add', 'Pengguna::add');
+$routes->post('/pengguna/delete', 'Pengguna::delete');
+$routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

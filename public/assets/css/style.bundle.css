@@ -60118,8 +60118,44 @@ html:not([data-theme=dark]) {
     display: none;
 }
 
-@media (max-width:480px) {
+/* desktop only */
+@media (min-width: 769px) {
+    .mobile-only{
+        display: none;
+    }
+  }
+
+  /*tablet  */
+@media (min-width: 481px) and (max-width: 768px) {
+    .mobile-only{
+        display: none;
+    }
+
+    #namaLengkapDetailPengguna{
+        text-align:center;
+    }
+
+    #picDetailPengguna{
+        text-align:center;
+    }
+  }
+
+
+/* mobile only */
+@media (max-width: 480px) {
     .desktop-only{
         display: none;
     }
-}
+
+    #namaLengkapDetailPengguna{
+        text-align:center;
+    }
+
+    #picDetailPengguna{
+        text-align:center;
+    }
+
+    .infoDetailPengguna{
+        text-align:center;
+    }
+  }
