@@ -92,9 +92,14 @@ class Pengguna extends BaseController
     public function detail($username)
     {
         $pengguna = $this->penggunaModel->where('username', $username)->first();
+        if ($pengguna == null) {
+            return redirect()->to('/pengguna');
+        }
         $data = [
             'title' => 'Pengguna | '. ucwords(strtolower($pengguna->username)),
             'breadcrumb' => 'Detail Pengguna',
+            'navDetail' => true,
+            'navPengaturan' => false,
             'username' => ucwords(strtolower($pengguna->username)),
             'email' => ucwords(strtolower($pengguna->email)),
             'firstName' => ucwords(strtolower($pengguna->first_name)),
@@ -102,5 +107,26 @@ class Pengguna extends BaseController
         ];
 
         return view('Pengguna/Detail/index', $data);
+    }
+
+    public function pengaturan($username)
+    {
+        $pengguna = $this->penggunaModel->where('username', $username)->first();
+        if ($pengguna == null) {
+            return redirect()->to('/pengguna');
+        }
+        $data = [
+            'title' => 'Pengguna | '. ucwords(strtolower($pengguna->username)),
+            'breadcrumb' => 'Pengaturan Pengguna',
+            'navDetail' => false,
+            'navPengaturan' => true,
+            'username' => ucwords(strtolower($pengguna->username)),
+            'email' => ucwords(strtolower($pengguna->email)),
+            'firstName' => ucwords(strtolower($pengguna->first_name)),
+            'lastName' => ucwords(strtolower($pengguna->last_name)),
+            'role' => $this->groupModel->orderBy('name', 'ASC')->findAll(),
+        ];
+
+        return view('Pengguna/Pengaturan/index', $data);
     }
 }

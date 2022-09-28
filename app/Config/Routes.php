@@ -40,7 +40,9 @@ $routes->get('/pengguna', 'Pengguna::index');
 $routes->get('/pengguna/table', 'Pengguna::table');
 $routes->post('/pengguna/add', 'Pengguna::add');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
-$routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
+$routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
+$routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
