@@ -154,4 +154,16 @@ class UserModel extends Model
             'password' => bin2hex(random_bytes(16)),
         ]);
     }
+
+    public function showPengguna($username = null)
+    {
+        $table = $this->db->table($this->table);
+        $query = $table->select('users.*, auth_groups.name as role, badge')->join('auth_groups_users', 'auth_groups_users.user_id=users.id', 'left')->join('auth_groups', 'auth_groups.id=auth_groups_users.group_id', 'left')->orderBy('username', 'asc')->orderBy('auth_groups.id', 'asc');
+        if ($username != null) {
+            $data = $query->where('username', $username)->get()->getFirstRow();
+        } else {
+            $data = $query->get()->getResultObject();
+        }
+        return $data;
+    }
 }

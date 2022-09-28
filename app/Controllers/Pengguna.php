@@ -34,7 +34,7 @@ class Pengguna extends BaseController
     {
         if ($this->request->isAJAX()) {
             $data = [
-                'pengguna' => $this->penggunaModel->orderBy('username', 'ASC')->findAll(),
+                'pengguna' => $this->penggunaModel->showPengguna(),
             ];
             $msg = [
             'table' => view('Pengguna/Table/tablePengguna', $data),
@@ -91,7 +91,7 @@ class Pengguna extends BaseController
 
     public function detail($username)
     {
-        $pengguna = $this->penggunaModel->where('username', $username)->first();
+        $pengguna = $this->penggunaModel->showPengguna($username);
         if ($pengguna == null) {
             return redirect()->to('/pengguna');
         }
@@ -100,10 +100,7 @@ class Pengguna extends BaseController
             'breadcrumb' => 'Detail Pengguna',
             'navDetail' => true,
             'navPengaturan' => false,
-            'username' => ucwords(strtolower($pengguna->username)),
-            'email' => ucwords(strtolower($pengguna->email)),
-            'firstName' => ucwords(strtolower($pengguna->first_name)),
-            'lastName' => ucwords(strtolower($pengguna->last_name)),
+            'pengguna' => $pengguna,
         ];
 
         return view('Pengguna/Detail/index', $data);
@@ -111,7 +108,7 @@ class Pengguna extends BaseController
 
     public function pengaturan($username)
     {
-        $pengguna = $this->penggunaModel->where('username', $username)->first();
+        $pengguna = $this->penggunaModel->showPengguna($username);
         if ($pengguna == null) {
             return redirect()->to('/pengguna');
         }
@@ -120,10 +117,7 @@ class Pengguna extends BaseController
             'breadcrumb' => 'Pengaturan Pengguna',
             'navDetail' => false,
             'navPengaturan' => true,
-            'username' => ucwords(strtolower($pengguna->username)),
-            'email' => ucwords(strtolower($pengguna->email)),
-            'firstName' => ucwords(strtolower($pengguna->first_name)),
-            'lastName' => ucwords(strtolower($pengguna->last_name)),
+            'pengguna' => $pengguna,
             'role' => $this->groupModel->orderBy('name', 'ASC')->findAll(),
         ];
 

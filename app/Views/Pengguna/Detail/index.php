@@ -21,7 +21,7 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-bold fs-6 text-gray-800"><?= $username; ?></span>
+                        <span class="fw-bold fs-6 text-gray-800"><?= $pengguna->username; ?></span>
                     </div>
                     <!--end::Col-->
                 </div>
@@ -33,7 +33,7 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-semibold text-gray-800 fs-6"><?= $email; ?></span>
+                        <span class="fw-semibold text-gray-800 fs-6"><?= $pengguna->email; ?></span>
                     </div>
                     <!--end::Col-->
                 </div>
@@ -57,7 +57,7 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-semibold text-gray-800 fs-6"><?= $firstName; ?> <?= $lastName; ?></span>
+                        <span class="fw-semibold text-gray-800 fs-6"><?= $pengguna->first_name; ?> <?= $pengguna->last_name; ?></span>
                     </div>
                     <!--end::Col-->
                 </div>

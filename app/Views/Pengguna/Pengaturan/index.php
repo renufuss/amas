@@ -79,14 +79,14 @@
                             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                                 <input type="text" name="fname"
                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                    placeholder="First name" value="<?= $firstName; ?>">
+                                    placeholder="First name" value="<?= $pengguna->first_name; ?>">
                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                                 <input type="text" name="lname" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Last name" value="<?= $lastName; ?>">
+                                    placeholder="Last name" value="<?= $pengguna->last_name; ?>">
                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
                             <!--end::Col-->
@@ -129,9 +129,7 @@
             <!--end::Card body-->
             <!--begin::Actions-->
             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                <button type="reset" class="btn btn-light btn-active-light-primary me-2">Discard</button>
-                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Save
-                    Changes</button>
+                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Simpan</button>
             </div>
             <!--end::Actions-->
             <input type="hidden">
@@ -161,7 +159,7 @@
                 <!--begin::Label-->
                 <div id="kt_signin_email">
                     <div class="fs-6 fw-bold mb-1">Username</div>
-                    <div class="fw-semibold text-gray-600"><?= $username; ?></div>
+                    <div class="fw-semibold text-gray-600"><?= $pengguna->username; ?></div>
                 </div>
                 <!--end::Label-->
                 <!--begin::Edit-->

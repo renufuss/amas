@@ -5,7 +5,13 @@
             <!--begin: Pic-->
             <div class="col-lg-3 col-xxl-2 col-md-3 col-12 mb-3" id="picDetailPengguna">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                    <img src="<?= base_url(); ?>/assets/media/avatars/300-1.jpg" alt="image" />
+                    <?php if($pengguna->image_profile != null) : ?>
+                        <img src="assets/media/stock/600x400/img-26.jpg" class="" alt="" />
+                    <?php else : ?>
+                        <div class="symbol symbol-50px">
+                            <div class="symbol-label fs-3x fw-semibold bg-<?= $pengguna->badge; ?> text-inverse-danger"><?= strtoupper(substr($pengguna->first_name, 0, 1)); ?><?= strtoupper(substr($pengguna->last_name, 0, 1)); ?></div>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             <!--end::Pic-->
@@ -16,8 +22,8 @@
                 <div class="d-flex flex-column">
                     <!--begin::Name-->
                     <div class="col-md-12 col-12 mb-4" id="namaLengkapDetailPengguna">
-                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $firstName; ?>
-                            <?= $lastName; ?></a>
+                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $pengguna->first_name; ?>
+                            <?= $pengguna->last_name; ?></a>
                     </div>
                     <!--end::Name-->
                     <!--begin::Info-->
@@ -38,7 +44,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <?= $username; ?>
+                                <?= $pengguna->username; ?>
                             </a>
                         </div>
                         <div class="col-md-12 col-12 infoDetailPengguna">
@@ -55,7 +61,7 @@
                                             fill="currentColor" />
                                     </svg>
                                 </span>
-                                <!--end::Svg Icon--><?= $email; ?>
+                                <!--end::Svg Icon--><?= $pengguna->email; ?>
                             </a>
                         </div>
                     </div>
@@ -71,11 +77,11 @@
         <!-- mobile -->
         <div class="row fs-5 text-gray-500 fw-bold mobile-only" style="padding-left:15px">
             <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navDetail) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/detail/<?= $username; ?>"><i
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navDetail) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/detail/<?= $pengguna->username; ?>"><i
                         class="las la-user la-2x"></i></a>
             </div>
             <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/pengaturan/<?= $username; ?>"><i
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/pengaturan/<?= $pengguna->username; ?>"><i
                         class="las la-user-cog la-2x"></i></a>
             </div>
             <div class="col-md-4 col-4 mt-2">
@@ -88,12 +94,12 @@
         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold desktop-only">
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navDetail) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/detail/<?= $username; ?>">Detail</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navDetail) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/detail/<?= $pengguna->username; ?>">Detail</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/pengaturan/<?= $username; ?>">Pengaturan</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/pengaturan/<?= $pengguna->username; ?>">Pengaturan</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
