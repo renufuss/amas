@@ -21,7 +21,7 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-bold fs-6 text-gray-800"><?= $pengguna->username; ?></span>
+                        <span class="fw-bold fs-6 text-gray-800"><?= ucwords(strtolower($pengguna->username)); ?></span>
                     </div>
                     <!--end::Col-->
                 </div>
@@ -33,22 +33,24 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-semibold text-gray-800 fs-6"><?= $pengguna->email; ?></span>
+                        <span class="fw-semibold text-gray-800 fs-6"><?= ucwords(strtolower($pengguna->email)); ?></span>
                     </div>
                     <!--end::Col-->
                 </div>
                 <!--end::Input group-->
                 <!--begin::Input group-->
+                <?php if($pengguna->npm) : ?>
                 <div class="row mb-7">
                     <!--begin::Label-->
                     <label class="col-lg-4 fw-semibold text-muted">NPM</label>
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-semibold text-gray-800 fs-6">20082010051</span>
+                        <span class="fw-semibold text-gray-800 fs-6"><?= $pengguna->npm; ?></span>
                     </div>
                     <!--end::Col-->
                 </div>
+                <?php endif; ?>
                 <!--end::Input group-->
                 <!--begin::Input group-->
                 <div class="row mb-7">
@@ -57,7 +59,7 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row">
-                        <span class="fw-semibold text-gray-800 fs-6"><?= $pengguna->first_name; ?> <?= $pengguna->last_name; ?></span>
+                        <span class="fw-semibold text-gray-800 fs-6"><?= ucwords(strtolower($pengguna->first_name)); ?> <?= ucwords(strtolower($pengguna->last_name)); ?></span>
                     </div>
                     <!--end::Col-->
                 </div>

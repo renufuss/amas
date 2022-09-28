@@ -22,8 +22,8 @@
                 <div class="d-flex flex-column">
                     <!--begin::Name-->
                     <div class="col-md-12 col-12 mb-4" id="namaLengkapDetailPengguna">
-                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= $pengguna->first_name; ?>
-                            <?= $pengguna->last_name; ?></a>
+                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= ucwords(strtolower($pengguna->first_name)); ?>
+                            <?= ucwords(strtolower($pengguna->last_name)); ?></a>
                     </div>
                     <!--end::Name-->
                     <!--begin::Info-->
@@ -44,7 +44,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <?= $pengguna->username; ?>
+                                <?= ucwords(strtolower($pengguna->username)); ?>
                             </a>
                         </div>
                         <div class="col-md-12 col-12 infoDetailPengguna">
@@ -61,7 +61,7 @@
                                             fill="currentColor" />
                                     </svg>
                                 </span>
-                                <!--end::Svg Icon--><?= $pengguna->email; ?>
+                                <!--end::Svg Icon--><?= ucwords(strtolower($pengguna->email)); ?>
                             </a>
                         </div>
                     </div>

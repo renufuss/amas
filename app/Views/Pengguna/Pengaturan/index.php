@@ -79,14 +79,14 @@
                             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                                 <input type="text" name="fname"
                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                    placeholder="First name" value="<?= $pengguna->first_name; ?>">
+                                    placeholder="First name" value="<?= ucwords(strtolower($pengguna->first_name)); ?>">
                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-lg-6 fv-row fv-plugins-icon-container">
                                 <input type="text" name="lname" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Last name" value="<?= $pengguna->last_name; ?>">
+                                    placeholder="Last name" value="<?= ucwords(strtolower($pengguna->last_name)); ?>">
                                 <div class="fv-plugins-message-container invalid-feedback"></div>
                             </div>
                             <!--end::Col-->
@@ -159,7 +159,7 @@
                 <!--begin::Label-->
                 <div id="kt_signin_email">
                     <div class="fs-6 fw-bold mb-1">Username</div>
-                    <div class="fw-semibold text-gray-600"><?= $pengguna->username; ?></div>
+                    <div class="fw-semibold text-gray-600"><?= ucwords(strtolower($pengguna->username)); ?></div>
                 </div>
                 <!--end::Label-->
                 <!--begin::Edit-->
@@ -210,7 +210,7 @@
                 <!--begin::Label-->
                 <div id="kt_signin_email">
                     <div class="fs-6 fw-bold mb-1">Email Address</div>
-                    <div class="fw-semibold text-gray-600">support@keenthemes.com</div>
+                    <div class="fw-semibold text-gray-600"><?= ucwords(strtolower($pengguna->email)); ?></div>
                 </div>
                 <!--end::Label-->
                 <!--begin::Edit-->
