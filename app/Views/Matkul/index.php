@@ -39,6 +39,13 @@
         </div>
     </div>
     <!--end::Card Header-->
+     <!--begin::Card Body-->
+     <div class="card-body py-3">
+        <!--begin::Table container-->
+        <div class="table-responsive" id="table"></div>
+        <!--end::Table container-->
+    </div>
+    <!--end::Card Body-->
 </div>
 <!--end::Card-->
 <!-- begin::modalMatkul -->
@@ -48,10 +55,10 @@
 <script>
 function datamatkul() {
     $.ajax({
-        url: "<?= site_url('matkul/ambildata')?>",
+        url: "<?= site_url('matkul/table')?>",
         dataType: "json",
         success: function (response) {
-            $(".viewdata").html(response.data);
+            $("#table").html(response.data);
         },
         error: function (xhr, thrownError) {
           alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
