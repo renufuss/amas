@@ -164,7 +164,7 @@ class UserModel extends Model
     public function showPengguna($username = null)
     {
         $table = $this->db->table($this->table);
-        $query = $table->select('users.*, auth_groups.name as role, badge')->join('auth_groups_users', 'auth_groups_users.user_id=users.id', 'left')->join('auth_groups', 'auth_groups.id=auth_groups_users.group_id', 'left')->orderBy('auth_groups.id', 'asc')->orderBy('username', 'asc');
+        $query = $table->select('users.*, auth_groups.name as role, badge')->join('auth_groups_users', 'auth_groups_users.user_id=users.id', 'left')->join('auth_groups', 'auth_groups.id=auth_groups_users.group_id', 'left')->orderBy('auth_groups.id', 'asc')->orderBy('username', 'asc')->where('deleted_at', null);
         if ($username != null) {
             $data = $query->where('username', $username)->get()->getFirstRow();
         } else {
