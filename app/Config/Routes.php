@@ -44,6 +44,11 @@ $routes->post('/pengguna/login/(:segment)', 'Pengguna::editLogin/$1');
 $routes->post('/pengguna/reset/(:segment)', 'Pengguna::resetPassword/$1');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
 $routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
+
+
+$routes->get('/matkul', 'Matkul::index');
+$routes->get('/matkul/table', 'Matkul::table');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
