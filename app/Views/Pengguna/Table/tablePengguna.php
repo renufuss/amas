@@ -28,20 +28,25 @@ foreach($pengguna as $row) :
             <td>
                 <div class="d-flex align-items-center">
                     <div class="symbol symbol-50px me-5">
-                        <img src="assets/media/stock/600x400/img-26.jpg" class="" alt="" />
+                        <?php if($row->image_profile != null) : ?>
+                        <img src="<?= base_url(); ?>/assets/images/users/<?= $row->image_profile; ?>" class="" alt="" />
+                        <?php else : ?>
+                        <div class="symbol symbol-50px">
+                            <div class="symbol-label fs-2 fw-semibold bg-<?= $row->badge; ?> text-inverse-danger"><?= strtoupper(substr($row->first_name, 0, 1)); ?><?= strtoupper(substr($row->last_name, 0, 1)); ?></div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                     <div class="d-flex justify-content-start flex-column">
-                        <a href="#"
-                            class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->username)); ?></a>
-                        <span
-                            class="text-muted fw-semibold text-muted d-block fs-7"><?= ucwords(strtolower($row->email)); ?></span>
+                        <span class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->username)); ?></span>
+                        <span class="text-muted fw-semibold text-muted d-block fs-<?= ($row->npm) ? '9' : '7' ?>"><?= ucwords(strtolower($row->email)); ?></span>
+                        <span class="text-muted fw-semibold text-muted d-block fs-9"><?= $row->npm; ?></span>
                     </div>
                 </div>
             </td>
             <td class="desktop-only text-center"><?= $row->first_name; ?></td>
             <td class="desktop-only text-center"><?= $row->last_name; ?></td>
             <td class="desktop-only text-center">
-                <span class="badge badge-light-danger fs-7 fw-bold">Mahasiswa</span>
+                <span class="badge badge-light-<?= $row->badge; ?> fs-7 fw-bold"><?= $row->role; ?></span>
             </td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
@@ -93,13 +98,7 @@ foreach($pengguna as $row) :
 <script>
     $(document).ready(function () {
         const table = $('#dataTablePengguna').DataTable({
-            columnDefs: [{
-                orderable: false,
-                targets: [0,4,5]
-            }],
-            order: [
-                [1, 'asc']
-            ],
+            "aaSorting": [],
             "scrollX": true
         });
 
