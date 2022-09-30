@@ -326,6 +326,9 @@
 
 
 <!-- begin::Script -->
+<script type="text/javascript">
+    let username = <?= json_encode($pengguna->username); ?>
+</script>
 <script src="<?= base_url(); ?>/assets/ajax/ajaxPengguna.js"></script>
 <!-- end::Script -->
 
