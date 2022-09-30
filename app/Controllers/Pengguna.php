@@ -49,17 +49,9 @@ class Pengguna extends BaseController
     public function add()
     {
         if ($this->request->isAJAX()) {
-            $data = [
-                'username' => $this->request->getPost('username'),
-                'email' => $this->request->getPost('email'),
-                'first_name' => $this->request->getPost('first_name'),
-                'last_name' => $this->request->getPost('last_name'),
-                'active' => 1,
-                'role' => $this->request->getPost('role'),
-                'password_hash' => Password::hash($this->defaultPassword),
-            ];
-
-            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(), $this->penggunaModel->getValidationMessages())) {
+            $data = $this->request->getPost();
+            $data['password_hash'] = Password::hash($this->defaultPassword);
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['image_profile']]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
                     'error' => $this->validator->getErrors(),
                     'errormsg'=> 'Gagal menambahkan pengguna',
@@ -74,28 +66,17 @@ class Pengguna extends BaseController
         }
     }
 
-    public function edit()
+    public function edit($username)
     {
         if ($this->request->isAJAX()) {
-            $session = \Config\Services::session();
-            $id = $session->get("id");
-
-            $data = [
-                'id' => $id,
-                'username' => $this->penggunaModel->where('id', $id)->first()->username,
-                'email' => $this->penggunaModel->where('id', $id)->first()->email,
-                'password_hash' => $this->penggunaModel->where('id', $id)->first()->password_hash,
-                'first_name' => $this->request->getPost('first_name'),
-                'last_name' => $this->request->getPost('last_name'),
-                'npm' => $this->request->getPost('npm'),
-                'role' => $this->request->getPost('role'),
-                'image_profile' => $this->request->getFile('image_profile'),
-                'avatar_remove' => $this->request->getPost('avatar_remove'),
-            ];
-            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(), $this->penggunaModel->getValidationMessages())) {
+            $id = $this->penggunaModel->where('username', $username)->first()->id;
+            $data = $this->request->getPost();
+            $data['id'] = $id;
+            $data['image_profile'] = $this->request->getFile('image_profile');
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['email','username','password_hash']]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
                     'error' => $this->validator->getErrors(),
-                    'errormsg'=> 'Gagal menambahkan pengguna',
+                    'errormsg'=> 'Gagal mengupdate pengguna',
                 ];
             } else {
                 // image profile
@@ -127,6 +108,7 @@ class Pengguna extends BaseController
                 // save
                 $this->penggunaModel->save($data);
                 $msg = [
+                    'data' => $data,
                     'sukses' => 'Berhasil mengupdate pengguna'
                 ];
             }
@@ -169,12 +151,10 @@ class Pengguna extends BaseController
 
     public function pengaturan($username)
     {
-        $session = \Config\Services::session();
         $pengguna = $this->penggunaModel->showPengguna($username);
         if ($pengguna == null) {
             return redirect()->to('/pengguna');
         }
-        $session->set("id", $pengguna->id);
         $data = [
             'title' => 'Pengguna | '. ucwords(strtolower($pengguna->username)),
             'breadcrumb' => 'Pengaturan Pengguna',

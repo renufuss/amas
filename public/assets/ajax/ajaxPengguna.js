@@ -132,7 +132,6 @@ function deletePengguna(id, username) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            console.log(response.id);
             table();
           }else{
             toastr.error(response.error, "Error");
@@ -151,7 +150,7 @@ $('#btnSimpanProfil').click(function (e) {
   var formData = new FormData(form);
   $.ajax({
     type: "post",
-    url: base_url + "/pengguna/edit",
+    url: base_url + "/pengguna/edit/"+username,
     data: formData,
     dataType: "json",
     contentType: false,
@@ -169,7 +168,6 @@ $('#btnSimpanProfil').click(function (e) {
       $("#btnSimpanProfil").html("Simpan");
     },
     success: function (response) {
-      console.log(response);
       toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -219,7 +217,6 @@ $('#btnSimpanProfil').click(function (e) {
           location.reload();
         }, 1200);
       }
-
     },
     error: function (xhr, thrownError) {
       alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);

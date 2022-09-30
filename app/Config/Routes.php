@@ -39,7 +39,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/pengguna', 'Pengguna::index');
 $routes->get('/pengguna/table', 'Pengguna::table');
 $routes->post('/pengguna/add', 'Pengguna::add');
-$routes->post('/pengguna/edit', 'Pengguna::edit');
+$routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
 $routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
 $routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
