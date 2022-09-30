@@ -17,7 +17,7 @@
     <!--begin::Content-->
     <div id="kt_account_settings_profile_details" class="collapse show">
         <!--begin::Form-->
-        <form id="kt_account_profile_details_form" class="form fv-plugins-bootstrap5 fv-plugins-framework"
+        <form id="formDetailProfil" class="form fv-plugins-bootstrap5 fv-plugins-framework"
             novalidate="novalidate">
             <!--begin::Card body-->
             <div class="card-body border-top p-9">
@@ -29,18 +29,23 @@
                     <!--begin::Col-->
                     <div class="col-lg-8">
                         <!--begin::Image input-->
-                        <div class="image-input image-input-outline" data-kt-image-input="true"
+                        <div class="image-input image-input-outline <?= ($pengguna->image_profile == null) ? 'image-input-empty' : ''; ?>" data-kt-image-input="true"
                             style="background-image: url('/assets/media/svg/avatars/blank.svg')">
                             <!--begin::Preview existing avatar-->
+                            <?php if($pengguna->image_profile != null) : ?>
                             <div class="image-input-wrapper w-125px h-125px"
-                                style="background-image: url(/assets/media/avatars/300-1.jpg)"></div>
+                                style="background-image: url(/assets/images/users/<?= $pengguna->image_profile;?>)"></div>
+                            <?php else : ?>
+                                <div class="image-input-wrapper w-125px h-125px"
+                                style="background-image: none"></div>
+                            <?php endif; ?>
                             <!--end::Preview existing avatar-->
                             <!--begin::Label-->
                             <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
                                 data-kt-image-input-action="change" data-bs-toggle="tooltip" data-kt-initialized="1">
                                 <i class="bi bi-pencil-fill fs-7"></i>
                                 <!--begin::Inputs-->
-                                <input type="file" name="avatar" accept=".png, .jpg, .jpeg">
+                                <input type="file" class="is-invalid" name="image_profile" id="image_profile" accept=".png, .jpg, .jpeg">
                                 <input type="hidden" name="avatar_remove">
                                 <!--end::Inputs-->
                             </label>
@@ -61,6 +66,7 @@
                         <!--end::Image input-->
                         <!--begin::Hint-->
                         <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
+                        <div class="form-text" style="color: red;" id="image_profile-feedback"></div>
                         <!--end::Hint-->
                     </div>
                     <!--end::Col-->
@@ -77,17 +83,17 @@
                         <div class="row">
                             <!--begin::Col-->
                             <div class="col-lg-6 fv-row fv-plugins-icon-container">
-                                <input type="text" name="fname"
+                                <input type="text" name="first_name" id="first_name"
                                     class="form-control form-control-lg form-control-solid mb-3 mb-lg-0"
-                                    placeholder="First name" value="<?= ucwords(strtolower($pengguna->first_name)); ?>">
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                                    placeholder="Nama Depan" value="<?= ucwords(strtolower($pengguna->first_name)); ?>" autocomplete="off">
+                                <div class="fv-plugins-message-container invalid-feedback" id="first_name-feedback"></div>
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
                             <div class="col-lg-6 fv-row fv-plugins-icon-container">
-                                <input type="text" name="lname" class="form-control form-control-lg form-control-solid"
-                                    placeholder="Last name" value="<?= ucwords(strtolower($pengguna->last_name)); ?>">
-                                <div class="fv-plugins-message-container invalid-feedback"></div>
+                                <input type="text" name="last_name" id="last_name" class="form-control form-control-lg form-control-solid"
+                                    placeholder="Nama Belakang" value="<?= ucwords(strtolower($pengguna->last_name)); ?>" autocomplete="off">
+                                <div class="fv-plugins-message-container invalid-feedback" id="last_name-feedback"></div>
                             </div>
                             <!--end::Col-->
                         </div>
@@ -103,9 +109,9 @@
                     <!--end::Label-->
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row fv-plugins-icon-container">
-                        <input type="text" name="company" class="form-control form-control-lg form-control-solid"
-                            placeholder="Company name" value="Keenthemes">
-                        <div class="fv-plugins-message-container invalid-feedback"></div>
+                        <input type="text" name="npm" id="npm" class="form-control form-control-lg form-control-solid"
+                            placeholder="Nomor Pokok Mahasiswa" value="<?= $pengguna->npm; ?>" autocomplete="off">
+                        <div class="fv-plugins-message-container invalid-feedback" id="npm-feedback"></div>
                     </div>
                     <!--end::Col-->
                 </div>
@@ -118,7 +124,7 @@
                             data-hide-search="true" data-placeholder="Pilih Role...">
                             <option value="">Pilih Role...</option>
                             <?php foreach($role as $row): ?>
-                            <option value="<?= $row->name; ?>"><?= $row->name; ?></option>
+                            <option value="<?= $row->name; ?>" <?= ($row->name == $pengguna->role) ? 'selected' : ''; ?>><?= $row->name; ?></option>
                             <?php endforeach; ?>
                         </select>
                         <div class="invalid-feedback" id="role-feedback"></div>
@@ -129,7 +135,7 @@
             <!--end::Card body-->
             <!--begin::Actions-->
             <div class="card-footer d-flex justify-content-end py-6 px-9">
-                <button type="submit" class="btn btn-primary" id="kt_account_profile_details_submit">Simpan</button>
+                <button type="button" class="btn btn-primary" id="btnSimpanProfil">Simpan</button>
             </div>
             <!--end::Actions-->
             <input type="hidden">
@@ -319,5 +325,8 @@
 <!--end::Sign-in Method-->
 
 
+<!-- begin::Script -->
+<script src="<?= base_url(); ?>/assets/ajax/ajaxPengguna.js"></script>
+<!-- end::Script -->
 
 <?= $this->endSection(); ?>

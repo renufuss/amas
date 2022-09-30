@@ -179,10 +179,10 @@
 			<div class="cursor-pointer symbol symbol-35px symbol-md-40px" data-kt-menu-trigger="click"
 				data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
 				<?php if(user()->image_profile != null) : ?>
-				<img src="assets/media/stock/600x400/img-26.jpg" class="" alt="" />
+				<img src="<?= base_url(); ?>/assets/images/users/<?= user()->image_profile; ?>" class="" alt="" />
 				<?php else : ?>
 				<div class="symbol symbol-50px">
-					<div class="symbol-label fs-2 fw-semibold bg-<?= user()->getRole()['badge']; ?> text-inverse-danger">
+					<div class="symbol-label fs-4 fw-semibold bg-<?= user()->getRole()['badge']; ?> text-inverse-danger">
 						<?= strtoupper(substr(user()->first_name, 0, 1)); ?><?= strtoupper(substr(user()->last_name, 0, 1)); ?>
 					</div>
 				</div>
@@ -197,10 +197,10 @@
 						<!--begin::Avatar-->
 						<div class="symbol symbol-50px me-5">
 							<?php if(user()->image_profile != null) : ?>
-							<img src="assets/media/stock/600x400/img-26.jpg" class="" alt="Logo" />
+							<img src="<?= base_url(); ?>/assets/images/users/<?= user()->image_profile; ?>" class="" alt="Logo" />
 							<?php else : ?>
 							<div class="symbol symbol-50px">
-								<div class="symbol-label fs-2 fw-semibold bg-<?= user()->badge; ?> text-inverse-danger">
+								<div class="symbol-label fs-2 fw-semibold bg-<?= user()->getRole()['badge']; ?> text-inverse-danger">
 									<?= strtoupper(substr(user()->first_name, 0, 1)); ?><?= strtoupper(substr(user()->last_name, 0, 1)); ?>
 								</div>
 							</div>

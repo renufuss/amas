@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Myth\Auth\Entities\User;
 use Myth\Auth\Models\GroupModel;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Password;
@@ -73,6 +74,66 @@ class Pengguna extends BaseController
         }
     }
 
+    public function edit()
+    {
+        if ($this->request->isAJAX()) {
+            $session = \Config\Services::session();
+            $id = $session->get("id");
+
+            $data = [
+                'id' => $id,
+                'username' => $this->penggunaModel->where('id', $id)->first()->username,
+                'email' => $this->penggunaModel->where('id', $id)->first()->email,
+                'password_hash' => $this->penggunaModel->where('id', $id)->first()->password_hash,
+                'first_name' => $this->request->getPost('first_name'),
+                'last_name' => $this->request->getPost('last_name'),
+                'npm' => $this->request->getPost('npm'),
+                'role' => $this->request->getPost('role'),
+                'image_profile' => $this->request->getFile('image_profile'),
+                'avatar_remove' => $this->request->getPost('avatar_remove'),
+            ];
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(), $this->penggunaModel->getValidationMessages())) {
+                $msg = [
+                    'error' => $this->validator->getErrors(),
+                    'errormsg'=> 'Gagal menambahkan pengguna',
+                ];
+            } else {
+                // image profile
+                $newImage = $data['image_profile'];
+                $oldImage = $this->penggunaModel->where('id', $id)->first()->image_profile;
+                if ($newImage->getError() != 4) {
+                    $newImage->move('assets/images/users', $newImage->getRandomName());
+                    if ($oldImage != null && file_exists('assets/images/users/' . $oldImage)) {
+                        unlink('assets/images/users/' . $oldImage); //Hapus image lama
+                    }
+
+                    // set nama image
+                    $data['image_profile'] = $newImage->getName();
+                } elseif ($data['avatar_remove'] == 1) {
+                    if ($oldImage != null && file_exists('assets/images/users/' . $oldImage)) {
+                        unlink('assets/images/users/' . $oldImage); //Hapus image lama
+                    }
+                    $data['image_profile'] = null;
+                } else {
+                    $data['image_profile'] = $oldImage;
+                }
+
+                // remove role
+                $this->groupModel->removeUserFromAllGroups($id);
+
+                // add role
+                $this->groupModel->addUserToGroup($id, $this->groupModel->where('name', $data['role'])->first()->id);
+
+                // save
+                $this->penggunaModel->save($data);
+                $msg = [
+                    'sukses' => 'Berhasil mengupdate pengguna'
+                ];
+            }
+            echo json_encode($msg);
+        }
+    }
+
     public function delete()
     {
         if ($this->request->isAJAX()) {
@@ -108,10 +169,12 @@ class Pengguna extends BaseController
 
     public function pengaturan($username)
     {
+        $session = \Config\Services::session();
         $pengguna = $this->penggunaModel->showPengguna($username);
         if ($pengguna == null) {
             return redirect()->to('/pengguna');
         }
+        $session->set("id", $pengguna->id);
         $data = [
             'title' => 'Pengguna | '. ucwords(strtolower($pengguna->username)),
             'breadcrumb' => 'Pengaturan Pengguna',

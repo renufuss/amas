@@ -6,7 +6,7 @@
             <div class="col-lg-3 col-xxl-2 col-md-3 col-12 mb-3" id="picDetailPengguna">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                     <?php if($pengguna->image_profile != null) : ?>
-                        <img src="assets/media/stock/600x400/img-26.jpg" class="" alt="" />
+                        <img src="<?= base_url(); ?>/assets/images/users/<?= $pengguna->image_profile; ?>" class="" alt="" />
                     <?php else : ?>
                         <div class="symbol symbol-50px">
                             <div class="symbol-label fs-3x fw-semibold bg-<?= $pengguna->badge; ?> text-inverse-danger"><?= strtoupper(substr($pengguna->first_name, 0, 1)); ?><?= strtoupper(substr($pengguna->last_name, 0, 1)); ?></div>
@@ -44,7 +44,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <?= ucwords(strtolower($pengguna->username)); ?>
+                                <?= ucwords(strtolower($pengguna->role)); ?>
                             </a>
                         </div>
                         <div class="col-md-12 col-12 infoDetailPengguna">

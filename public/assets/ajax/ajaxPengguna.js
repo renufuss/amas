@@ -4,11 +4,6 @@ $(document).ready(function () {
   table();
 });
 
-$('#kt_app_sidebar_toggle').click(function (e) { 
-  e.preventDefault();
-  table();
-});
-
 // begin::btnAdd (Add Pengguna)
 $('#btnAdd').click(function (e) {
   e.preventDefault();
@@ -31,10 +26,11 @@ $('#btnAdd').click(function (e) {
               `);
       $("#btnAdd").prop('disabled', true);
     },
-    success: function (response) {
+    complete: function () {
       $("#btnAdd").html(`Simpan`);
       $("#btnAdd").prop('disabled', false);
-
+    },
+    success: function (response) {
       toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -148,8 +144,91 @@ function deletePengguna(id, username) {
 }
 // end::Delete
 
+// begin::Edit
+$('#btnSimpanProfil').click(function (e) { 
+  e.preventDefault();
+  var form = $("#formDetailProfil")[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+  $.ajax({
+    type: "post",
+    url: base_url + "/pengguna/edit",
+    data: formData,
+    dataType: "json",
+    contentType: false,
+    processData: false,
+    cache: false,
+    beforeSend: function () {
+      $("#btnSimpanProfil").prop("disabled", true);
+      $("#btnSimpanProfil").html(`
+      <div class="spinner-border text-primary m-1" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+    },
+    complete: function () {
+      $("#btnSimpanProfil").prop("disabled", false);
+      $("#btnSimpanProfil").html("Simpan");
+    },
+    success: function (response) {
+      console.log(response);
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      // Remove Feedback
+      form = {
+        first_name,
+        last_name,
+        role,
+        image_profile,
+        npm,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        setTimeout(function () {
+          location.reload();
+        }, 1200);
+      }
+
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+});
+// end::Edit
+
 // begin::Table
-// Table Pengguna
 function table() {
   $.ajax({
     type: "get",

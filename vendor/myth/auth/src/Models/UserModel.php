@@ -18,7 +18,7 @@ class UserModel extends Model
     protected $useSoftDeletes = true;
     protected $allowedFields  = [
         'email', 'username', 'password_hash', 'reset_hash', 'reset_at', 'reset_expires', 'activate_hash',
-        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at', 'first_name', 'last_name'
+        'status', 'status_message', 'active', 'force_pass_reset', 'permissions', 'deleted_at', 'first_name', 'last_name', 'image_profile', 'npm'
     ];
     protected $useTimestamps   = true;
     protected $validationRules = [
@@ -28,6 +28,7 @@ class UserModel extends Model
         'first_name' => 'required|min_length[3]|alpha_space',
         'last_name' => 'required|min_length[3]|alpha_space',
         'role'=>'required',
+        'image_profile' => 'max_size[image_profile,1024]|is_image[image_profile]|mime_in[image_profile,image/jpg,image/jpeg,image/png]',
     ];
     protected $validationMessages = [
         'email' => [
@@ -59,8 +60,13 @@ class UserModel extends Model
         'role' => [
             'required' => 'Role tidak boleh kosong',
         ],
+        'image_profile' => [
+            'max_size' => 'Ukuran gambar tidak boleh melebihi 1 MB',
+            'is_image' => 'Yang anda pilih bukan gambar',
+            'mime_in' => 'Yang anda pilih bukan gambar',
+        ]
     ];
-    protected $skipValidation     = false;
+    protected $skipValidation     = true;
     protected $afterInsert        = ['addToGroup'];
 
     /**
@@ -158,7 +164,7 @@ class UserModel extends Model
     public function showPengguna($username = null)
     {
         $table = $this->db->table($this->table);
-        $query = $table->select('users.*, auth_groups.name as role, badge')->join('auth_groups_users', 'auth_groups_users.user_id=users.id', 'left')->join('auth_groups', 'auth_groups.id=auth_groups_users.group_id', 'left')->orderBy('username', 'asc')->orderBy('auth_groups.id', 'asc');
+        $query = $table->select('users.*, auth_groups.name as role, badge')->join('auth_groups_users', 'auth_groups_users.user_id=users.id', 'left')->join('auth_groups', 'auth_groups.id=auth_groups_users.group_id', 'left')->orderBy('auth_groups.id', 'asc')->orderBy('username', 'asc');
         if ($username != null) {
             $data = $query->where('username', $username)->get()->getFirstRow();
         } else {
