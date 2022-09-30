@@ -41,6 +41,9 @@ $routes->get('/pengguna/table', 'Pengguna::table');
 $routes->post('/pengguna/add', 'Pengguna::add');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
 $routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
+$routes->get('/matkul', 'Matkul::index');
+$routes->get('/matkul/ambildata', 'Matkul::ambildata');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing
