@@ -39,12 +39,18 @@ $routes->get('/', 'Home::index');
 $routes->get('/pengguna', 'Pengguna::index');
 $routes->get('/pengguna/table', 'Pengguna::table');
 $routes->post('/pengguna/add', 'Pengguna::add');
+$routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
+<<<<<<< HEAD
 $routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
 
 
 $routes->get('/matkul', 'Matkul::index');
 $routes->get('/matkul/table', 'Matkul::table');
+=======
+$routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
+$routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
+>>>>>>> 0e6894c7e70db9b1bcfb9e792853c5471c2f9e6c
 
 /*
  * --------------------------------------------------------------------
