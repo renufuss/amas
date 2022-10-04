@@ -52,24 +52,7 @@
 <?php include('Modal/modalMatkul.php'); ?>
 <!-- end::modalMatkul -->
 <!-- begin::Script -->
-<script>
-function datamatkul() {
-    $.ajax({
-        url: "<?= site_url('matkul/table')?>",
-        dataType: "json",
-        success: function (response) {
-            $("#table").html(response.data);
-        },
-        error: function (xhr, thrownError) {
-          alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-        },
-      });
-}
-	$(document).ready(function() {
-		datamatkul();
-	});
-    
-</script>
+<script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 <!-- end::Script -->
 
 <?= $this->endSection(); ?>
