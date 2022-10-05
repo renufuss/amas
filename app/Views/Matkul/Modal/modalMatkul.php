@@ -53,6 +53,30 @@
 									<div class="invalid-feedback" id="kelas-feedback"></div>
 							</div>
 							<!-- end::col -->
+							<!-- begin::col -->
+							<div class="col-md-4 fv-row">
+								<!--begin::Label-->
+								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+									<span class="required">Mulai</span>
+								</label>
+								<!--end::Label-->
+								<input type="time" class="form-control form-control-solid"
+									name="mulai" id="mulai" autocomplete="off" />
+									<div class="invalid-feedback" id="mulai-feedback"></div>
+							</div>
+							<!-- end::col -->
+							<!-- begin::col -->
+							<div class="col-md-4 fv-row">
+								<!--begin::Label-->
+								<label class="d-flex align-items-center fs-6 fw-semibold mb-2">
+									<span class="required">Selesai</span>
+								</label>
+								<!--end::Label-->
+								<input type="time" class="form-control form-control-solid"
+									name="selesai" id="selesai" autocomplete="off" />
+									<div class="invalid-feedback" id="selesai-feedback"></div>
+							</div>
+							<!-- end::col -->
 						</div>
 						<!--end::Input group-->
 

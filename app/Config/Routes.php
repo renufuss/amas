@@ -44,10 +44,17 @@ $routes->post('/pengguna/login/(:segment)', 'Pengguna::editLogin/$1');
 $routes->post('/pengguna/reset/(:segment)', 'Pengguna::resetPassword/$1');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
 $routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
-
+$routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
+$routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
 
 $routes->get('/matkul', 'Matkul::index');
 $routes->get('/matkul/table', 'Matkul::table');
+<<<<<<< HEAD
+=======
+$routes->post('/matkul/add', 'Matkul::add');
+$routes->post('/matkul/delete', 'Matkul::delete');
+
+>>>>>>> d5ec7ca (tambah & delete matkul)
 
 /*
  * --------------------------------------------------------------------

@@ -1,3 +1,8 @@
+<!-- begin :: DataTable CSS -->
+<link href="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+    type="text/css" />
+<!-- end :: DataTable CSS -->
+
 <table class="table align-middle gs-0 gy-4" id="datamatkul">
     <!--begin::Table head-->
     <thead>
@@ -5,7 +10,7 @@
             <th class="text-center rounded-start desktop-only ps-4">No.</th>
             <th class="ps-4 min-w-200px">Mata Kuliah</th>
             <th class="ps-4 min-w-150px desktop-only text-center">Kelas</th>
-            <th class="ps-4 min-w-150px desktop-only text-center">placeholder</th>
+            <th class="ps-4 min-w-150px desktop-only text-center">Waktu</th>
             <th class="text-center rounded-end">Aksi</th>
         </tr>
     </thead>
@@ -23,14 +28,14 @@ foreach($tampildata as $row) :
                 <div class="d-flex align-items-center">
                     <div class="d-flex justify-content-start flex-column">
                         <a href="#"
-                            class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= $row['nama'] ?></a>
+                            class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= $row->nama ?></a>
                         <span
-                            class="text-muted fw-semibold text-muted d-block fs-7"><?= $row['kode'] ?></span>
+                            class="text-muted fw-semibold text-muted d-block fs-7"><?= $row->kode ?></span>
                     </div>
                 </div>
             </td>
-            <td class="desktop-only text-center"><?= $row['kelas'] ?></td>
-            <td class="desktop-only text-center">ini placeholder</td>
+            <td class="desktop-only text-center"><?= $row->kelas ?></td>
+            <td class="desktop-only text-center"><?= $row->mulai?> - <?= $row->selesai?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
                     <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
@@ -48,7 +53,7 @@ foreach($tampildata as $row) :
                         </span>
                         <!--end::Svg Icon-->
                     </a>
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deleteMatkul('<?= $row->id;?>','<?= $row->nama;?>')">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -75,6 +80,14 @@ foreach($tampildata as $row) :
 </table>
 <script>
     $(document).ready(function () {
-        $('#datamatkul').DataTable();
+        const table = $('#datamatkul').DataTable({
+            "aaSorting": [],
+            "scrollX": true
+        });
+
+        $('#search').on('keyup', function () {
+            table.search(this.value).draw();
+        });
     });
+
 </script>
