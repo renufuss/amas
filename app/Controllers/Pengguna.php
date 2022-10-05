@@ -51,7 +51,8 @@ class Pengguna extends BaseController
         if ($this->request->isAJAX()) {
             $data = $this->request->getPost();
             $data['password_hash'] = Password::hash($this->defaultPassword);
-            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['image_profile']]), $this->penggunaModel->getValidationMessages())) {
+            $data['active'] = 1;
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['image_profile','npm']]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
                     'error' => $this->validator->getErrors(),
                     'errormsg'=> 'Gagal menambahkan pengguna',
@@ -158,11 +159,12 @@ class Pengguna extends BaseController
         if ($this->request->isAJAX()) {
             $id = $this->penggunaModel->where('username', $username)->first()->id;
             if ($id == null) {
-                $msg['errormsg'] = 'Gagal reset pengguna';
+                $msg['error'] = 'Gagal reset pengguna';
                 return json_encode($msg);
             }
             $data['id'] = $id;
             $data['password_hash'] = Password::hash($this->defaultPassword);
+            $this->penggunaModel->save($data);
             $msg['sukses'] = 'Berhasil reset password';
             return json_encode($msg);
         }

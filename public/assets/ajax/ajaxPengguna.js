@@ -356,7 +356,7 @@ $('#btnResetPassword').click(function (e) {
       $.ajax({
         type: "post",
         url: base_url + "/pengguna/reset/" + username,
-        data: {id},
+        data: {username},
         dataType: "json",
         success: function (response) {
           toastr.options = {
