@@ -3,14 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\MatkulModel;
-use App\Models\MatModel;
 
 class Matkul extends BaseController
 {
     protected $matkulModel;
     public function __construct()
     {
-        $this->matkulModel = new MatModel();
+        $this->matkulModel = new MatkulModel();
     }
     public function index()
     {
@@ -23,18 +22,14 @@ class Matkul extends BaseController
     public function table()
     {
         if ($this->request->isAJAX()) {
-            $matkul = new MatkulModel();
             $data= [
-                'tampildata' => $matkul->orderBy('nama', 'ASC')->findAll()
+                'tampildata' => $this->matkulModel->orderBy('nama', 'ASC')->findAll()
             ];
-
             $msg = [
                 'data' => view('Matkul/Table/tableMatkul', $data)
             ];
 
             echo json_encode($msg);
-        } else {
-            exit('error');
         }
     }
         //begin::CRUD
@@ -42,6 +37,7 @@ class Matkul extends BaseController
         {
             if ($this->request->isAJAX()) {
                 $data = $this->request->getPost();
+                $data['id_user'] = user()->id;
                 if (!$this->validateData($data, $this->matkulModel->getValidationRules(), $this->matkulModel->getValidationMessages())) {
                     $msg = [
                         'error' => $this->validator->getErrors(),

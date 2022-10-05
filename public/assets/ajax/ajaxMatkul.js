@@ -29,8 +29,6 @@ $('#btnAdd').click(function (e) {
       nama: $('#nama').val(),
       kode: $('#kode').val(),
       kelas: $('#kelas').val(),
-      mulai: $('#mulai').val(),
-      selesai: $('#selesai').val(),
     },
     dataType: "json",
     beforeSend: function () {
@@ -69,8 +67,6 @@ $('#btnAdd').click(function (e) {
         nama,
         kode,
         kelas,
-        mulai,
-        selesai
       };
       Object.entries(form).forEach(entry => {
         const [key, value] = entry;
@@ -146,7 +142,7 @@ function deleteMatkul(id, nama) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            table();
+            datamatkul();
           }else{
             toastr.error(response.error, "Error");
           }

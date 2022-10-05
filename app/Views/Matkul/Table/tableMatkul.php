@@ -10,7 +10,6 @@
             <th class="text-center rounded-start desktop-only ps-4">No.</th>
             <th class="ps-4 min-w-200px">Mata Kuliah</th>
             <th class="ps-4 min-w-150px desktop-only text-center">Kelas</th>
-            <th class="ps-4 min-w-150px desktop-only text-center">Waktu</th>
             <th class="text-center rounded-end">Aksi</th>
         </tr>
     </thead>
@@ -35,7 +34,6 @@ foreach($tampildata as $row) :
                 </div>
             </td>
             <td class="desktop-only text-center"><?= $row->kelas ?></td>
-            <td class="desktop-only text-center"><?= $row->mulai?> - <?= $row->selesai?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
                     <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
