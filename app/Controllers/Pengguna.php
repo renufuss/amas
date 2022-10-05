@@ -21,6 +21,7 @@ class Pengguna extends BaseController
 
     public function index()
     {
+
         $data = [
             'title' => 'Pengguna',
             'breadcrumb' => 'Pengguna',
