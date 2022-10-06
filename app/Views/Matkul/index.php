@@ -24,7 +24,7 @@
         </div>
         <div class="card-toolbar">
             <!-- begin::Tambah Matkul -->
-            <button class="btn btn-sm btn-light-primary m-3" data-bs-toggle="modal" data-bs-target="#modalMatkul">
+            <button class="btn btn-sm btn-light-primary m-3" id="btnTambahMatkul">
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                 <span class="svg-icon svg-icon-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@
 </div>
 <!--end::Card-->
 <!-- begin::modalMatkul -->
-<?php include('Modal/modalMatkul.php'); ?>
+<div class="viewModal"></div>
 <!-- end::modalMatkul -->
 <!-- begin::Script -->
 <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>

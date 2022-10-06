@@ -14,7 +14,7 @@ class MatkulModel extends Model
     protected $returnType     = 'object';
     protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['nama', 'kode', 'kelas', 'id_user']; //yang diedit apa aja
+    protected $allowedFields = ['nama', 'kode', 'kelas', 'id_user'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

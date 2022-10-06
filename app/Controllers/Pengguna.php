@@ -52,7 +52,8 @@ class Pengguna extends BaseController
         if ($this->request->isAJAX()) {
             $data = $this->request->getPost();
             $data['password_hash'] = Password::hash($this->defaultPassword);
-            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['image_profile']]), $this->penggunaModel->getValidationMessages())) {
+            $data['active'] = 1;
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['image_profile','npm']]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
                     'error' => $this->validator->getErrors(),
                     'errormsg'=> 'Gagal menambahkan pengguna',
@@ -71,11 +72,20 @@ class Pengguna extends BaseController
     {
         if ($this->request->isAJAX()) {
             $id = $this->penggunaModel->where('username', $username)->first()->id;
+            if ($id == null) {
+                $msg['errormsg'] = 'Gagal mengupdate pengguna';
+                return json_encode($msg);
+            }
             $data = $this->request->getPost();
             $data['id'] = $id;
             $data['image_profile'] = $this->request->getFile('image_profile');
-            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => ['email','username','password_hash']]), $this->penggunaModel->getValidationMessages())) {
+            $exceptRules = ['email','username','password_hash'];
+            if ($data['npm'] == '' || $data['npm'] == null) {
+                array_push($exceptRules, 'npm');
+            }
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => $exceptRules]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
+                    'npm' => $data['npm'],
                     'error' => $this->validator->getErrors(),
                     'errormsg'=> 'Gagal mengupdate pengguna',
                 ];
@@ -100,6 +110,10 @@ class Pengguna extends BaseController
                     $data['image_profile'] = $oldImage;
                 }
 
+                if ($data['role'] == 'Dosen') {
+                    $data['npm'] = null;
+                }
+
                 // remove role
                 $this->groupModel->removeUserFromAllGroups($id);
 
@@ -109,13 +123,54 @@ class Pengguna extends BaseController
                 // save
                 $this->penggunaModel->save($data);
                 $msg = [
-                    'data' => $data,
                     'sukses' => 'Berhasil mengupdate pengguna'
                 ];
             }
             echo json_encode($msg);
         }
     }
+
+    public function editLogin($username)
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->penggunaModel->where('username', $username)->first()->id;
+            if ($id == null) {
+                $msg['errormsg'] = 'Gagal mengupdate pengguna';
+                return json_encode($msg);
+            }
+            $data = $this->request->getPost();
+            $data['id'] = $id;
+            if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['only' => ['username','email']]), $this->penggunaModel->getValidationMessages())) {
+                $msg = [
+                    'error' => $this->validator->getErrors(),
+                    'errormsg'=> 'Gagal mengupdate pengguna',
+                ];
+            } else {
+                $this->penggunaModel->save($data);
+                $msg = [
+                    'sukses' => 'Berhasil mengupdate pengguna',
+                ];
+            }
+            echo json_encode($msg);
+        }
+    }
+
+    public function resetPassword($username)
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->penggunaModel->where('username', $username)->first()->id;
+            if ($id == null) {
+                $msg['error'] = 'Gagal reset pengguna';
+                return json_encode($msg);
+            }
+            $data['id'] = $id;
+            $data['password_hash'] = Password::hash($this->defaultPassword);
+            $this->penggunaModel->save($data);
+            $msg['sukses'] = 'Berhasil reset password';
+            return json_encode($msg);
+        }
+    }
+
 
     public function delete()
     {

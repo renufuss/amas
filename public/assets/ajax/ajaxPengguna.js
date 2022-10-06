@@ -200,6 +200,8 @@ $('#btnSimpanProfil').click(function (e) {
         $(`#${key}-feedback`).html('');
       });
 
+      console.log(response);
+
       if (response.error) {
         // Add Feedback
         Object.entries(response.error).forEach(entry => {
@@ -242,3 +244,147 @@ function table() {
   });
 }
 // end::Table
+
+// begin::Button Edit
+
+// Informasi Login
+$('#btnUbahLogin').click(function (e) { 
+  e.preventDefault();
+  $('#info_login_edit').removeClass('d-none');
+  $('#email_address').addClass('d-none');
+  $('#btn_login_edit').addClass('d-none');
+  $('#username_label').addClass('d-none');
+});
+
+$('#btnCancelUbahLogin').click(function (e) { 
+  e.preventDefault();
+  $('#info_login_edit').addClass('d-none');
+  $('#btn_login_edit').removeClass('d-none');
+  $('#email_address').removeClass('d-none');
+  $('#username_label').removeClass('d-none');
+});
+
+$('#btnSimpanLogin').click(function (e) { 
+  e.preventDefault();
+  $.ajax({
+    type: "post",
+    url: base_url + "/pengguna/login/"+username,
+    data: {
+      username : $('#username').val(),
+      email: $('#email').val(),
+    },
+    dataType: "json",
+    beforeSend: function () {
+      $("#btnSimpanLogin").prop("disabled", true);
+      $("#btnSimpanLogin").html(`
+      <div class="spinner-border text-primary m-1" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+    },
+    complete: function () {
+      $("#btnSimpanLogin").prop("disabled", false);
+      $("#btnSimpanLogin").html("Simpan");
+    },
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+       // Remove Feedback
+       form = {
+        username,
+        email,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        setTimeout(function () {
+          window.location.replace(base_url + "/pengguna/pengaturan/" + $('#username').val());
+        }, 1200);
+      }
+    }
+  });
+});
+
+// Password
+$('#btnResetPassword').click(function (e) { 
+  e.preventDefault();
+  Swal.fire({
+    html: `Apakah kamu yakin ingin reset password ${username} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Reset",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/pengguna/reset/" + username,
+        data: {username},
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+});
+
+// end::Button Edit
