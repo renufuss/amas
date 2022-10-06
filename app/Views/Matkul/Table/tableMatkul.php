@@ -34,7 +34,7 @@ foreach($tampildata as $row) :
             <td class="desktop-only text-center"><?= $row->kelas ?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" onclick="edit('<?= $row->id; ?>')">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#modalUpMatkul">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -78,7 +78,6 @@ foreach($tampildata as $row) :
 <!-- begin :: DataTable Js -->
 <script src="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <!-- end :: End DataTable Js -->
-
 <script>
     $(document).ready(function () {
         const table = $('#datamatkul').DataTable({

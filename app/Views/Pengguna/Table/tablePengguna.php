@@ -95,10 +95,6 @@ foreach($pengguna as $row) :
 <script src="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
 <!-- end :: End DataTable Js -->
 
-<!-- begin::Script -->
-<script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
-<!-- end::Script -->
-
 <script>
     $(document).ready(function () {
         const table = $('#dataTablePengguna').DataTable({

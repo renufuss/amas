@@ -29,7 +29,6 @@ class UserModel extends Model
         'last_name' => 'required|min_length[3]|alpha_space',
         'role'=>'required',
         'image_profile' => 'max_size[image_profile,1024]|is_image[image_profile]|mime_in[image_profile,image/jpg,image/jpeg,image/png]',
-        'npm' => 'numeric',
     ];
     protected $validationMessages = [
         'email' => [
@@ -65,10 +64,7 @@ class UserModel extends Model
             'max_size' => 'Ukuran gambar tidak boleh melebihi 1 MB',
             'is_image' => 'Yang anda pilih bukan gambar',
             'mime_in' => 'Yang anda pilih bukan gambar',
-        ],
-        'npm' => [
-            'numeric' => 'NPM tidak valid',
-        ],
+        ]
     ];
     protected $skipValidation     = true;
     protected $afterInsert        = ['addToGroup'];
