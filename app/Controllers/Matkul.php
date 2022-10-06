@@ -23,7 +23,7 @@ class Matkul extends BaseController
     {
         if ($this->request->isAJAX()) {
             $data= [
-                'tampildata' => $this->matkulModel->orderBy('nama', 'ASC')->findAll()
+                'tampildata' => $this->matkulModel->where('id_user', user()->id)->orderBy('nama', 'ASC')->findAll()
             ];
             $msg = [
                 'data' => view('Matkul/Table/tableMatkul', $data)
