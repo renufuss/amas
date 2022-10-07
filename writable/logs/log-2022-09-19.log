@@ -1,0 +1,126 @@
+CRITICAL - 2022-09-19 03:20:00 --> Undefined variable $title
+in APPPATH\Views\Layout\index.php on line 5.
+ 1 APPPATH\Views\Layout\index.php(5): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $title', 'APPPATH\\Views\\Layout\\index.php', 5)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Layout\\index.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\View\View.php(229): CodeIgniter\View\View->render('Layout/index', [], true)
+ 5 SYSTEMPATH\Common.php(1142): CodeIgniter\View\View->render('Aplikasi/index', [], true)
+ 6 APPPATH\Controllers\Aplikasi.php(9): view('Aplikasi/index')
+ 7 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+ 8 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2022-09-19 19:47:41 --> Undefined variable $row
+in APPPATH\Views\Aplikasi\Table\table.php on line 24.
+ 1 APPPATH\Views\Aplikasi\Table\table.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $row', 'APPPATH\\Views\\Aplikasi\\Table\\table.php', 24)
+ 2 APPPATH\Views\Aplikasi\index.php(30): include('APPPATH\\Views\\Aplikasi\\Table\\table.php')
+ 3 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Aplikasi\\index.php')
+ 4 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1142): CodeIgniter\View\View->render('Aplikasi/index', [], true)
+ 6 APPPATH\Controllers\Aplikasi.php(19): view('Aplikasi/index', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+ 8 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2022-09-19 19:47:56 --> Attempt to read property "name" on array
+in APPPATH\Views\Aplikasi\Table\table.php on line 24.
+ 1 APPPATH\Views\Aplikasi\Table\table.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Attempt to read property "name" on array', 'APPPATH\\Views\\Aplikasi\\Table\\table.php', 24)
+ 2 APPPATH\Views\Aplikasi\index.php(30): include('APPPATH\\Views\\Aplikasi\\Table\\table.php')
+ 3 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Aplikasi\\index.php')
+ 4 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1142): CodeIgniter\View\View->render('Aplikasi/index', [], true)
+ 6 APPPATH\Controllers\Aplikasi.php(19): view('Aplikasi/index', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+ 8 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2022-09-19 19:50:06 --> Undefined property: stdClass::$name
+in APPPATH\Views\Aplikasi\Table\table.php on line 24.
+ 1 APPPATH\Views\Aplikasi\Table\table.php(24): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: stdClass::$name', 'APPPATH\\Views\\Aplikasi\\Table\\table.php', 24)
+ 2 APPPATH\Views\Aplikasi\index.php(30): include('APPPATH\\Views\\Aplikasi\\Table\\table.php')
+ 3 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Aplikasi\\index.php')
+ 4 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1142): CodeIgniter\View\View->render('Aplikasi/index', [], true)
+ 6 APPPATH\Controllers\Aplikasi.php(20): view('Aplikasi/index', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+ 8 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+ERROR - 2022-09-19 19:50:30 --> mysqli_sql_exception: Unknown column 'app_aplikasi.deleted_at' in 'where clause' in D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:292
+Stack trace:
+#0 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *\nFROM `...', 0)
+#1 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Model.php(223): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\Project\CodeIgniter\sisfo-manajemen-password\app\Controllers\Aplikasi.php(19): CodeIgniter\BaseModel->findAll()
+#7 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+#8 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+#9 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\Project\CodeIgniter\sisfo-manajemen-password\public\index.php(67): CodeIgniter\CodeIgniter->run()
+#11 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('D:\\Project\\Code...')
+#12 {main}
+CRITICAL - 2022-09-19 19:50:30 --> Unknown column 'app_aplikasi.deleted_at' in 'where clause'
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`.`deleted_at` IS NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`.`deleted_at` IS NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`.`deleted_at` IS NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`.`deleted_at` IS NULL', [], false)
+ 5 SYSTEMPATH\Model.php(223): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Aplikasi.php(19): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+ 9 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+ERROR - 2022-09-19 19:51:00 --> mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IS NULL' at line 3 in D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:292
+Stack trace:
+#0 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *\nFROM `...', 0)
+#1 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *\nFROM `...')
+#2 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *\nFROM `...')
+#3 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Model.php(223): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+#6 D:\Project\CodeIgniter\sisfo-manajemen-password\app\Controllers\Aplikasi.php(19): CodeIgniter\BaseModel->findAll()
+#7 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+#8 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+#9 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#10 D:\Project\CodeIgniter\sisfo-manajemen-password\public\index.php(67): CodeIgniter\CodeIgniter->run()
+#11 D:\Project\CodeIgniter\sisfo-manajemen-password\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('D:\\Project\\Code...')
+#12 {main}
+CRITICAL - 2022-09-19 19:51:00 --> You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'IS NULL' at line 3
+in SYSTEMPATH\Database\MySQLi\Connection.php on line 292.
+ 1 SYSTEMPATH\Database\MySQLi\Connection.php(292): mysqli->query('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`. IS NULL', 0)
+ 2 SYSTEMPATH\Database\BaseConnection.php(693): CodeIgniter\Database\MySQLi\Connection->execute('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`. IS NULL')
+ 3 SYSTEMPATH\Database\BaseConnection.php(620): CodeIgniter\Database\BaseConnection->simpleQuery('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`. IS NULL')
+ 4 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `app_aplikasi`
+WHERE `app_aplikasi`. IS NULL', [], false)
+ 5 SYSTEMPATH\Model.php(223): CodeIgniter\Database\BaseBuilder->get()
+ 6 SYSTEMPATH\BaseModel.php(584): CodeIgniter\Model->doFindAll(0, 0)
+ 7 APPPATH\Controllers\Aplikasi.php(19): CodeIgniter\BaseModel->findAll()
+ 8 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Aplikasi->index()
+ 9 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Aplikasi))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')

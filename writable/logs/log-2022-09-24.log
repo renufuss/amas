@@ -1,0 +1,87 @@
+ERROR - 2022-09-24 21:48:22 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:171
+Stack trace:
+#0 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(171): mysqli->real_connect('localhost', 'root', '', 'dbsisfomanajeme...', 3306, '', 0)
+#1 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\BaseConnection.php(382): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\BaseConnection.php(588): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Model.php(250): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#6 D:\Project\CodeIgniter\amas\vendor\myth\auth\src\Authentication\LocalAuthenticator.php(140): CodeIgniter\BaseModel->first()
+#7 D:\Project\CodeIgniter\amas\vendor\myth\auth\src\Authentication\LocalAuthenticator.php(19): Myth\Auth\Authentication\LocalAuthenticator->validate(Array, true)
+#8 D:\Project\CodeIgniter\amas\vendor\myth\auth\src\Controllers\AuthController.php(87): Myth\Auth\Authentication\LocalAuthenticator->attempt(Array, false)
+#9 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\CodeIgniter.php(907): Myth\Auth\Controllers\AuthController->attemptLogin()
+#10 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(Myth\Auth\Controllers\AuthController))
+#11 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#12 D:\Project\CodeIgniter\amas\public\index.php(67): CodeIgniter\CodeIgniter->run()
+#13 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('D:\\Project\\Code...')
+#14 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:215
+Stack trace:
+#0 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\BaseConnection.php(382): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\BaseConnection.php(588): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Model.php(250): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\BaseModel.php(622): CodeIgniter\Model->doFirst()
+#5 D:\Project\CodeIgniter\amas\vendor\myth\auth\src\Authentication\LocalAuthenticator.php(140): CodeIgniter\BaseModel->first()
+#6 D:\Project\CodeIgniter\amas\vendor\myth\auth\src\Authentication\LocalAuthenticator.php(19): Myth\Auth\Authentication\LocalAuthenticator->validate(Array, true)
+#7 D:\Project\CodeIgniter\amas\vendor\myth\auth\src\Controllers\AuthController.php(87): Myth\Auth\Authentication\LocalAuthenticator->attempt(Array, false)
+#8 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\CodeIgniter.php(907): Myth\Auth\Controllers\AuthController->attemptLogin()
+#9 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(Myth\Auth\Controllers\AuthController))
+#10 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 D:\Project\CodeIgniter\amas\public\index.php(67): CodeIgniter\CodeIgniter->run()
+#12 D:\Project\CodeIgniter\amas\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(43): require_once('D:\\Project\\Code...')
+#13 {main}
+CRITICAL - 2022-09-24 21:48:22 --> Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+in SYSTEMPATH\Database\BaseConnection.php on line 418.
+ 1 SYSTEMPATH\Database\BaseConnection.php(588): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1585): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `users`
+WHERE `username` = :username:
+AND `users`.`deleted_at` IS NULL
+ LIMIT 1', [...], false)
+ 3 SYSTEMPATH\Model.php(250): CodeIgniter\Database\BaseBuilder->get()
+ 4 SYSTEMPATH\BaseModel.php(622): CodeIgniter\Model->doFirst()
+ 5 VENDORPATH\myth\auth\src\Authentication\LocalAuthenticator.php(140): CodeIgniter\BaseModel->first()
+ 6 VENDORPATH\myth\auth\src\Authentication\LocalAuthenticator.php(19): Myth\Auth\Authentication\LocalAuthenticator->validate([...], true)
+ 7 VENDORPATH\myth\auth\src\Controllers\AuthController.php(87): Myth\Auth\Authentication\LocalAuthenticator->attempt([...], false)
+ 8 SYSTEMPATH\CodeIgniter.php(907): Myth\Auth\Controllers\AuthController->attemptLogin()
+ 9 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(Myth\Auth\Controllers\AuthController))
+10 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+11 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+12 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2022-09-24 22:09:00 --> include(table/tableUser.php): Failed to open stream: No such file or directory
+in APPPATH\Views\Pengguna\index.php on line 32.
+ 1 APPPATH\Views\Pengguna\index.php(32): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include(table/tableUser.php): Failed to open stream: No such file or directory', 'APPPATH\\Views\\Pengguna\\index.php', 32)
+ 2 APPPATH\Views\Pengguna\index.php(32): include()
+ 3 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Pengguna\\index.php')
+ 4 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1142): CodeIgniter\View\View->render('Pengguna/index', [], true)
+ 6 APPPATH\Controllers\Pengguna.php(13): view('Pengguna/index', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Pengguna->index()
+ 8 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Pengguna))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2022-09-24 22:09:17 --> include(table/tablePengguna): Failed to open stream: No such file or directory
+in APPPATH\Views\Pengguna\index.php on line 32.
+ 1 APPPATH\Views\Pengguna\index.php(32): CodeIgniter\Debug\Exceptions->errorHandler(2, 'include(table/tablePengguna): Failed to open stream: No such file or directory', 'APPPATH\\Views\\Pengguna\\index.php', 32)
+ 2 APPPATH\Views\Pengguna\index.php(32): include()
+ 3 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\Pengguna\\index.php')
+ 4 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 5 SYSTEMPATH\Common.php(1142): CodeIgniter\View\View->render('Pengguna/index', [], true)
+ 6 APPPATH\Controllers\Pengguna.php(13): view('Pengguna/index', [...])
+ 7 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Pengguna->index()
+ 8 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Pengguna))
+ 9 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
+CRITICAL - 2022-09-24 23:10:15 --> Undefined property: App\Controllers\Pengguna::$groupModel
+in APPPATH\Controllers\Pengguna.php on line 36.
+ 1 APPPATH\Controllers\Pengguna.php(36): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined property: App\\Controllers\\Pengguna::$groupModel', 'APPPATH\\Controllers\\Pengguna.php', 36)
+ 2 SYSTEMPATH\CodeIgniter.php(907): App\Controllers\Pengguna->modalAdd()
+ 3 SYSTEMPATH\CodeIgniter.php(457): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Pengguna))
+ 4 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 5 FCPATH\index.php(67): CodeIgniter\CodeIgniter->run()
+ 6 SYSTEMPATH\Commands\Server\rewrite.php(43): require_once('FCPATH\\index.php')
