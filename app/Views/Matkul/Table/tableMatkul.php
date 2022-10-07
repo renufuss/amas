@@ -1,7 +1,7 @@
 <!-- begin :: DataTable CSS -->
-<link href="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
-    type="text/css" />
+<link href="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
 <!-- end :: DataTable CSS -->
+
 
 <table class="table align-middle gs-0 gy-4" id="datamatkul">
     <!--begin::Table head-->
@@ -24,17 +24,32 @@ foreach($tampildata as $row) :
                 <?= $i++; ?>
             </td>
             <td>
+            <div class="d-flex align-items-center">
+                    <div class="symbol symbol-50px me-5">
+                        <?php if($row->image != null) : ?>
+                        <img src="<?= base_url(); ?>/assets/images/users/<?= $row->image; ?>" class="" alt="" />
+                        <?php else : ?>
+                            <?php
+                            $bg = ['success', 'primary', 'warning', 'danger'];
+                            $random = array_rand($bg, 1);
+                            ?>
+                        <div class="symbol symbol-50px">
+                            <div class="symbol-label fs-2 fw-semibold bg-<?=  $bg[$random]; ?> text-inverse-danger"><?= strtoupper(substr($row->nama, 0, 1)); ?></div>
+                        </div>
+                        <?php endif; ?>
+                    </div>
                 <div class="d-flex align-items-center">
                     <div class="d-flex justify-content-start flex-column">
                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= $row->nama ?></a>
                         <span class="text-muted fw-semibold text-muted d-block fs-7"><?= $row->kode ?></span>
+                        <span class="text-muted fw-semibold text-muted fs-7 mobile-only"><?= $row->kelas ?></span>
                     </div>
                 </div>
             </td>
             <td class="desktop-only text-center"><?= $row->kelas ?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
-                <a href="<?= base_url(); ?>/matkul/detail/<?= $row->nama; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                <a href="<?= base_url(); ?>/matkul/mahasiswa/<?= $row->id; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"

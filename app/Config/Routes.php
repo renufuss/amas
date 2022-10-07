@@ -41,8 +41,9 @@ $routes->get('/pengguna', 'Pengguna::index');
 $routes->get('/pengguna/table', 'Pengguna::table');
 $routes->post('/pengguna/add', 'Pengguna::add');
 $routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1');
+$routes->post('/pengguna/login/(:segment)', 'Pengguna::editLogin/$1');
+$routes->post('/pengguna/reset/(:segment)', 'Pengguna::resetPassword/$1');
 $routes->post('/pengguna/delete', 'Pengguna::delete');
-$routes->get('/pengguna/detail/(:segment)', 'Pengguna::Detail/$1');
 $routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
 $routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
 
@@ -50,8 +51,8 @@ $routes->get('/matkul', 'Matkul::index');
 $routes->get('/matkul/table', 'Matkul::table');
 $routes->post('/matkul/add', 'Matkul::add');
 $routes->post('/matkul/delete', 'Matkul::delete');
-$routes->get('/matkul/detail/(:segment)', 'Matkul::Detail/$1');
-$routes->get('/matkul/detail/(:segment)', 'Matkul::detail/$1');
+$routes->get('/matkul/mahasiswa/(:segment)', 'Matkul::mahasiswa/$1');
+$routes->post('/matkul/mahasiswa/table', 'Matkul::tableMahasiswa');
 
 
 /*

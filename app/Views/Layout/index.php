@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 	<!--begin::Head-->
 	<head>
 		<title><?= $title; ?></title>

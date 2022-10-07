@@ -6,17 +6,17 @@ $(document).ready(function () {
 
 
 function datamatkul() {
-    $.ajax({
-        type: "get",
-        url: base_url + "/matkul/table",
-        dataType: "json",
-        success: function (response) {
-            $("#table").html(response.data);
-        },
-        error: function (xhr, thrownError) {
-          alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-        },
-      });
+  $.ajax({
+      type: "get",
+      url: base_url + "/matkul/table",
+      dataType: "json",
+      success: function (response) {
+          $("#table").html(response.data);
+      },
+      error: function (xhr, thrownError) {
+        alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+      },
+    });
 }
 
 // begin::btnAdd (Add Matkul)
@@ -152,3 +152,21 @@ function deleteMatkul(id, nama) {
   });
 }
 // end::Delete
+
+// detail
+function tableMahasiswa(id){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/mahasiswa/table",
+    data: {
+      id:id,
+    },
+    dataType: "json",
+    success: function (response) {
+        $("#table-mahasiswa").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}

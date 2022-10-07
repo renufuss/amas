@@ -5,11 +5,15 @@
             <!--begin: Pic-->
             <div class="col-lg-3 col-xxl-2 col-md-3 col-12 mb-3" id="picDetailPengguna">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                    <?php if($pengguna->image_profile != null) : ?>
-                        <img src="<?= base_url(); ?>/assets/images/users/<?= $pengguna->image_profile; ?>" class="" alt="" />
+                    <?php if($matkul->image != null) : ?>
+                        <img src="<?= base_url(); ?>/assets/images/users/<?= $matkul->image; ?>" class="" alt="" />
                     <?php else : ?>
+                        <?php
+                            $bg = ['success', 'primary', 'warning', 'danger'];
+                        $random = array_rand($bg, 1);
+                        ?>
                         <div class="symbol symbol-50px">
-                            <div class="symbol-label fs-3x fw-semibold bg-<?= $pengguna->badge; ?> text-inverse-danger"><?= strtoupper(substr($pengguna->first_name, 0, 1)); ?><?= strtoupper(substr($pengguna->last_name, 0, 1)); ?></div>
+                            <div class="symbol-label fs-5x fw-semibold bg-<?=  $bg[$random]; ?> text-inverse-danger"><?= strtoupper(substr($matkul->nama, 0, 1)); ?></div>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -22,8 +26,7 @@
                 <div class="d-flex flex-column">
                     <!--begin::Name-->
                     <div class="col-md-12 col-12 mb-4" id="namaLengkapDetailPengguna">
-                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= ucwords(strtolower($pengguna->first_name)); ?>
-                            <?= ucwords(strtolower($pengguna->last_name)); ?></a>
+                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1"><?= ucwords(strtolower($matkul->nama)); ?></a>
                     </div>
                     <!--end::Name-->
                     <!--begin::Info-->
@@ -44,7 +47,7 @@
                                     </svg>
                                 </span>
                                 <!--end::Svg Icon-->
-                                <?= ucwords(strtolower($pengguna->role)); ?>
+                                <?= ucwords(strtolower($matkul->first_name)); ?> <?= ucwords(strtolower($matkul->last_name)); ?>
                             </a>
                         </div>
                         <div class="col-md-12 col-12 infoDetailPengguna">
@@ -61,7 +64,7 @@
                                             fill="currentColor" />
                                     </svg>
                                 </span>
-                                <!--end::Svg Icon--><?= ucwords(strtolower($pengguna->email)); ?>
+                                <!--end::Svg Icon--><?= $matkul->email; ?>
                             </a>
                         </div>
                     </div>
@@ -77,11 +80,11 @@
         <!-- mobile -->
         <div class="row fs-5 text-gray-500 fw-bold mobile-only" style="padding-left:15px">
             <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navDetail) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/detail/<?= $pengguna->username; ?>"><i
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="<?= base_url(); ?>/pengguna/detail/"><i
                         class="las la-user la-2x"></i></a>
             </div>
             <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/pengaturan/<?= $pengguna->username; ?>"><i
+                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna/pengaturan/"><i
                         class="las la-user-cog la-2x"></i></a>
             </div>
             <div class="col-md-4 col-4 mt-2">
@@ -94,12 +97,12 @@
         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold desktop-only">
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navDetail) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/detail/<?= $pengguna->username; ?>">Detail</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="<?= base_url(); ?>/pengguna/detail/">Matkul</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/pengguna/pengaturan/<?= $pengguna->username; ?>">Pengaturan</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna/pengaturan/">Pengaturan</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->

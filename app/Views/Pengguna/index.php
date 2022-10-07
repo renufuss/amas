@@ -19,8 +19,7 @@
                 </svg>
             </span>
             <!--end::Svg Icon-->
-            <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15"
-                placeholder="Cari Pengguna" id="search">
+            <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15" placeholder="Cari Pengguna" id="search">
         </div>
         <div class="card-toolbar">
             <!-- begin::Tambah Pengguna -->
