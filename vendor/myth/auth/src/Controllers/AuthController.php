@@ -65,9 +65,20 @@ class AuthController extends Controller
     public function attemptLogin()
     {
         $rules = [
-            'login'    => 'required',
-            'password' => 'required',
+            'login' => [
+                'rules'  => 'required',
+                'errors' => [
+                    'required' => 'Silakan masukkan username anda',
+                ],
+            ],
+            'password' => [
+                'rules'  => 'required',
+                'errors' => [
+                    'required' => 'Silakan masukkan password anda',
+                ],
+            ],
         ];
+
         if ($this->config->validFields === ['email']) {
             $rules['login'] .= '|valid_email';
         }
@@ -85,7 +96,7 @@ class AuthController extends Controller
 
         // Try to log them in...
         if (! $this->auth->attempt([$type => $login, 'password' => $password], $remember)) {
-            return redirect()->back()->withInput()->with('error', $this->auth->error() ?? lang('Auth.badAttempt'));
+            return redirect()->back()->withInput()->with('error', 'Username atau password tidak valid...');
         }
 
         // Is the user being forced to reset their password?
@@ -145,20 +156,28 @@ class AuthController extends Controller
 
         $users = model(UserModel::class);
 
+        $userModel = new UserModel();
         // Validate basics first since some password rules rely on these fields
-        $rules = config('Validation')->registrationRules ?? [
-            'username' => 'required|alpha_numeric_space|min_length[3]|max_length[30]|is_unique[users.username]',
-            'email'    => 'required|valid_email|is_unique[users.email]',
-        ];
 
-        if (! $this->validate($rules)) {
+        if (! $this->validate($userModel->getValidationRules(['only' => ['username','email','first_name','last_name']]), $userModel->getValidationMessages())) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
         // Validate passwords since they can only be validated properly here
         $rules = [
-            'password'     => 'required|strong_password',
-            'pass_confirm' => 'required|matches[password]',
+            'password' => [
+                'rules' => 'required|strong_password',
+                'errors' => [
+                    'required' => 'Password tidak boleh kosong',
+                ]
+            ],
+            'pass_confirm' => [
+                'rules' => 'required|matches[password]',
+                'errors' => [
+                    'required' => 'Silakan konfirmasi password anda dengan benar',
+                    'matches' => 'Silakan konfirmasi password anda dengan benar'
+                ]
+            ],
         ];
 
         if (! $this->validate($rules)) {

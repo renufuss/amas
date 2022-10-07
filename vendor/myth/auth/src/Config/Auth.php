@@ -74,8 +74,8 @@ class Auth extends BaseConfig
      * @var array
      */
     public $views = [
-        'login'           => 'Myth\Auth\Views\login',
-        'register'        => 'Myth\Auth\Views\register',
+        'login'           => '\App\Views\Auth\Login\index',
+        'register'        => '\App\Views\Auth\Register\index',
         'forgot'          => 'Myth\Auth\Views\forgot',
         'reset'           => 'Myth\Auth\Views\reset',
         'emailForgot'     => 'Myth\Auth\Views\emails\forgot',
@@ -103,6 +103,8 @@ class Auth extends BaseConfig
     public $validFields = [
         'email',
         'username',
+        'first_name',
+        'last_name',
     ];
 
     /**
