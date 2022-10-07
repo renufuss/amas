@@ -51,14 +51,6 @@
 			</div>
         </div>
         <!--end::Input group=-->
-        <!--begin::Wrapper-->
-        <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-10">
-            <div></div>
-            <!--begin::Link-->
-            <a href="../../demo1/dist/authentication/layouts/fancy/reset-password.html" class="link-primary">Forgot Password ?</a>
-            <!--end::Link-->
-        </div>
-        <!--end::Wrapper-->
         <!--begin::Actions-->
         <div class="d-flex flex-stack">
             <!--begin::Submit-->
