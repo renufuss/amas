@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use Myth\Auth\Entities\User;
 use Myth\Auth\Models\GroupModel;
 use Myth\Auth\Models\UserModel;
 use Myth\Auth\Password;
