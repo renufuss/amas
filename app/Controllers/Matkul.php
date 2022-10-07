@@ -23,7 +23,7 @@ class Matkul extends BaseController
     {
         if ($this->request->isAJAX()) {
             $data= [
-                'tampildata' => $this->matkulModel->where('id_user', user()->id)->orderBy('nama', 'ASC')->findAll()
+                'tampildata' => $this->matkulModel->orderBy('nama', 'ASC')->findAll()
             ];
             $msg = [
                 'data' => view('Matkul/Table/tableMatkul', $data)
@@ -66,4 +66,23 @@ class Matkul extends BaseController
                 return json_encode($msg);
             }
         }
+
+        public function detail($nama)
+        {
+            $matkul = $this->matkulModel->orderBy('nama')->findAll();
+            if ($matkul == null) {
+                return redirect()->to('/matkul');
+            }
+            $data = [
+                'title' => 'Mata Kuliah',
+                'breadcrumb' => 'Detail Mata Kuliah',
+                'navDetail' => true,
+                'navPengaturan' => false,
+                'matkul' => $matkul,
+            ];
+    
+            return view('Matkul/Detail/index', $data);
+        }
+
+        
 }
