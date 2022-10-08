@@ -17,8 +17,8 @@
 <!--end::sidebar mobile toggle-->
 <!--begin::Mobile logo-->
 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-    <a href="../../demo1/dist/index.html" class="d-lg-none">
-        <img alt="Logo" src="<?= base_url(); ?>/assets/media/logos/default-small.svg" class="h-30px" />
+    <a href="<?= base_url(); ?>" class="d-lg-none">
+        <img alt="Logo" src="<?= base_url(); ?>/assets/amas/blackLogo.png" class="h-30px" />
     </a>
 </div>
 <!--end::Mobile logo-->
