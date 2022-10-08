@@ -6,7 +6,7 @@
             <div class="col-lg-3 col-xxl-2 col-md-3 col-12 mb-3" id="picDetailPengguna">
                 <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
                     <?php if($matkul->image != null) : ?>
-                        <img src="<?= base_url(); ?>/assets/images/users/<?= $matkul->image; ?>" class="" alt="" />
+                        <img src="<?= base_url(); ?>/assets/images/matkul/<?= $matkul->image; ?>" class="" alt="" />
                     <?php else : ?>
                         <?php
                             $bg = ['success', 'primary', 'warning', 'danger'];
@@ -97,17 +97,17 @@
         <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold desktop-only">
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="<?= base_url(); ?>/pengguna/detail/">Matkul</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?= ($navMahasiswa) ? 'active' : ''; ?>" href="<?= base_url(); ?>/matkul/mahasiswa/<?= $matkul->id; ?>">Mahasiswa</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna/pengaturan/">Pengaturan</a>
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?= ($navPengaturan) ? 'active' : ''; ?>" href="<?= base_url(); ?>/matkul/pengaturan/<?= $matkul->id; ?>">Pengaturan</a>
             </li>
             <!--end::Nav item-->
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
-                <a class="text-gray-500 text-hover-warning ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna">&laquo;
+                <a class="text-gray-500 text-hover-warning ms-0 me-10 py-5" href="<?= base_url(); ?>/matkul">&laquo;
                     Kembali</a>
             </li>
             <!--end::Nav item-->

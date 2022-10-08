@@ -55,6 +55,56 @@ class Matkul extends BaseController
             return json_encode($msg);
         }
     }
+
+    public function edit($id)
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->matkulModel->where('id', $id)->first()->id;
+            if ($id == null) {
+                $msg['errormsg'] = 'Gagal mengupdate matkul';
+                return json_encode($msg);
+            }
+            $data = $this->request->getPost();
+            $data['id'] = $id;
+            $data['image'] = $this->request->getFile('image_matkul');
+
+            if (!$this->validateData($data, $this->matkulModel->getValidationRules(), $this->matkulModel->getValidationMessages())) {
+                $msg = [
+                    'error' => $this->validator->getErrors(),
+                    'errormsg'=> 'Gagal mengupdate matkul',
+                ];
+            } else {
+                // image profile
+                $newImage = $data['image'];
+                $oldImage = $this->matkulModel->where('id', $id)->first()->image;
+                if ($newImage->getError() != 4) {
+                    $newImage->move('assets/images/matkul', $newImage->getRandomName());
+                    if ($oldImage != null && file_exists('assets/images/matkul/' . $oldImage)) {
+                        unlink('assets/images/matkul/' . $oldImage); //Hapus image lama
+                    }
+
+                    // set nama image
+                    $data['image'] = $newImage->getName();
+                } elseif ($data['avatar_remove'] == 1) {
+                    if ($oldImage != null && file_exists('assets/images/matkul/' . $oldImage)) {
+                        unlink('assets/images/matkul/' . $oldImage); //Hapus image lama
+                    }
+                    $data['image'] = null;
+                } else {
+                    $data['image'] = $oldImage;
+                }
+
+                // save
+                $this->matkulModel->save($data);
+                $msg = [
+                    'sukses' => 'Berhasil mengupdate matkul'
+                ];
+            }
+            echo json_encode($msg);
+        }
+    }
+
+
     public function delete()
     {
         if ($this->request->isAJAX()) {
@@ -70,6 +120,24 @@ class Matkul extends BaseController
         }
     }
 
+    public function pengaturan($id)
+    {
+        $matkul = $this->matkulModel->showMatkul($id);
+        if ($matkul == null) {
+            return redirect()->to('/matkul');
+        }
+
+        $data = [
+            'title' => 'Matkul | '. ucwords(strtolower($matkul->nama)),
+            'breadcrumb' => 'Pengaturan Mata Kuliah',
+            'matkul' => $matkul,
+            'navMahasiswa' => false,
+            'navPengaturan' => true,
+        ];
+        return view('Matkul/Pengaturan/index', $data);
+    }
+
+    // Mahasiswa
     public function mahasiswa($id)
     {
         $matkul = $this->matkulModel->showMatkul($id);
@@ -77,9 +145,11 @@ class Matkul extends BaseController
             return redirect()->to('/matkul');
         }
         $data = [
-            'title' => 'Mata Kuliah',
-            'breadcrumb' => 'Detail Mata Kuliah',
+            'title' => 'Mahasiswa | '.ucwords(strtolower($matkul->nama)),
+            'breadcrumb' => 'Mahasiswa Mata Kuliah',
             'matkul' => $matkul,
+            'navMahasiswa' => true,
+            'navPengaturan' => false,
         ];
         return view('Matkul/Mahasiswa/index', $data);
     }

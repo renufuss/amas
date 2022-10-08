@@ -25,7 +25,7 @@ class MatkulModel extends Model
         'nama'      => 'required|min_length[5]',
         'kode'      => 'required|min_length[5]',
         'kelas'     => 'required|min_length[3]',
-        'image' => 'max_size[image,1024]|is_image[image]|mime_in[image,image/jpg,image/jpeg,image/png]',
+        'image_matkul' => 'max_size[image_matkul,1024]|is_image[image_matkul]|mime_in[image_matkul,image/jpg,image/jpeg,image/png]',
     ];
     protected $validationMessages = [
         'nama' => [

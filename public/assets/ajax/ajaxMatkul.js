@@ -101,6 +101,7 @@ $('#btnAdd').click(function (e) {
   });
 });
 // end::btnAdd
+
 // begin::Delete
 function deleteMatkul(id, nama) {
   Swal.fire({
@@ -152,6 +153,89 @@ function deleteMatkul(id, nama) {
   });
 }
 // end::Delete
+
+// begin::Edit
+$('#btnSimpanMatkul').click(function (e) { 
+  e.preventDefault();
+  var form = $("#formDetailProfil")[0]; // You need to use standard javascript object here
+  var formData = new FormData(form);
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/edit/"+id,
+    data: formData,
+    dataType: "json",
+    contentType: false,
+    processData: false,
+    cache: false,
+    beforeSend: function () {
+      $("#btnSimpanMatkul").prop("disabled", true);
+      $("#btnSimpanMatkul").html(`
+      <div class="spinner-border text-primary m-1" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+    },
+    complete: function () {
+      $("#btnSimpanMatkul").prop("disabled", false);
+      $("#btnSimpanMatkul").html("Simpan");
+    },
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      // Remove Feedback
+      form = {
+        nama,
+        kode,
+        kelas,
+        image_matkul,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      console.log(response);
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        setTimeout(function () {
+          location.reload();
+        }, 1200);
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+});
+// end::Edit
 
 // detail
 function tableMahasiswa(id){
