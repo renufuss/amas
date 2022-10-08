@@ -20,11 +20,11 @@
             </span>
             <!--end::Svg Icon-->
             <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15"
-                placeholder="Cari Pengguna" id="search">
+                placeholder="Cari Mata Kuliah" id="search">
         </div>
         <div class="card-toolbar">
-            <!-- begin::Tambah Pengguna -->
-            <button class="btn btn-sm btn-light-primary m-3" data-bs-toggle="modal" data-bs-target="#modalPengguna">
+            <!-- begin::Tambah Matkul -->
+            <button class="btn btn-sm btn-light-primary m-3" data-bs-toggle="modal" data-bs-target="#modalMatkul">
                 <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
                 <span class="svg-icon svg-icon-2">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -33,26 +33,36 @@
                         <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
                     </svg>
                 </span>
-                <!--end::Svg Icon-->Tambah Pengguna
+                <!--end::Svg Icon-->Tambah Matkul
             </button>
-            <!-- end::Tambah Pengguna -->
+            <!-- end::Tambah Matkul -->
         </div>
     </div>
     <!--end::Card Header-->
-    <!--begin::Card Body-->
-    <div class="card-body py-3">
-        <!--begin::Table container-->
-        <div class="table-responsive" id="table"></div>
-        <!--end::Table container-->
-    </div>
-    <!--end::Card Body-->
 </div>
 <!--end::Card-->
-<!-- begin::modalPengguna -->
-<?php include('Modal/modalPengguna.php'); ?>
-<!-- end::modalPengguna -->
+<!-- begin::modalMatkul -->
+<?php include('Modal/modalMatkul.php'); ?>
+<!-- end::modalMatkul -->
 <!-- begin::Script -->
-<script src="<?= base_url(); ?>/assets/ajax/ajaxPengguna.js"></script>
+<script>
+function datamatkul() {
+    $.ajax({
+        url: "<?= site_url('matkul/ambildata')?>",
+        dataType: "json",
+        success: function (response) {
+            $(".viewdata").html(response.data);
+        },
+        error: function (xhr, thrownError) {
+          alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+        },
+      });
+}
+	$(document).ready(function() {
+		datamatkul();
+	});
+    
+</script>
 <!-- end::Script -->
 
 <?= $this->endSection(); ?>

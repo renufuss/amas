@@ -1,25 +1,19 @@
-<!-- begin :: DataTable CSS -->
-<link href="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
-    type="text/css" />
-<!-- end :: DataTable CSS -->
-
-<table class="table align-middle gs-0 gy-4" id="dataTablePengguna">
+<table class="table align-middle gs-0 gy-4" id="datamatkul">
     <!--begin::Table head-->
     <thead>
         <tr class="fw-bold text-muted bg-light">
-            <th class="text-center rounded-start desktop-only ps-4">#</th>
-            <th class="ps-4 min-w-200px">Pengguna</th>
-            <th class="ps-4 min-w-150px desktop-only text-center">Nama Depan</th>
-            <th class="ps-4 min-w-150px desktop-only text-center">Nama Belakang</th>
-            <th class="ps-4 min-w-100px desktop-only">Role</th>
-            <th class="text-center rounded-end"></th>
+            <th class="text-center rounded-start desktop-only ps-4">No.</th>
+            <th class="ps-4 min-w-200px">Mata Kuliah</th>
+            <th class="ps-4 min-w-150px desktop-only text-center">Kelas</th>
+            <th class="ps-4 min-w-150px desktop-only text-center">placeholder</th>
+            <th class="text-center rounded-end">Aksi</th>
         </tr>
     </thead>
     <!--end::Table head-->
     <!--begin::Table body-->
     <tbody>
         <?php $i = 1;
-foreach($pengguna as $row) :
+foreach($tampildata as $row) :
     ?>
         <tr>
             <td class="text-center desktop-only">
@@ -27,25 +21,19 @@ foreach($pengguna as $row) :
             </td>
             <td>
                 <div class="d-flex align-items-center">
-                    <div class="symbol symbol-50px me-5">
-                        <img src="assets/media/stock/600x400/img-26.jpg" class="" alt="" />
-                    </div>
                     <div class="d-flex justify-content-start flex-column">
                         <a href="#"
-                            class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->username)); ?></a>
+                            class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= $row['nama'] ?></a>
                         <span
-                            class="text-muted fw-semibold text-muted d-block fs-7"><?= ucwords(strtolower($row->email)); ?></span>
+                            class="text-muted fw-semibold text-muted d-block fs-7"><?= $row['kode'] ?></span>
                     </div>
                 </div>
             </td>
-            <td class="desktop-only text-center"><?= $row->first_name; ?></td>
-            <td class="desktop-only text-center"><?= $row->last_name; ?></td>
-            <td class="desktop-only text-center">
-                <span class="badge badge-light-danger fs-7 fw-bold">Mahasiswa</span>
-            </td>
+            <td class="desktop-only text-center"><?= $row['kelas'] ?></td>
+            <td class="desktop-only text-center">ini placeholder</td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <a href="<?= base_url(); ?>/dosen/detail/<?= $row->username; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                    <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen019.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -60,7 +48,7 @@ foreach($pengguna as $row) :
                         </span>
                         <!--end::Svg Icon-->
                     </a>
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deletePengguna('<?= $row->id;?>','<?= $row->username;?>')">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -85,26 +73,8 @@ foreach($pengguna as $row) :
     </tbody>
     <!--end::Table body-->
 </table>
-
-<!-- begin :: DataTable Js -->
-<script src="<?= base_url(); ?>/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-<!-- end :: End DataTable Js -->
-
 <script>
     $(document).ready(function () {
-        const table = $('#dataTablePengguna').DataTable({
-            columnDefs: [{
-                orderable: false,
-                targets: [0,4,5]
-            }],
-            order: [
-                [1, 'asc']
-            ],
-            "scrollX": true
-        });
-
-        $('#search').on('keyup', function () {
-            table.search(this.value).draw();
-        });
+        $('#datamatkul').DataTable();
     });
 </script>
