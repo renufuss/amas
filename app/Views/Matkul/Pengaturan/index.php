@@ -80,7 +80,7 @@
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row fv-plugins-icon-container">
                         <input type="text" name="nama" id="nama" class="form-control form-control-lg form-control-solid"
-                            placeholder="Nama Mata Kuliah" value="<?= $matkul->nama; ?>" autocomplete="off">
+                            placeholder="Nama Mata Kuliah" value="<?= ucwords(strtolower($matkul->nama)); ?>" autocomplete="off">
                         <div class="fv-plugins-message-container invalid-feedback" id="nama-feedback"></div>
                     </div>
                     <!--end::Col-->
@@ -94,7 +94,7 @@
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row fv-plugins-icon-container">
                         <input type="text" name="kode" id="kode" class="form-control form-control-lg form-control-solid"
-                            placeholder="Kode Mata Kuliah" value="<?= $matkul->kode; ?>" autocomplete="off">
+                            placeholder="Kode Mata Kuliah" value="<?= strtoupper($matkul->kode); ?>" autocomplete="off">
                         <div class="fv-plugins-message-container invalid-feedback" id="kode-feedback"></div>
                     </div>
                     <!--end::Col-->
@@ -108,7 +108,7 @@
                     <!--begin::Col-->
                     <div class="col-lg-8 fv-row fv-plugins-icon-container">
                         <input type="text" name="kelas" id="kelas" class="form-control form-control-lg form-control-solid"
-                            placeholder="Kelas Mata Kuliah" value="<?= $matkul->kelas; ?>" autocomplete="off">
+                            placeholder="Kelas Mata Kuliah" value="<?= strtoupper($matkul->kelas); ?>" autocomplete="off">
                         <div class="fv-plugins-message-container invalid-feedback" id="kelas-feedback"></div>
                     </div>
                     <!--end::Col-->

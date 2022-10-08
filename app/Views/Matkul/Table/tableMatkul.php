@@ -40,13 +40,13 @@ foreach($tampildata as $row) :
                     </div>
                 <div class="d-flex align-items-center">
                     <div class="d-flex justify-content-start flex-column">
-                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= $row->nama ?></a>
-                        <span class="text-muted fw-semibold text-muted d-block fs-7"><?= $row->kode ?></span>
-                        <span class="text-muted fw-semibold text-muted fs-7 mobile-only"><?= $row->kelas ?></span>
+                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->nama)) ?></a>
+                        <span class="text-muted fw-semibold text-muted d-block fs-7"><?= strtoupper($row->kode); ?></span>
+                        <span class="text-muted fw-semibold text-muted fs-7 mobile-only"><?= strtoupper($row->kelas); ?></span>
                     </div>
                 </div>
             </td>
-            <td class="desktop-only text-center"><?= $row->kelas ?></td>
+            <td class="desktop-only text-center"><?= strtoupper($row->kelas); ?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
                 <a href="<?= base_url(); ?>/matkul/mahasiswa/<?= $row->id; ?>" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
