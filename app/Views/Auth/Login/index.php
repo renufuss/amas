@@ -7,9 +7,9 @@
     <!--begin::Authentication - Sign-in -->
     <div class="d-flex flex-column flex-lg-row flex-column-fluid">
         <!--begin::Logo-->
-        <a href="../../demo1/dist/index.html" class="d-block d-lg-none mx-auto py-20">
-            <img alt="Logo" src="assets/media/logos/default.svg" class="theme-light-show h-25px" />
-            <img alt="Logo" src="assets/media/logos/default-dark.svg" class="theme-dark-show h-25px" />
+        <a href="<?= base_url('login'); ?>" class="d-block d-lg-none mx-auto py-20">
+        <img alt="Logo" src="<?= base_url(); ?>/assets/amas/default.png" class="theme-light-show h-70px" />
+            <img alt="Logo" src="<?= base_url(); ?>/assets/amas/white.png" class="theme-dark-show h-70px" />
         </a>
         <!--end::Logo-->
         <!--begin::Aside-->
