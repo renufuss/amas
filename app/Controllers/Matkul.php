@@ -174,12 +174,13 @@ class Matkul extends BaseController
 
     // =====================================================================================
     // For Mahasiswa
-    public function indexMahasiswa()
+    public function indexListMatkul()
     {
         $data= [
             'title' => 'Mata Kuliah',
-            'breadcrumb' => 'Mata Kuliah'];
-        return view('Matkul/indexMahasiswa', $data);
+            'breadcrumb' => 'Mata Kuliah'
+        ];
+        return view('Matkul/indexListMatkul', $data);
     }
 
     public function tableMatkulMahasiswa()
@@ -187,12 +188,78 @@ class Matkul extends BaseController
         if ($this->request->isAJAX()) {
             $data= [
                 'tampildata' => $this->matkulModel->showMatkul(),
+                'joinedMatkul' => $this->mahasiswaMatkulModel->where('id_user', user()->id)->findAll(),
             ];
             $msg = [
-                'data' => view('Matkul/Table/tableMatkulMahasiswa', $data)
+                'data' => view('Matkul/Table/tableListMatkul', $data)
             ];
 
             echo json_encode($msg);
+        }
+    }
+
+    public function joinMatkul()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('id');
+            $matkul = $this->matkulModel->find($id);
+
+            if ($matkul == null) {
+                $msg['error'] = 'Gagal join matkul';
+                return json_encode($msg);
+            }
+            $data = [
+                'id_user' => user()->id,
+                'id_matkul' => $id,
+            ];
+            $this->mahasiswaMatkulModel->save($data);
+            $msg['sukses'] = 'Berhasil bergabung dengan mata kuliah';
+            return json_encode($msg);
+        }
+    }
+
+    public function indexMatkulSaya()
+    {
+        $data= [
+            'title' => 'Mata Kuliah Saya',
+            'breadcrumb' => 'Mata Kuliah Saya'
+        ];
+        return view('Matkul/indexMatkulSaya', $data);
+    }
+
+    public function tableMatkulSaya()
+    {
+        if ($this->request->isAJAX()) {
+            $data= [
+                'tampildata' => $this->mahasiswaMatkulModel->showMatkul(user()->id),
+            ];
+            $msg = [
+                'data' => view('Matkul/Table/tableMatkulSaya', $data)
+            ];
+
+            echo json_encode($msg);
+        }
+    }
+
+    public function keluarMatkul()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('id');
+            $matkul = $this->matkulModel->find($id);
+
+            if ($matkul == null) {
+                $msg['error'] = 'Gagal keluar matkul';
+                return json_encode($msg);
+            }
+            $joined = $this->mahasiswaMatkulModel->where('id_user', user()->id)->where('id_matkul', $matkul->id)->first();
+
+            if ($joined != null) {
+                $this->mahasiswaMatkulModel->delete($joined->id);
+                $msg['sukses'] = 'Berhasil keluar dari mata kuliah';
+            } else {
+                $msg['error'] = 'Gagal keluar matkul';
+            }
+            return json_encode($msg);
         }
     }
 }

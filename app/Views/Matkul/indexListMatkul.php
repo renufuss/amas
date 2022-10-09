@@ -37,7 +37,7 @@
 
 <script>
     $(document).ready(function () {
-        tableMatkulMahasiswa();
+        tableListMatkul();
     });
 </script>
 

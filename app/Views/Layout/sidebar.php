@@ -69,7 +69,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="../../demo1/dist/layouts/dark-sidebar.html">
+                        <a class="menu-link" href="<?= base_url('matkul/saya'); ?>">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
