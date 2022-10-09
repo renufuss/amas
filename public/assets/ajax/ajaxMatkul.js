@@ -270,3 +270,53 @@ function tableMatkulMahasiswa(){
     },
   });
 }
+
+function joinMatkul(id,nama){
+  Swal.fire({
+    html: `Apakah kamu yakin ingin bergabung dengan ${nama} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Gabung",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/delete",
+        data: {id},
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            tableMatkulMahasiswa();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+}
