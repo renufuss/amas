@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 	<!--begin::Head-->
 	<head>
 		<title><?= $title; ?></title>
@@ -48,9 +48,9 @@
 						<!--begin::Logo-->
 						<div class="app-sidebar-logo px-6" id="kt_app_sidebar_logo">
 							<!--begin::Logo image-->
-							<a href="../../demo1/dist/index.html">
-								<img alt="Logo" src="<?= base_url(); ?>/assets/media/logos/default-dark.svg" class="h-25px app-sidebar-logo-default" />
-								<img alt="Logo" src="<?= base_url(); ?>/assets/media/logos/default-small.svg" class="h-20px app-sidebar-logo-minimize" />
+							<a href="<?= base_url();?>">
+								<img alt="Logo" src="<?= base_url(); ?>/assets/amas/white.png" class="h-50px app-sidebar-logo-default" />
+								<img alt="Logo" src="<?= base_url(); ?>/assets/amas/whiteLogo.png" class="h-30px app-sidebar-logo-minimize" />
 							</a>
 							<!--end::Logo image-->
 							<!--begin::Sidebar toggle-->

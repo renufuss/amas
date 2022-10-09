@@ -84,7 +84,6 @@ class Pengguna extends BaseController
             }
             if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => $exceptRules]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
-                    'npm' => $data['npm'],
                     'error' => $this->validator->getErrors(),
                     'errormsg'=> 'Gagal mengupdate pengguna',
                 ];
