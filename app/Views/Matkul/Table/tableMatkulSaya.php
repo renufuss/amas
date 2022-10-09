@@ -3,14 +3,14 @@
 <!-- end :: DataTable CSS -->
 
 
-<table class="table align-middle gs-0 gy-4" id="datamatkul">
+<table class="table align-middle gs-0 gy-4" id="dataTableMatkulSaya">
     <!--begin::Table head-->
     <thead>
         <tr class="fw-bold text-muted bg-light">
             <th class="text-center rounded-start desktop-only ps-4">#</th>
             <th class="ps-4 min-w-200px">Mata Kuliah</th>
-            <th class="ps-4 min-w-150px desktop-only text-center">Dosen</th>
-            <th class="text-center rounded-end"></th>
+            <th class="ps-4 min-w-200px desktop-only">Kelas</th>
+            <th class="rounded-end"></th>
         </tr>
     </thead>
     <!--end::Table head-->
@@ -42,13 +42,30 @@ foreach($tampildata as $row) :
                     <div class="d-flex justify-content-start flex-column">
                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->nama)) ?></a>
                         <span class="text-muted fw-semibold text-muted d-block fs-7"><?= strtoupper($row->kode); ?></span>
-                        <span class="text-muted fw-semibold text-muted fs-7"><?= strtoupper($row->kelas); ?></span>
+                        <span class="text-muted fw-semibold text-muted fs-7 mobile-only"><?= strtoupper($row->kelas); ?></span>
                     </div>
                 </div>
             </td>
-            <td class="desktop-only text-center"><?= ucwords(strtolower($row->first_name)); ?> <?= ucwords(strtolower($row->last_name)); ?></td>
-            <td class="text-center">
-                <button type="button" class="btn btn-bg-light btn-color-muted btn-active-color-primary btn-sm px-4 me-2" onclick="joinMatkul('<?= $row->id ?>','<?= $row->nama ?>')">Bergabung</button>
+            <td class="desktop-only"><?= strtoupper($row->kelas); ?></td>
+            <td class="text-end">
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="hapusJoin('<?= $row->id;?>','<?= $row->nama;?>')">
+                        <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
+                        <span class="svg-icon svg-icon-3">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M5 9C5 8.44772 5.44772 8 6 8H18C18.5523 8 19 8.44772 19 9V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V9Z"
+                                    fill="currentColor"></path>
+                                <path opacity="0.5"
+                                    d="M5 5C5 4.44772 5.44772 4 6 4H18C18.5523 4 19 4.44772 19 5V5C19 5.55228 18.5523 6 18 6H6C5.44772 6 5 5.55228 5 5V5Z"
+                                    fill="currentColor"></path>
+                                <path opacity="0.5"
+                                    d="M9 4C9 3.44772 9.44772 3 10 3H14C14.5523 3 15 3.44772 15 4V4H9V4Z"
+                                    fill="currentColor"></path>
+                            </svg>
+                        </span>
+                        <!--end::Svg Icon-->
+                    </button>
             </td>
         </tr>
         <?php endforeach; ?>
@@ -60,7 +77,7 @@ foreach($tampildata as $row) :
 <!-- end :: End DataTable Js -->
 <script>
     $(document).ready(function () {
-        const table = $('#datamatkul').DataTable({
+        const table = $('#dataTableMatkulSaya').DataTable({
             "aaSorting": [],
             "scrollX": true
         });

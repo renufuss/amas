@@ -57,8 +57,14 @@ $routes->get('/matkul/mahasiswa/(:segment)', 'Matkul::mahasiswa/$1');
 $routes->post('/matkul/mahasiswa/table', 'Matkul::tableMahasiswa');
 $routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1');
 
-$routes->get('/matkul/list', 'Matkul::indexMahasiswa');
+$routes->get('/matkul/list', 'Matkul::indexListMatkul');
 $routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
+$routes->post('/matkul/join', 'Matkul::joinMatkul');
+
+$routes->get('/matkul/saya', 'Matkul::indexMatkulSaya');
+$routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya');
+$routes->post('/matkul/keluar', 'Matkul::keluarMatkul');
+
 
 
 /*

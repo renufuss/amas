@@ -33,4 +33,13 @@ class MahasiswaMatkulModel extends Model
 
         return $data;
     }
+
+    public function showMatkul($idUser)
+    {
+        $table = $this->db->table($this->table);
+        $query = $table->select('matkul.*')->join('matkul', 'matkul.id=mahasiswa_matkul.id_matkul', 'left')->where('mahasiswa_matkul.id_user', $idUser)->orderBy('matkul.nama', 'asc')->orderBy('mahasiswa_matkul.id', 'asc');
+        $data = $query->get()->getResultObject();
+
+        return $data;
+    }
 }

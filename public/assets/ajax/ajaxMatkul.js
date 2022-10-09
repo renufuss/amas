@@ -257,7 +257,7 @@ function tableMahasiswa(id){
 // =================================================================
 // For Mahasiswa
 
-function tableMatkulMahasiswa(){
+function tableListMatkul(){
   $.ajax({
     type: "get",
     url: base_url + "/matkul/list/table",
@@ -288,7 +288,7 @@ function joinMatkul(id,nama){
     if (result.isConfirmed) {
       $.ajax({
         type: "post",
-        url: base_url + "/matkul/delete",
+        url: base_url + "/matkul/join",
         data: {id},
         dataType: "json",
         success: function (response) {
@@ -311,7 +311,71 @@ function joinMatkul(id,nama){
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            tableMatkulMahasiswa();
+            tableListMatkul();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+}
+
+function tableMatkulSaya(){
+  $.ajax({
+    type: "get",
+    url: base_url + "/matkul/saya/table",
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+function hapusJoin(id,nama){
+  Swal.fire({
+    html: `Apakah kamu yakin ingin keluar dari ${nama} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Keluar",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/keluar",
+        data: {id},
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            tableMatkulSaya();
           }else{
             toastr.error(response.error, "Error");
           }
