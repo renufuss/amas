@@ -17,10 +17,10 @@ class Matkul extends BaseController
         $data= [
             'title' => 'Mata Kuliah',
             'breadcrumb' => 'Mata Kuliah'];
-        return view('Matkul/index', $data);
+        return view('Matkul/Dosen/index', $data);
     }
 
-    public function table()
+    public function tableMatkulDosen()
     {
         if ($this->request->isAJAX()) {
             $matkul = new MatkulModel();
@@ -29,12 +29,10 @@ class Matkul extends BaseController
             ];
 
             $msg = [
-                'data' => view('Matkul/Table/tableMatkul', $data)
+                'data' => view('Matkul/Dosen/Table/tableMatkul', $data)
             ];
 
             echo json_encode($msg);
-        } else {
-            exit('error');
         }
     }
         //begin::CRUD

@@ -48,13 +48,10 @@ $routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
 $routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
 
 $routes->get('/matkul', 'Matkul::index');
-$routes->get('/matkul/table', 'Matkul::table');
-<<<<<<< HEAD
-=======
+$routes->get('/matkul/table', 'Matkul::tableMatkulDosen');
 $routes->post('/matkul/add', 'Matkul::add');
 $routes->post('/matkul/delete', 'Matkul::delete');
 
->>>>>>> d5ec7ca (tambah & delete matkul)
 
 /*
  * --------------------------------------------------------------------
