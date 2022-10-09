@@ -19,21 +19,6 @@
             <input type="text" data-kt-docs-table-filter="search" class="form-control form-control-solid w-250px ps-15"
                 placeholder="Cari Mata Kuliah" id="search">
         </div>
-        <div class="card-toolbar">
-            <!-- begin::Tambah Matkul -->
-            <button class="btn btn-sm btn-light-primary m-3" data-bs-toggle="modal" data-bs-target="#modalMatkul">
-                <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
-                <span class="svg-icon svg-icon-2">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect opacity="0.5" x="11.364" y="20.364" width="16" height="2" rx="1"
-                            transform="rotate(-90 11.364 20.364)" fill="currentColor" />
-                        <rect x="4.36396" y="11.364" width="16" height="2" rx="1" fill="currentColor" />
-                    </svg>
-                </span>
-                <!--end::Svg Icon-->Tambah Matkul
-            </button>
-            <!-- end::Tambah Matkul -->
-        </div>
     </div>
     <!--end::Card Header-->
      <!--begin::Card Body-->
@@ -45,16 +30,14 @@
     <!--end::Card Body-->
 </div>
 <!--end::Card-->
-<!-- begin::modalMatkul -->
-<?php include('Modal/modalMatkul.php'); ?>
-<!-- end::modalMatkul -->
+
 <!-- begin::Script -->
 <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 <!-- end::Script -->
 
 <script>
     $(document).ready(function () {
-        datamatkul();
+        tableMatkulMahasiswa();
     });
 </script>
 

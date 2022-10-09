@@ -1,9 +1,8 @@
 const base_url = window.location.origin;
 
-$(document).ready(function () {
-  datamatkul();
-});
 
+// ==================================================================
+// For Dosen
 
 function datamatkul() {
   $.ajax({
@@ -248,6 +247,23 @@ function tableMahasiswa(id){
     dataType: "json",
     success: function (response) {
         $("#table-mahasiswa").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+// =================================================================
+// For Mahasiswa
+
+function tableMatkulMahasiswa(){
+  $.ajax({
+    type: "get",
+    url: base_url + "/matkul/list/table",
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
     },
     error: function (xhr, thrownError) {
       alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);

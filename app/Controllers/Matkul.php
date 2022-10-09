@@ -14,6 +14,9 @@ class Matkul extends BaseController
         $this->matkulModel = new MatkulModel();
         $this->mahasiswaMatkulModel = new MahasiswaMatkulModel();
     }
+
+    // =====================================================================================
+    // For Dosen
     public function index()
     {
         $data= [
@@ -22,14 +25,14 @@ class Matkul extends BaseController
         return view('Matkul/index', $data);
     }
 
-    public function table()
+    public function tableMatkulDosen()
     {
         if ($this->request->isAJAX()) {
             $data= [
-                'tampildata' => $this->matkulModel->orderBy('nama', 'ASC')->findAll()
+                'tampildata' => $this->matkulModel->where('id_user', user()->id)->orderBy('nama', 'ASC')->findAll()
             ];
             $msg = [
-                'data' => view('Matkul/Table/tableMatkul', $data)
+                'data' => view('Matkul/Table/tableMatkulDosen', $data)
             ];
 
             echo json_encode($msg);
@@ -165,6 +168,30 @@ class Matkul extends BaseController
             $msg = [
                 'data' => view('Matkul/Mahasiswa/Table/tableMahasiswa', $data)
             ];
+            echo json_encode($msg);
+        }
+    }
+
+    // =====================================================================================
+    // For Mahasiswa
+    public function indexMahasiswa()
+    {
+        $data= [
+            'title' => 'Mata Kuliah',
+            'breadcrumb' => 'Mata Kuliah'];
+        return view('Matkul/indexMahasiswa', $data);
+    }
+
+    public function tableMatkulMahasiswa()
+    {
+        if ($this->request->isAJAX()) {
+            $data= [
+                'tampildata' => $this->matkulModel->showMatkul(),
+            ];
+            $msg = [
+                'data' => view('Matkul/Table/tableMatkulMahasiswa', $data)
+            ];
+
             echo json_encode($msg);
         }
     }

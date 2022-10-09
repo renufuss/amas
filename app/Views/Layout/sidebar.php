@@ -57,7 +57,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="../../demo1/dist/layouts/light-sidebar.html">
+                        <a class="menu-link" href="<?= base_url('matkul/list'); ?>">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
