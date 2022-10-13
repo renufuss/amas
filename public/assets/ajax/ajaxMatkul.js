@@ -254,6 +254,106 @@ function tableMahasiswa(id){
   });
 }
 
+function tableAgenda(id){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/table",
+    data: {
+      id:id,
+    },
+    dataType: "json",
+    success: function (response) {
+        $("#table-agenda").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+$('#btnSimpanAgenda').click(function (e) { 
+  e.preventDefault();
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/simpan",
+    data: {
+      id_matkul : idMatkul,
+      name : $('#name').val(),
+      jam_masuk : $('#jam_masuk').val(),
+      jam_telat : $('#jam_telat').val(),
+      jam_selesai : $('#jam_selesai').val(),
+    },
+    dataType: "json",
+    beforeSend: function () {
+      $("#btnSimpanAgenda").html(`
+              <div class="spinner-border text-primary m-1" role="status">
+              <span class="sr-only">Loading...</span>
+              </div>
+              `);
+      $("#btnSimpanAgenda").prop('disabled', true);
+    },
+    complete: function () {
+      $("#btnSimpanAgenda").html(`Simpan`);
+      $("#btnSimpanAgenda").prop('disabled', false);
+    },
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      // Remove Feedback
+      form = {
+        name,
+        jam_masuk,
+        jam_telat,
+        jam_selesai,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        Object.entries(form).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).val('');
+        });
+        toastr.success(response.sukses, "Sukses");
+        tableAgenda();
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+});
+
 // =================================================================
 // For Mahasiswa
 
@@ -384,3 +484,4 @@ function hapusJoin(id,nama){
     } 
   });
 }
+
