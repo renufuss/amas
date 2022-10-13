@@ -55,7 +55,11 @@ $routes->post('/matkul/edit/(:segment)', 'Matkul::edit/$1');
 $routes->post('/matkul/delete', 'Matkul::delete');
 $routes->get('/matkul/mahasiswa/(:segment)', 'Matkul::mahasiswa/$1');
 $routes->post('/matkul/mahasiswa/table', 'Matkul::tableMahasiswa');
+$routes->get('/matkul/agenda/(:segment)', 'Matkul::agenda/$1');
+$routes->post('/matkul/agenda/table', 'Matkul::tableAgenda');
+$routes->post('/matkul/agenda/simpan', 'Matkul::simpanAgenda');
 $routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1');
+
 
 $routes->get('/matkul/list', 'Matkul::indexListMatkul');
 $routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
