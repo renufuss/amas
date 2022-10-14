@@ -35,7 +35,7 @@ foreach($mahasiswa as $row) :
                         <?php endif; ?>
                     </div>
                     <div class="d-flex justify-content-start flex-column">
-                        <span class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->username)); ?></span>
+                        <span class="text-dark fw-bold text-hover-primary mb-1 fs-6"><?= ucwords(strtolower($row->first_name)); ?> <?= ucwords(strtolower($row->last_name)); ?></span>
                         <span class="text-muted fw-semibold text-muted d-block fs-8"><?= ucwords(strtolower($row->email)); ?></span>
                         <span class="text-muted fw-semibold text-muted fs-9 mobile-only"><?= $row->npm; ?></span>
                     </div>
@@ -44,7 +44,7 @@ foreach($mahasiswa as $row) :
             <td class="desktop-only"><?= $row->npm; ?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deletePengguna('<?= $row->id;?>','<?= $row->username;?>')">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deleteMahasiswa('<?= $row->id;?>')">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
