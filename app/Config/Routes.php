@@ -59,7 +59,8 @@ $routes->get('/matkul/agenda/(:segment)', 'Matkul::agenda/$1');
 $routes->post('/matkul/agenda/table', 'Matkul::tableAgenda');
 $routes->post('/matkul/agenda/simpan', 'Matkul::simpanAgenda');
 $routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1');
-
+$routes->get('/matkul/qr/(:segment)', 'Matkul::indexQR/$1');
+$routes->post('/matkul/qr', 'Matkul::statusPresent');
 
 $routes->get('/matkul/list', 'Matkul::indexListMatkul');
 $routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
