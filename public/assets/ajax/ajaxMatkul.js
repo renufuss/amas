@@ -345,7 +345,7 @@ $('#btnSimpanAgenda').click(function (e) {
           $(`#${key}`).val('');
         });
         toastr.success(response.sukses, "Sukses");
-        tableAgenda();
+        tableAgenda(idMatkul);
       }
     },
     error: function (xhr, thrownError) {
@@ -353,6 +353,21 @@ $('#btnSimpanAgenda').click(function (e) {
     },
   });
 });
+
+function statusPresent(){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/qr",
+    data: {id},
+    dataType: "json",
+    success: function (response) {
+      $('#izin').html(response.izin);
+      $('#terlambat').html(response.terlambat);
+      $('#hadir').html(response.hadir);
+      $('#belumAbsen').html(response.belum_absen);
+    }
+  });
+}
 
 // =================================================================
 // For Mahasiswa

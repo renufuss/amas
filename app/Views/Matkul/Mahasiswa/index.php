@@ -22,7 +22,7 @@
             <!-- end::Export Excel -->
         </div>
             </div>
-            <!--begin::Card header-->
+            <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body p-9">
                <div id="table-mahasiswa"></div>

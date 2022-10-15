@@ -40,13 +40,13 @@ class MatkulModel extends Model
             'required' => 'Kelas tidak boleh kosong',
             'min_length' => 'Kelas minimal berjumlah 3 karakter',
         ],
-        'image' => [
+        'image_matkul' => [
             'max_size' => 'Ukuran gambar tidak boleh melebihi 1 MB',
             'is_image' => 'Yang anda pilih bukan gambar',
             'mime_in' => 'Yang anda pilih bukan gambar',
         ],
     ];
-    protected $skipValidation     = false;
+    protected $skipValidation     = true;
 
 
     public function showMatkul($id = null)
