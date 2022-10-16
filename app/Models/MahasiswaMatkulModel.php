@@ -12,14 +12,14 @@ class MahasiswaMatkulModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'object';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
 
-    protected $allowedFields = ['id_user', 'id_matkul'];
+    protected $allowedFields = ['id_user', 'id_matkul','deleted_at'];
 
-    protected $useTimestamps = false;
-    protected $createdField  = null;
-    protected $updatedField  = null;
-    protected $deletedField  = null;
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     protected $validationRules    = [];
     protected $validationMessages = [];
@@ -37,7 +37,7 @@ class MahasiswaMatkulModel extends Model
     public function showMatkul($idUser)
     {
         $table = $this->db->table($this->table);
-        $query = $table->select('matkul.*')->join('matkul', 'matkul.id=mahasiswa_matkul.id_matkul', 'left')->where('mahasiswa_matkul.id_user', $idUser)->orderBy('matkul.nama', 'asc')->orderBy('mahasiswa_matkul.id', 'asc');
+        $query = $table->select('matkul.*')->join('matkul', 'matkul.id=mahasiswa_matkul.id_matkul', 'left')->where('mahasiswa_matkul.id_user', $idUser)->where('mahasiswa_matkul.deleted_at', null)->orderBy('matkul.nama', 'asc')->orderBy('mahasiswa_matkul.id', 'asc');
         $data = $query->get()->getResultObject();
 
         return $data;

@@ -213,7 +213,7 @@ class Matkul extends BaseController
         return view('Matkul/Agenda/index', $data);
     }
 
-    public function tableAgenda()
+    public function tableAgendaDosen()
     {
         if ($this->request->isAJAX()) {
             $id = $this->request->getPost('id');
@@ -221,7 +221,7 @@ class Matkul extends BaseController
                 'agenda' => $this->agendaModel->where('id_matkul', $id)->findAll(),
             ];
             $msg = [
-                'data' => view('Matkul/Agenda/Table/tableAgenda', $data)
+                'data' => view('Matkul/Agenda/Table/tableAgendaDosen', $data)
             ];
             echo json_encode($msg);
         }
@@ -310,6 +310,82 @@ class Matkul extends BaseController
         }
     }
 
+    public function deleteAgenda()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('id');
+            $matkul = $this->agendaModel->find($id);
+            if ($matkul != null) {
+                $this->agendaModel->delete($id);
+                $msg['sukses'] = 'Berhasil menghapus agenda';
+            } else {
+                $msg['error'] = 'Gagal menghapus agenda';
+            }
+            return json_encode($msg);
+        }
+    }
+
+    public function indexQR($id)
+    {
+        $agenda = $this->agendaModel->find($id);
+        if ($agenda == null) {
+            return redirect()->to('/agenda');
+        }
+        $data = [
+            'title' => 'Agenda | '.ucwords(strtolower($agenda->name)),
+            'breadcrumb' => 'QR Mata Kuliah',
+            'agenda' => $agenda,
+        ];
+        return view('Matkul/Agenda/QR/index', $data);
+    }
+
+    public function statusPresent()
+    {
+        if ($this->request->isAJAX()) {
+            $agenda = $this->agendaModel->find($this->request->getPost('id'));
+            $idMatkul = $agenda->id_matkul;
+            $mahasiswa = $this->mahasiswaMatkulModel->showMahasiswa($idMatkul);
+            $cekStatus = $this->mahasiswaAgendaModel->where('id_agenda', $agenda->id)->findAll();
+            $izin = [];
+            $terlambat = [];
+            $hadir = [];
+            $belum_absen = [];
+            if ($mahasiswa != null) {
+                foreach ($mahasiswa as $mhsRow) {
+                    if ($cekStatus != null) {
+                        foreach ($cekStatus as $cekRow) {
+                            if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
+                                array_push($izin, $mhsRow);
+                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
+                                array_push($terlambat, $mhsRow);
+                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 3) {
+                                array_push($hadir, $mhsRow);
+                            } else {
+                                array_push($belum_absen, $mhsRow);
+                            }
+                        }
+                    } else {
+                        array_push($belum_absen, $mhsRow);
+                    }
+                }
+            }
+
+            $data = [
+                'izin' => $izin,
+                'terlambat' => $terlambat,
+                'hadir' => $hadir,
+                'belum_absen' => $belum_absen,
+            ];
+            $msg = [
+                'izin' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaIzin', $data),
+                'terlambat' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaTerlambat', $data),
+                'hadir' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaHadir', $data),
+                'belum_absen' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaBelumAbsen', $data),
+            ];
+            return json_encode($msg);
+        }
+    }
+
     // =====================================================================================
     // For Mahasiswa
     public function indexListMatkul()
@@ -346,9 +422,17 @@ class Matkul extends BaseController
                 $msg['error'] = 'Gagal join matkul';
                 return json_encode($msg);
             }
+            $cekJoin = $this->mahasiswaMatkulModel->where('id_user', user()->id)->where('id_matkul', $id)->withDeleted()->first();
+            if ($cekJoin != null) {
+                $idJoin = $cekJoin->id;
+            } else {
+                $idJoin = null;
+            }
             $data = [
+                'id' => $idJoin,
                 'id_user' => user()->id,
                 'id_matkul' => $id,
+                'deleted_at' => null,
             ];
             $this->mahasiswaMatkulModel->save($data);
             $msg['sukses'] = 'Berhasil bergabung dengan mata kuliah';

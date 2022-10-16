@@ -306,6 +306,8 @@ function deleteMahasiswa(id) {
 }
 // end::DeleteMHS
 
+
+// begin::Agenda
 function tableAgenda(id){
   $.ajax({
     type: "post",
@@ -320,6 +322,56 @@ function tableAgenda(id){
     error: function (xhr, thrownError) {
       alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
     },
+  });
+}
+
+function deleteAgenda(id,nama){
+  Swal.fire({
+    html: `Apakah kamu yakin ingin menghapus ${nama} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Hapus",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/agenda/delete",
+        data: {id},
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            tableAgenda();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
   });
 }
 
@@ -420,6 +472,7 @@ function statusPresent(){
     }
   });
 }
+// end::Agenda
 
 // =================================================================
 // For Mahasiswa
