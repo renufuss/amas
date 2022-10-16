@@ -55,12 +55,24 @@ $routes->post('/matkul/edit/(:segment)', 'Matkul::edit/$1');
 $routes->post('/matkul/delete', 'Matkul::delete');
 $routes->get('/matkul/mahasiswa/(:segment)', 'Matkul::mahasiswa/$1');
 $routes->post('/matkul/mahasiswa/table', 'Matkul::tableMahasiswa');
+$routes->get('/matkul/agenda/(:segment)', 'Matkul::agenda/$1');
+$routes->post('/matkul/agenda/table', 'Matkul::tableAgenda');
+$routes->post('/matkul/agenda/simpan', 'Matkul::simpanAgenda');
 $routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1');
 
-$routes->get('/matkul/list', 'Matkul::indexMahasiswa');
-$routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
-$routes->post('/matkul/deleteMhs', 'Matkul::deleteMhs');
 
+$routes->get('/matkul/list', 'Matkul::indexListMatkul');
+$routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
+$routes->post('/matkul/join', 'Matkul::joinMatkul');
+
+$routes->get('/matkul/saya', 'Matkul::indexMatkulSaya');
+$routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya');
+$routes->post('/matkul/keluar', 'Matkul::keluarMatkul');
+
+$routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
+
+$routes->get('/profil/detail', 'Pengguna::deletemhs');
+$routes->get('/profil/pengaturan', 'Pengguna::deletemhs');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

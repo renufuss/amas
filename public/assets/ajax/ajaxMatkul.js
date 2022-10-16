@@ -43,6 +43,7 @@ $('#btnAdd').click(function (e) {
       $("#btnAdd").prop('disabled', false);
     },
     success: function (response) {
+      console.log(response);
       toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -271,7 +272,7 @@ function deleteMahasiswa(id) {
     if (result.isConfirmed) {
       $.ajax({
         type: "post",
-        url: base_url + "/matkul/deleteMhs",
+        url: base_url + "/matkul/deletemhs",
         data: {id},
         dataType: "json",
         success: function (response) {
@@ -305,10 +306,110 @@ function deleteMahasiswa(id) {
 }
 // end::DeleteMHS
 
+function tableAgenda(id){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/table",
+    data: {
+      id:id,
+    },
+    dataType: "json",
+    success: function (response) {
+        $("#table-agenda").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+$('#btnSimpanAgenda').click(function (e) { 
+  e.preventDefault();
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/simpan",
+    data: {
+      id_matkul : idMatkul,
+      name : $('#name').val(),
+      jam_masuk : $('#jam_masuk').val(),
+      jam_telat : $('#jam_telat').val(),
+      jam_selesai : $('#jam_selesai').val(),
+    },
+    dataType: "json",
+    beforeSend: function () {
+      $("#btnSimpanAgenda").html(`
+              <div class="spinner-border text-primary m-1" role="status">
+              <span class="sr-only">Loading...</span>
+              </div>
+              `);
+      $("#btnSimpanAgenda").prop('disabled', true);
+    },
+    complete: function () {
+      $("#btnSimpanAgenda").html(`Simpan`);
+      $("#btnSimpanAgenda").prop('disabled', false);
+    },
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      // Remove Feedback
+      form = {
+        name,
+        jam_masuk,
+        jam_telat,
+        jam_selesai,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        Object.entries(form).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).val('');
+        });
+        toastr.success(response.sukses, "Sukses");
+        tableAgenda();
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+});
+
 // =================================================================
 // For Mahasiswa
 
-function tableMatkulMahasiswa(){
+function tableListMatkul(){
   $.ajax({
     type: "get",
     url: base_url + "/matkul/list/table",
@@ -339,7 +440,7 @@ function joinMatkul(id,nama){
     if (result.isConfirmed) {
       $.ajax({
         type: "post",
-        url: base_url + "/matkul/delete",
+        url: base_url + "/matkul/join",
         data: {id},
         dataType: "json",
         success: function (response) {
@@ -362,7 +463,7 @@ function joinMatkul(id,nama){
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            tableMatkulMahasiswa();
+            tableListMatkul();
           }else{
             toastr.error(response.error, "Error");
           }
@@ -371,3 +472,68 @@ function joinMatkul(id,nama){
     } 
   });
 }
+
+function tableMatkulSaya(){
+  $.ajax({
+    type: "get",
+    url: base_url + "/matkul/saya/table",
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+function hapusJoin(id,nama){
+  Swal.fire({
+    html: `Apakah kamu yakin ingin keluar dari ${nama} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Keluar",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/keluar",
+        data: {id},
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            tableMatkulSaya();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+}
+
