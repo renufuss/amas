@@ -75,8 +75,10 @@ $routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa');
 
 
 $routes->get('/scanner', 'Scanner::index');
+$routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
 
-
+$routes->get('/profil/detail', 'Pengguna::deletemhs');
+$routes->get('/profil/pengaturan', 'Pengguna::deletemhs');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

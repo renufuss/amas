@@ -43,6 +43,7 @@ $('#btnAdd').click(function (e) {
       $("#btnAdd").prop('disabled', false);
     },
     success: function (response) {
+      console.log(response);
       toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -253,6 +254,57 @@ function tableMahasiswa(id){
     },
   });
 }
+// begin::DeleteMHS
+function deleteMahasiswa(id) {
+  Swal.fire({
+    html: `Apakah kamu yakin ingin menghapus ${id} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Hapus",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/deletemhs",
+        data: {id},
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            dataTableMahasiswa();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+}
+// end::DeleteMHS
 
 function tableAgenda(id){
   $.ajax({

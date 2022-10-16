@@ -72,6 +72,7 @@ class Matkul extends BaseController
             } else {
                 $this->matkulModel->save($data);
                 $msg = [
+                    'data' => $data,
                     'sukses' => 'Berhasil menambahkan matkul'
                 ];
             }
@@ -307,101 +308,6 @@ class Matkul extends BaseController
             }
             return json_encode($msg);
         }
-    }
-
-    public function indexQR($id)
-    {
-        $agenda = $this->agendaModel->find($id);
-        if ($agenda == null) {
-            return redirect()->to('/agenda');
-        }
-        $data = [
-            'title' => 'Agenda | '.ucwords(strtolower($agenda->name)),
-            'breadcrumb' => 'QR Mata Kuliah',
-            'agenda' => $agenda,
-        ];
-        return view('Matkul/Agenda/QR/index', $data);
-    }
-
-    public function statusPresent()
-    {
-        if ($this->request->isAJAX()) {
-            $agenda = $this->agendaModel->find($this->request->getPost('id'));
-            $idMatkul = $agenda->id_matkul;
-            $mahasiswa = $this->mahasiswaMatkulModel->showMahasiswa($idMatkul);
-            $cekStatus = $this->mahasiswaAgendaModel->where('id_agenda', $agenda->id)->findAll();
-            $izin = [];
-            $terlambat = [];
-            $hadir = [];
-            $belum_absen = [];
-            if ($mahasiswa != null) {
-                foreach ($mahasiswa as $mhsRow) {
-                    if ($cekStatus != null) {
-                        foreach ($cekStatus as $cekRow) {
-                            if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
-                                array_push($izin, $mhsRow);
-                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
-                                array_push($terlambat, $mhsRow);
-                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 3) {
-                                array_push($hadir, $mhsRow);
-                            } else {
-                                array_push($belum_absen, $mhsRow);
-                            }
-                        }
-                    } else {
-                        array_push($belum_absen, $mhsRow);
-                    }
-                }
-            }
-
-            $data = [
-                'izin' => $izin,
-                'terlambat' => $terlambat,
-                'hadir' => $hadir,
-                'belum_absen' => $belum_absen,
-            ];
-            $msg = [
-                'izin' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaIzin', $data),
-                'terlambat' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaTerlambat', $data),
-                'hadir' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaHadir', $data),
-                'belum_absen' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaBelumAbsen', $data),
-            ];
-            return json_encode($msg);
-        }
-    }
-
-    public function changeStatus($id)
-    {
-        $agenda = $this->agendaModel->find($id);
-        $matkul = $this->matkulModel->find($agenda->id_matkul);
-        if ($agenda != null && $matkul != null) {
-            $cekJoinMatkul = $this->mahasiswaMatkulModel->where('id_matkul', $matkul->id)->where('id_user', user()->id)->first();
-            if ($cekJoinMatkul != null) {
-                $cekAgenda = $this->mahasiswaAgendaModel->where('id_mahasiswa_matkul', $cekJoinMatkul->id)->where('id_agenda', $agenda->id)->first();
-                if ($cekAgenda != null) {
-                    $data['id'] = $cekAgenda->id;
-                }
-                // Set Status
-                if (date('Y-m-d H:i:s') < $agenda->jam_masuk) {
-                    $msg['error'] = 'Maaf, Agenda belum dimulai anda belum bisa melakukan presensi';
-                } elseif (date('Y-m-d H:i:s') > $agenda->jam_telat) {
-                    $data['status'] = '2';
-                } elseif (date('Y-m-d H:i:s') > $agenda->jam_selesai) {
-                    $msg['error'] = 'Maaf, Agenda telah usai anda tidak bisa melakukan presensi';
-                } else {
-                    $data['status'] = '3';
-                }
-                $data['id_mahasiswa_matkul'] = $cekJoinMatkul->id;
-                $data['id_agenda'] = $agenda->id;
-
-                $this->mahasiswaAgendaModel->save($data);
-            } else {
-                $msg['error'] = 'Anda belum terdaftar di matkul '.$matkul->nama;
-            }
-        } else {
-            $msg['error'] = 'Agenda tidak ditemukan';
-        }
-        return json_encode($msg);
     }
 
     // =====================================================================================
