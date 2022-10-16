@@ -12,14 +12,14 @@ class AgendaModel extends Model
     protected $useAutoIncrement = true;
 
     protected $returnType     = 'object';
-    protected $useSoftDeletes = false;
+    protected $useSoftDeletes = true;
 
     protected $allowedFields = ['name', 'jam_masuk', 'jam_telat', 'jam_selesai', 'id_matkul', 'qr'];
 
-    protected $useTimestamps = false;
-    protected $createdField  = false;
-    protected $updatedField  = false;
-    protected $deletedField  = false;
+    protected $useTimestamps = true;
+    protected $createdField  = 'created_at';
+    protected $updatedField  = 'updated_at';
+    protected $deletedField  = 'deleted_at';
 
     protected $validationRules    = [
         'name'      => 'required',
@@ -42,4 +42,13 @@ class AgendaModel extends Model
         ],
     ];
     protected $skipValidation     = false;
+
+    public function showAgenda($idMatkul)
+    {
+        $table = $this->db->table($this->table);
+        $query = $table->select('agenda.*,matkul.*')->join('matkul', 'agenda.id_matkul=matkul.id')->whereIn('agenda.id_matkul', $idMatkul);
+        $data = $query->get()->getResultObject();
+
+        return $data;
+    }
 }

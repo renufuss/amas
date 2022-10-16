@@ -370,6 +370,40 @@ class Matkul extends BaseController
         }
     }
 
+    public function changeStatus($id)
+    {
+        $agenda = $this->agendaModel->find($id);
+        $matkul = $this->matkulModel->find($agenda->id_matkul);
+        if ($agenda != null && $matkul != null) {
+            $cekJoinMatkul = $this->mahasiswaMatkulModel->where('id_matkul', $matkul->id)->where('id_user', user()->id)->first();
+            if ($cekJoinMatkul != null) {
+                $cekAgenda = $this->mahasiswaAgendaModel->where('id_mahasiswa_matkul', $cekJoinMatkul->id)->where('id_agenda', $agenda->id)->first();
+                if ($cekAgenda != null) {
+                    $data['id'] = $cekAgenda->id;
+                }
+                // Set Status
+                if (date('Y-m-d H:i:s') < $agenda->jam_masuk) {
+                    $msg['error'] = 'Maaf, Agenda belum dimulai anda belum bisa melakukan presensi';
+                } elseif (date('Y-m-d H:i:s') > $agenda->jam_telat) {
+                    $data['status'] = '2';
+                } elseif (date('Y-m-d H:i:s') > $agenda->jam_selesai) {
+                    $msg['error'] = 'Maaf, Agenda telah usai anda tidak bisa melakukan presensi';
+                } else {
+                    $data['status'] = '3';
+                }
+                $data['id_mahasiswa_matkul'] = $cekJoinMatkul->id;
+                $data['id_agenda'] = $agenda->id;
+
+                $this->mahasiswaAgendaModel->save($data);
+            } else {
+                $msg['error'] = 'Anda belum terdaftar di matkul '.$matkul->nama;
+            }
+        } else {
+            $msg['error'] = 'Agenda tidak ditemukan';
+        }
+        return json_encode($msg);
+    }
+
     // =====================================================================================
     // For Mahasiswa
     public function indexListMatkul()
@@ -457,6 +491,38 @@ class Matkul extends BaseController
             } else {
                 $msg['error'] = 'Gagal keluar matkul';
             }
+            return json_encode($msg);
+        }
+    }
+
+    public function indexAgendaMahasiswa()
+    {
+        $data= [
+            'title' => 'Agenda',
+            'breadcrumb' => 'Agenda'
+        ];
+        return view('Matkul/Agenda/indexAgendaMahasiswa', $data);
+    }
+
+    public function tableAgendaMahasiswa()
+    {
+        if ($this->request->isAJAX()) {
+            $idUser = user()->id;
+            $findMatkul = $this->mahasiswaMatkulModel->where('id_user', $idUser)->findColumn('id_matkul');
+            $idMatkul = [];
+            if ($findMatkul != null) {
+                foreach ($findMatkul as $row) {
+                    array_push($idMatkul, $row);
+                }
+            }
+            $agenda = $this->agendaModel->showAgenda($idMatkul);
+
+            $data = [
+                'agenda' => $agenda,
+            ];
+            $msg = [
+                'data' => view('Matkul/Agenda/table/tableAgendaMahasiswa', $data)
+            ];
             return json_encode($msg);
         }
     }
