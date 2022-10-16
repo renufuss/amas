@@ -500,3 +500,17 @@ function hapusJoin(id,nama){
   });
 }
 
+function tableAgendaSaya(){
+  $.ajax({
+    type: "get",
+    url: base_url + "/agenda/table",
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+

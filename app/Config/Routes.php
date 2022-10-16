@@ -70,6 +70,11 @@ $routes->get('/matkul/saya', 'Matkul::indexMatkulSaya');
 $routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya');
 $routes->post('/matkul/keluar', 'Matkul::keluarMatkul');
 
+$routes->get('/agenda', 'Matkul::indexAgendaMahasiswa');
+$routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa');
+
+
+$routes->get('/scanner', 'Scanner::index');
 
 
 /*

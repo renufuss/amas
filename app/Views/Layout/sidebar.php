@@ -45,7 +45,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="../../demo1/dist/layouts/light-sidebar.html">
+                        <a class="menu-link" href="<?= base_url('agenda'); ?>">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -85,7 +85,7 @@
             <!--begin:Menu item-->
             <div class="menu-item">
                 <!--begin:Menu link-->
-                <a class="menu-link" href="<?= base_url('matkul'); ?>">
+                <a class="menu-link" href="<?= base_url('scanner'); ?>">
                     <span class="menu-icon">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen002.svg-->
                         <span class="svg-icon svg-icon-2">
