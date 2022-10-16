@@ -504,6 +504,13 @@ class Matkul extends BaseController
                 foreach ($findMatkul as $row) {
                     array_push($idMatkul, $row);
                 }
+            } else {
+                $msg = [
+                    'data' => '<br><br><span>Anda belum bergabung ke mata kuliah manapun, Silahkan bergabung ke mata kuliah untuk menampilkan agenda</span><br><br>
+                    <span class = "text-danger">Sebentar lagi anda akan dialihkan ke halaman list mata kuliah...</span>',
+                    'redirect'=>true,
+                ];
+                return json_encode($msg);
             }
             $agenda = $this->agendaModel->showAgenda($idMatkul);
 

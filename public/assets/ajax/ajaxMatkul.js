@@ -612,6 +612,11 @@ function tableAgendaSaya(){
     dataType: "json",
     success: function (response) {
         $("#table").html(response.data);
+        if(response.redirect){
+          setTimeout(function () {
+            window.location.href = base_url +'/matkul/list';
+          }, 1200);
+        }
     },
     error: function (xhr, thrownError) {
       alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
