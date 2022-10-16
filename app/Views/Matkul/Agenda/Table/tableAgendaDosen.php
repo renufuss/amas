@@ -56,7 +56,7 @@ foreach($agenda as $row) :
                         </span>
                     </a>
                     <!-- Delete -->
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deleteMatkul('2','Pemrograman Mobile')">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deleteAgenda('<?= $row->id; ?>','<?= $row->name ?>')">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -31,6 +31,9 @@
         </div>
 <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 
+<script type="text/javascript">
+    let idMatkul = <?= json_encode($matkul->id); ?>
+</script>
 <script>
     $(document).ready(function () {
         tableMahasiswa('<?= $matkul->id;?>');

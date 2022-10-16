@@ -44,7 +44,7 @@ foreach($mahasiswa as $row) :
             <td class="desktop-only"><?= $row->npm; ?></td>
             <td class="text-center">
                 <div class="d-flex justify-content-end flex-shrink-0">
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deleteMahasiswa('<?= $row->id;?>')">
+                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="deleteMahasiswa('<?= $row->id;?>','<?= $row->first_name;?> <?= $row->last_name;?>')">
                         <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                         <span class="svg-icon svg-icon-3">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none"

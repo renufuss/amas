@@ -255,9 +255,9 @@ function tableMahasiswa(id){
   });
 }
 // begin::DeleteMHS
-function deleteMahasiswa(id) {
+function deleteMahasiswa(idMahasiswa,nama) {
   Swal.fire({
-    html: `Apakah kamu yakin ingin menghapus ${id} ?`,
+    html: `Apakah kamu yakin ingin menghapus ${nama} ?`,
     icon: "warning",
     buttonsStyling: false,
     showCancelButton: true,
@@ -272,7 +272,79 @@ function deleteMahasiswa(id) {
     if (result.isConfirmed) {
       $.ajax({
         type: "post",
-        url: base_url + "/matkul/deletemhs",
+        url: base_url + "/matkul/keluar",
+        data: {
+          idMahasiswa,idMatkul
+        },
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            tableMahasiswa();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+}
+// end::DeleteMHS
+
+
+// begin::Agenda
+function tableAgenda(id){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/table",
+    data: {
+      id:id,
+    },
+    dataType: "json",
+    success: function (response) {
+        $("#table-agenda").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+function deleteAgenda(id,nama){
+  Swal.fire({
+    html: `Apakah kamu yakin ingin menghapus ${nama} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Hapus",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/agenda/delete",
         data: {id},
         dataType: "json",
         success: function (response) {
@@ -295,31 +367,13 @@ function deleteMahasiswa(id) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            dataTableMahasiswa();
+            tableAgenda();
           }else{
             toastr.error(response.error, "Error");
           }
         }
       });
     } 
-  });
-}
-// end::DeleteMHS
-
-function tableAgenda(id){
-  $.ajax({
-    type: "post",
-    url: base_url + "/matkul/agenda/table",
-    data: {
-      id:id,
-    },
-    dataType: "json",
-    success: function (response) {
-        $("#table-agenda").html(response.data);
-    },
-    error: function (xhr, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
   });
 }
 
@@ -420,6 +474,7 @@ function statusPresent(){
     }
   });
 }
+// end::Agenda
 
 // =================================================================
 // For Mahasiswa
@@ -502,7 +557,7 @@ function tableMatkulSaya(){
   });
 }
 
-function hapusJoin(id,nama){
+function hapusJoin(idMatkul,nama){
   Swal.fire({
     html: `Apakah kamu yakin ingin keluar dari ${nama} ?`,
     icon: "warning",
@@ -520,7 +575,7 @@ function hapusJoin(id,nama){
       $.ajax({
         type: "post",
         url: base_url + "/matkul/keluar",
-        data: {id},
+        data: {idMatkul},
         dataType: "json",
         success: function (response) {
           toastr.options = {
@@ -559,6 +614,11 @@ function tableAgendaSaya(){
     dataType: "json",
     success: function (response) {
         $("#table").html(response.data);
+        if(response.redirect){
+          setTimeout(function () {
+            window.location.href = base_url +'/matkul/list';
+          }, 1200);
+        }
     },
     error: function (xhr, thrownError) {
       alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);

@@ -46,7 +46,7 @@ class AgendaModel extends Model
     public function showAgenda($idMatkul)
     {
         $table = $this->db->table($this->table);
-        $query = $table->select('agenda.*,matkul.*')->join('matkul', 'agenda.id_matkul=matkul.id')->whereIn('agenda.id_matkul', $idMatkul);
+        $query = $table->select('agenda.*,matkul.*')->join('matkul', 'agenda.id_matkul=matkul.id')->whereIn('agenda.id_matkul', $idMatkul)->where('agenda.deleted_at', null)->where('matkul.deleted_at', null);
         $data = $query->get()->getResultObject();
 
         return $data;

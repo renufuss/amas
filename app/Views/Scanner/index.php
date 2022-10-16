@@ -38,6 +38,7 @@
 
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script type="text/javascript">
+    const base_url = window.location.origin;
     var scanner = new Instascan.Scanner({
         video: document.getElementById('preview'),
         scanPeriod: 5,
@@ -45,7 +46,7 @@
     });
     scanner.addListener('scan', function (content) {
         // alert(content);
-        window.location.href = content;
+        window.location.href = base_url +'/present/agenda/' + content;
     });
     Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
