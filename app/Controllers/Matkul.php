@@ -466,18 +466,28 @@ class Matkul extends BaseController
     public function keluarMatkul()
     {
         if ($this->request->isAJAX()) {
-            $id = $this->request->getPost('id');
-            $matkul = $this->matkulModel->find($id);
+            $idMatkul = $this->request->getPost('idMatkul');
+            $idMahasiswa = $this->request->getPost('idMahasiswa');
+            $dosen = true;
+            if ($idMahasiswa == null) {
+                $idMahasiswa = user()->id;
+                $dosen = false;
+            }
+            $matkul = $this->matkulModel->find($idMatkul);
 
             if ($matkul == null) {
                 $msg['error'] = 'Gagal keluar matkul';
                 return json_encode($msg);
             }
-            $joined = $this->mahasiswaMatkulModel->where('id_user', user()->id)->where('id_matkul', $matkul->id)->first();
+            $joined = $this->mahasiswaMatkulModel->where('id_user', $idMahasiswa)->where('id_matkul', $matkul->id)->first();
 
             if ($joined != null) {
                 $this->mahasiswaMatkulModel->delete($joined->id);
-                $msg['sukses'] = 'Berhasil keluar dari mata kuliah';
+                if ($dosen != true) {
+                    $msg['sukses'] = 'Berhasil keluar dari mata kuliah';
+                } else {
+                    $msg['sukses'] = 'Berhasil menghapus mahasiswa';
+                }
             } else {
                 $msg['error'] = 'Gagal keluar matkul';
             }

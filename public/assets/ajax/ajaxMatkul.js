@@ -255,9 +255,9 @@ function tableMahasiswa(id){
   });
 }
 // begin::DeleteMHS
-function deleteMahasiswa(id) {
+function deleteMahasiswa(idMahasiswa,nama) {
   Swal.fire({
-    html: `Apakah kamu yakin ingin menghapus ${id} ?`,
+    html: `Apakah kamu yakin ingin menghapus ${nama} ?`,
     icon: "warning",
     buttonsStyling: false,
     showCancelButton: true,
@@ -272,8 +272,10 @@ function deleteMahasiswa(id) {
     if (result.isConfirmed) {
       $.ajax({
         type: "post",
-        url: base_url + "/matkul/deletemhs",
-        data: {id},
+        url: base_url + "/matkul/keluar",
+        data: {
+          idMahasiswa,idMatkul
+        },
         dataType: "json",
         success: function (response) {
           toastr.options = {
@@ -295,7 +297,7 @@ function deleteMahasiswa(id) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            dataTableMahasiswa();
+            tableMahasiswa();
           }else{
             toastr.error(response.error, "Error");
           }
@@ -555,7 +557,7 @@ function tableMatkulSaya(){
   });
 }
 
-function hapusJoin(id,nama){
+function hapusJoin(idMatkul,nama){
   Swal.fire({
     html: `Apakah kamu yakin ingin keluar dari ${nama} ?`,
     icon: "warning",
@@ -573,7 +575,7 @@ function hapusJoin(id,nama){
       $.ajax({
         type: "post",
         url: base_url + "/matkul/keluar",
-        data: {id},
+        data: {idMatkul},
         dataType: "json",
         success: function (response) {
           toastr.options = {
