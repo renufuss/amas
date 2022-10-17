@@ -235,7 +235,7 @@
 				<!--end::Menu separator-->
 				<!--begin::Menu item-->
 				<div class="menu-item px-5">
-					<a href="../../demo1/dist/authentication/flows/basic/sign-in.html" class="menu-link px-5">Keluar</a>
+					<a class="menu-link px-5" data-bs-toggle="modal" data-bs-target="#modalLogout">Keluar</a>
 				</div>
 				<!--end::Menu item-->
 			</div>
