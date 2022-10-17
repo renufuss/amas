@@ -36,7 +36,7 @@
 									<span class="required">Jam Masuk</span>
 								</label>
 								<!--end::Label-->
-									<input class="form-control form-control-solid" placeholder="Pilih jam masuk" id="jam_masuk" />
+								<input class="form-control form-control-solid" placeholder="Pilih jam masuk" id="jam_masuk" />
 								<div class="invalid-feedback" id="jam_masuk-feedback"></div>
 							</div>
 							<!-- end::col -->
@@ -51,7 +51,7 @@
 									<span class="required">Jam Telat</span>
 								</label>
 								<!--end::Label-->
-									<input class="form-control form-control-solid" placeholder="Pilih jam telat" id="jam_telat" />
+								<input class="form-control form-control-solid" placeholder="Pilih jam telat" id="jam_telat" />
 								<div class="invalid-feedback" id="jam_telat-feedback"></div>
 							</div>
 							<!-- end::col -->
@@ -66,7 +66,8 @@
 									<span class="required">Jam Selesai</span>
 								</label>
 								<!--end::Label-->
-									<input class="form-control form-control-solid" placeholder="Pilih jam selesai" id="jam_selesai" />
+								<input class="form-control form-control-solid" placeholder="Pilih jam selesai"
+									id="jam_selesai" />
 								<div class="invalid-feedback" id="jam_selesai-feedback"></div>
 							</div>
 							<!-- end::col -->
@@ -83,19 +84,41 @@
 			</div>
 		</div>
 
+		<!-- Tanggal -->
+		<?php
+        $date = date('Y-m-d H:i');
+		$minJamMasuk = strtotime('-1 day', strtotime($date));
+		$minJamMasuk = date('Y-m-d H:i', $minJamMasuk);
+		?>
+
 		<script>
 			$(document).ready(function () {
 				$("#jam_masuk").flatpickr({
 					enableTime: true,
 					dateFormat: "Y-m-d H:i",
+					disable: [{
+							from: "1000-01-01",
+							to: "<?= $minJamMasuk; ?>"
+						},
+					]
 				});
 				$("#jam_telat").flatpickr({
 					enableTime: true,
 					dateFormat: "Y-m-d H:i",
+					disable: [{
+							from: "1000-01-01",
+							to: "<?= $minJamMasuk; ?>"
+						},
+					]
 				});
 				$("#jam_selesai").flatpickr({
 					enableTime: true,
 					dateFormat: "Y-m-d H:i",
+					disable: [{
+							from: "1000-01-01",
+							to: "<?= $minJamMasuk; ?>"
+						},
+					]
 				});
 			});
 		</script>
