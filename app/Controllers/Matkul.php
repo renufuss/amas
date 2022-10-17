@@ -237,7 +237,7 @@ class Matkul extends BaseController
                     'errormsg'=> 'Gagal menambahkan agenda',
                 ];
             } else {
-                if ($data['jam_masuk']>$data['jam_telat']) {
+                if ($data['jam_masuk']>=$data['jam_telat']) {
                     $msg = [
                         'error' => [
                             'jam_masuk' => 'Jam masuk tidak boleh melebihi jam telat',
@@ -246,7 +246,7 @@ class Matkul extends BaseController
                     ];
                     return json_encode($msg);
                 }
-                if ($data['jam_masuk']>$data['jam_selesai']) {
+                if ($data['jam_masuk']>=$data['jam_selesai']) {
                     $msg = [
                         'error' => [
                             'jam_masuk' => 'Jam masuk tidak boleh melebihi jam selesai',
@@ -255,7 +255,7 @@ class Matkul extends BaseController
                     ];
                     return json_encode($msg);
                 }
-                if ($data['jam_telat']>$data['jam_selesai']) {
+                if ($data['jam_telat']>=$data['jam_selesai']) {
                     $msg = [
                         'error' => [
                             'jam_telat' => 'Jam telat tidak boleh melebihi jam selesai',
