@@ -222,12 +222,12 @@
 				<!--end::Menu separator-->
 				<!--begin::Menu item-->
 				<div class="menu-item px-5">
-					<a href="../../demo1/dist/account/overview.html" class="menu-link px-5">Profil Saya</a>
+					<a href="<?= base_url(); ?>/profil/detail" class="menu-link px-5">Profil Saya</a>
 				</div>
 				<!--end::Menu item-->
 				<!--begin::Menu item-->
 				<div class="menu-item px-5 my-1">
-					<a href="../../demo1/dist/account/settings.html" class="menu-link px-5">Pengaturan Akun</a>
+					<a href="<?= base_url(); ?>/profil/pengaturan" class="menu-link px-5">Pengaturan Akun</a>
 				</div>
 				<!--end::Menu item-->
 				<!--begin::Menu separator-->
