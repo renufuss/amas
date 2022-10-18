@@ -200,7 +200,6 @@ $('#btnSimpanProfil').click(function (e) {
         $(`#${key}-feedback`).html('');
       });
 
-      console.log(response);
 
       if (response.error) {
         // Add Feedback
@@ -402,4 +401,78 @@ $('#btnCancelPass').click(function (e) {
   $('#ganti_pass').addClass('d-none');
   $('#password').removeClass('d-none');
   $('#btnGantiPass').removeClass('d-none');
+});
+
+$('#btnSimpanPass').click(function (e) { 
+  e.preventDefault();
+  $.ajax({
+    type: "post",
+    url: base_url + "/profil/savepass",
+    data: {
+      passwordLama : $('#passwordLama').val(),
+      passwordBaru : $('#passwordBaru').val(),
+      confirmPassword : $('#confirmPassword').val(),
+    },
+    dataType: "json",
+    beforeSend: function () {
+      $("#btnSimpanPass").prop("disabled", true);
+      $("#btnSimpanPass").html(`
+      <div class="spinner-border text-primary m-1" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`);
+    },
+    complete: function () {
+      $("#btnSimpanPass").prop("disabled", false);
+      $("#btnSimpanPass").html("Simpan");
+    },
+    success: function (response) {
+      console.log(response);
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      form = {
+        passwordLama,
+        passwordBaru,
+        confirmPassword,
+      }
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        setTimeout(function () {
+          location.reload();
+        }, 1200);
+      }
+    }
+  });
 });

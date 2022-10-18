@@ -72,6 +72,7 @@ $routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
 
 $routes->get('/profil/detail', 'Pengguna::profil');
 $routes->get('/profil/pengaturan', 'Pengguna::pengaturanprofil');
+$routes->post('/profil/savepass', 'Pengguna::changePassword');
 /*
  * --------------------------------------------------------------------
  * Additional Routing

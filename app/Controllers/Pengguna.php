@@ -20,7 +20,6 @@ class Pengguna extends BaseController
 
     public function index()
     {
-
         $data = [
             'title' => 'Pengguna',
             'breadcrumb' => 'Pengguna',
@@ -70,18 +69,27 @@ class Pengguna extends BaseController
     public function edit($username)
     {
         if ($this->request->isAJAX()) {
-            $id = $this->penggunaModel->where('username', $username)->first()->id;
+            $pengguna = $this->penggunaModel->showPengguna($username);
+            $id = $pengguna->id;
             if ($id == null) {
                 $msg['errormsg'] = 'Gagal mengupdate pengguna';
                 return json_encode($msg);
             }
             $data = $this->request->getPost();
+            $data['myprofile'] = $this->request->getPost('myprofile');
             $data['id'] = $id;
             $data['image_profile'] = $this->request->getFile('image_profile');
             $exceptRules = ['email','username','password_hash'];
             if ($data['npm'] == '' || $data['npm'] == null) {
                 array_push($exceptRules, 'npm');
             }
+            if ($data['myprofile'] != '' || $data['myprofile'] != null) {
+                $role = [
+                    'role' => $pengguna->role,
+                ];
+                $data = array_merge($data, $role);
+            }
+
             if (!$this->validateData($data, $this->penggunaModel->getValidationRules(['except' => $exceptRules]), $this->penggunaModel->getValidationMessages())) {
                 $msg = [
                     'error' => $this->validator->getErrors(),
@@ -166,6 +174,60 @@ class Pengguna extends BaseController
             $this->penggunaModel->save($data);
             $msg['sukses'] = 'Berhasil reset password';
             return json_encode($msg);
+        }
+    }
+
+    public function changePassword()
+    {
+        if ($this->request->isAJAX()) {
+            $validation = \Config\Services::validation();
+            $passwordLama = $this->request->getPost('passwordLama');
+            $passwordBaru = $this->request->getPost('passwordBaru');
+            $confirmPassword = $this->request->getPost('confirmPassword');
+            $rules = [
+                'passwordLama' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Password tidak boleh kosong',
+                    ]
+                ],
+                'passwordBaru' => [
+                    'rules' => 'required|min_length[8]',
+                    'errors' => [
+                        'required' => 'Password tidak boleh kosong',
+                        'min_length' => 'Password minimal berjumlah 8 karakter',
+                    ]
+                ],
+                'confirmPassword' => [
+                    'rules' => 'required|matches[passwordBaru]',
+                    'errors' => [
+                        'required' => 'Silakan konfirmasi password anda dengan benar',
+                        'matches' => 'Silakan konfirmasi password anda dengan benar'
+                    ]
+                ],
+            ];
+            $validation->setRules($rules);
+            if (Password::verify($passwordLama, user()->password_hash) != true) {
+                $error['passwordLama'] = 'Password Lama Anda Salah';
+                $msg = [
+                    'error' => $error,
+                    'errormsg' => 'Gagal mengganti password',
+                ];
+                return json_encode($msg);
+            }
+            if ($validation->withRequest($this->request)->run()) {
+                $data['id'] = user()->id;
+                $data['password_hash'] = Password::hash($passwordBaru);
+                $this->penggunaModel->save($data);
+                $msg['sukses'] = 'Berhasil ganti password';
+                return json_encode($msg);
+            } else {
+                $msg = [
+                    'error' => $validation->getErrors(),
+                    'errormsg' => 'Gagal mengganti password',
+                ];
+                return json_encode($msg);
+            }
         }
     }
 

@@ -116,7 +116,6 @@
                     <label class="col-lg-4 fw-semibold fs-6">Role</label>
                     <div class="col-lg-8 fv-row fv-plugins-icon-container">
                         <span class="fw-bold fs-6 text-gray-800"><?= ucwords(strtolower($pengguna->role)); ?></span>
-                        <input type="hidden" name="role" id="role" value="<?= $pengguna->role; ?>">
                     </div>
                 </div>
                 <!--end::Input group-->
@@ -126,8 +125,9 @@
             <div class="card-footer d-flex justify-content-end py-6 px-9">
                 <button type="button" class="btn btn-primary" id="btnSimpanProfil">Simpan</button>
             </div>
+            <div class="role" id="role"><span id="role-feedback"></span></div>
             <!--end::Actions-->
-            <input type="hidden">
+            <input type="hidden" name="myprofile" id="myprofile" value="true">
             <div></div>
         </form>
         <!--end::Form-->
@@ -183,33 +183,34 @@
                 <!--begin::Edit-->
                 <div id="ganti_pass" class="flex-row-fluid d-none">
                     <!--begin::Form-->
-                    <form id="kt_signin_change_password" class="form" novalidate="novalidate">
                         <div class="row mb-1">
                             <div class="col-lg-4">
                                 <div class="fv-row mb-0">
-                                    <label for="currentpassword" class="form-label fs-6 fw-bold mb-3">Password Saat Ini</label>
-                                    <input type="password" class="form-control form-control-lg form-control-solid" name="currentpassword" id="currentpassword" />
+                                    <label for="passwordLama" class="form-label fs-6 fw-bold mb-3">Password Saat Ini</label>
+                                    <input type="password" class="form-control form-control-lg form-control-solid" name="passwordLama" id="passwordLama" />
+                                    <div class="fv-plugins-message-container invalid-feedback" id="passwordLama-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="fv-row mb-0">
-                                    <label for="newpassword" class="form-label fs-6 fw-bold mb-3">Password Baru</label>
-                                    <input type="password" class="form-control form-control-lg form-control-solid" name="newpassword" id="newpassword" />
+                                    <label for="passwordBaru" class="form-label fs-6 fw-bold mb-3">Password Baru</label>
+                                    <input type="password" class="form-control form-control-lg form-control-solid" name="passwordBaru" id="passwordBaru" />
+                                    <div class="fv-plugins-message-container invalid-feedback" id="passwordBaru-feedback"></div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="fv-row mb-0">
-                                    <label for="confirmpassword" class="form-label fs-6 fw-bold mb-3">Konfirmasi Password Baru</label>
-                                    <input type="password" class="form-control form-control-lg form-control-solid" name="confirmpassword" id="confirmpassword" />
+                                    <label for="confirmPassword" class="form-label fs-6 fw-bold mb-3">Konfirmasi Password Baru</label>
+                                    <input type="password" class="form-control form-control-lg form-control-solid" name="confirmPassword" id="confirmPassword" />
+                                    <div class="fv-plugins-message-container invalid-feedback" id="confirmPassword-feedback"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-text mb-5">Password minimal 8 karakter kombinasi huruf dan angka</div>
                         <div class="d-flex">
-                            <button id="btnUpdatePass" type="button" class="btn btn-primary me-2 px-6">Update Password</button>
+                            <button id="btnSimpanPass" type="button" class="btn btn-primary me-2 px-6">Simpan Password</button>
                             <button id="btnCancelPass" type="button" class="btn btn-color-gray-400 btn-active-light-primary px-6">Cancel</button>
                         </div>
-                    </form>
                     <!--end::Form-->
                 </div>
                 <!--end::Edit-->

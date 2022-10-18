@@ -301,23 +301,8 @@ class Matkul extends BaseController
         }
     }
 
-    public function deletemhs()
-    {
-        if ($this->request->isAJAX()) {
-            $idUser = $this->request->getPost('id_user');
-            
-            $mahasiswaMatkulModel = $this->mahasiswaMatkulModel->where('id_user', $idUser);
-            if ($mahasiswaMatkulModel != null) {
-                $this->mahasiswaMatkulModel->delete($id);
-                $msg['sukses'] = 'Berhasil menghapus mahasiswa';
-            } else {
-                $msg['error'] = 'Gagal menghapus mahasiswa';
-            }
-            return json_encode($msg);
-        }
-    }
 
-    
+
 
     // =====================================================================================
     // For Mahasiswa
