@@ -388,3 +388,18 @@ $('#btnResetPassword').click(function (e) {
 });
 
 // end::Button Edit
+
+// Ganti Password Pengguna
+$('#btnGantiPass').click(function (e) { 
+  e.preventDefault();
+  $('#ganti_pass').removeClass('d-none');
+  $('#password').addClass('d-none');
+  $('#btnGantiPass').addClass('d-none');
+});
+
+$('#btnCancelPass').click(function (e) { 
+  e.preventDefault();
+  $('#ganti_pass').addClass('d-none');
+  $('#password').removeClass('d-none');
+  $('#btnGantiPass').removeClass('d-none');
+});

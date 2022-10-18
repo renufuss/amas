@@ -220,4 +220,36 @@ class Pengguna extends BaseController
 
         return view('Pengguna/Pengaturan/index', $data);
     }
+
+    public function profil()
+    {
+        $pengguna = $this->penggunaModel->showPengguna(user()->username);
+        $data = [
+            'title' => 'Profil',
+            'breadcrumb' => 'Profil Pengguna',
+            'navDetail' => true,
+            'navPengaturan' => false,
+            'pengguna' => $pengguna,
+        ];
+
+        return view('Profil/index', $data);
+    }
+
+    public function pengaturanprofil()
+    {
+        $pengguna = $this->penggunaModel->showPengguna(user()->username);
+        if ($pengguna == null) {
+            return redirect()->to('/profil');
+        }
+        $data = [
+            'title' => 'Profil',
+            'breadcrumb' => 'Pengaturan Profil',
+            'navDetail' => false,
+            'navPengaturan' => true,
+            'pengguna' => $pengguna,
+            'role' => $this->groupModel->orderBy('name', 'ASC')->findAll(),
+        ];
+
+        return view('Profil/Pengaturan/index', $data);
+    }
 }
