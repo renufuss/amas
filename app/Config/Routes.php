@@ -70,13 +70,15 @@ $routes->post('/matkul/join', 'Matkul::joinMatkul');
 $routes->get('/matkul/saya', 'Matkul::indexMatkulSaya');
 $routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya');
 $routes->post('/matkul/keluar', 'Matkul::keluarMatkul');
+$routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
 
 $routes->get('/agenda', 'Matkul::indexAgendaMahasiswa');
 $routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa');
 
 
 $routes->get('/scanner', 'Scanner::index');
-$routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
+$routes->post('/scanner/present', 'Matkul::changeStatus');
+$routes->get('/thankyou/(:segment)/(:segment)', 'Matkul::thankyouIndex/$1/$2');
 
 $routes->get('/profil/detail', 'Pengguna::deletemhs');
 $routes->get('/profil/pengaturan', 'Pengguna::deletemhs');

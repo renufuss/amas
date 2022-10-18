@@ -3,7 +3,6 @@ const base_url = window.location.origin;
 
 // ==================================================================
 // For Dosen
-
 function datamatkul() {
   $.ajax({
       type: "get",
@@ -308,7 +307,6 @@ function deleteMahasiswa(idMahasiswa,nama) {
 }
 // end::DeleteMHS
 
-
 // begin::Agenda
 function tableAgenda(id){
   $.ajax({
@@ -474,6 +472,105 @@ function statusPresent(){
     }
   });
 }
+
+
+$('#btnUbahAgenda').click(function (e) { 
+  e.preventDefault();
+  $('#detailAgenda').addClass('d-none');
+  $('#formAgenda').removeClass('d-none');
+});
+
+$('#cancelSimpanAgenda').click(function (e) { 
+  e.preventDefault();
+  $('#formAgenda').addClass('d-none');
+  $('#detailAgenda').removeClass('d-none');
+});
+
+$('#btnSimpanUbahAgenda').click(function (e) { 
+  e.preventDefault();
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/simpan",
+    data: {
+      id : id,
+      name : $('#name').val(),
+      jam_masuk : $('#jam_masuk').val(),
+      jam_telat : $('#jam_telat').val(),
+      jam_selesai : $('#jam_selesai').val(),
+    },
+    dataType: "json",
+    beforeSend: function () {
+      $("#btnSimpanUbahAgenda").html(`
+              <div class="spinner-border text-primary m-1" role="status">
+              <span class="sr-only">Loading...</span>
+              </div>
+              `);
+      $("#btnSimpanUbahAgenda").prop('disabled', true);
+    },
+    complete: function () {
+      $("#btnSimpanUbahAgenda").html(`Simpan`);
+      $("#btnSimpanUbahAgenda").prop('disabled', false);
+    },
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      // Remove Feedback
+      form = {
+        name,
+        jam_masuk,
+        jam_telat,
+        jam_selesai,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        Object.entries(form).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).val('');
+        });
+        toastr.success(response.sukses, "Sukses");
+        setTimeout(function () {
+          location.reload();
+        }, 1200);
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+  
+});
 // end::Agenda
 
 // =================================================================
@@ -625,4 +722,6 @@ function tableAgendaSaya(){
     },
   });
 }
+
+
 

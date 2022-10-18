@@ -25,10 +25,10 @@
         <!--end::Camera container-->
         <div class="btn-group btn-group-toggle mb-5 mobile-only" data-toggle="buttons">
             <label class="btn btn-primary active">
-                <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+                <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
             </label>
             <label class="btn btn-secondary">
-                <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+                <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
             </label>
         </div>
     </div>
@@ -46,11 +46,50 @@
     });
     scanner.addListener('scan', function (content) {
         // alert(content);
-        window.location.href = base_url +'/present/agenda/' + content;
+        // window.location.href = base_url +'/present/agenda/' + content;
+        $.ajax({
+            type: "post",
+            url: base_url + "/scanner/present",
+            data: {
+                id : content,
+            },
+            dataType: "json",
+            success: function (response) {
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        };
+            if(response.sukses){
+            toastr.success(response.sukses, "Sukses");
+            setTimeout(function () {
+                window.location.href = base_url +'/thankyou/' + response.idAgenda + '/' + response.idMahasiswaAgenda;
+            }, 1200);
+            }
+
+            if(response.error){
+                toastr.error(response.error, "Error");
+            }
+            },error: function (xhr, thrownError) {
+                alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+            },
+        });
     });
     Instascan.Camera.getCameras().then(function (cameras) {
         if (cameras.length > 0) {
-            scanner.start(cameras[0]);
+            scanner.start(cameras[1]);
             $('[name="options"]').on('change', function () {
                 if ($(this).val() == 1) {
                     if (cameras[0] != "") {
