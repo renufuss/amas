@@ -473,6 +473,21 @@ function statusPresent(){
   });
 }
 
+function tableListPresent(){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/status/table",
+    data: {id},
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
 
 $('#btnUbahAgenda').click(function (e) { 
   e.preventDefault();

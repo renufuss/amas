@@ -346,43 +346,50 @@ class Matkul extends BaseController
         return view('Matkul/Agenda/QR/index', $data);
     }
 
-    public function statusPresent()
+    public function statusMahasiswa()
     {
-        if ($this->request->isAJAX()) {
-            $agenda = $this->agendaModel->find($this->request->getPost('id'));
-            $idMatkul = $agenda->id_matkul;
-            $mahasiswa = $this->mahasiswaMatkulModel->showMahasiswa($idMatkul);
-            $cekStatus = $this->mahasiswaAgendaModel->where('id_agenda', $agenda->id)->findAll();
-            $izin = [];
-            $terlambat = [];
-            $hadir = [];
-            $belum_absen = [];
-            if ($mahasiswa != null) {
-                foreach ($mahasiswa as $mhsRow) {
-                    if ($cekStatus != null) {
-                        foreach ($cekStatus as $cekRow) {
-                            if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
-                                array_push($izin, $mhsRow);
-                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
-                                array_push($terlambat, $mhsRow);
-                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
-                                array_push($hadir, $mhsRow);
-                            } else {
-                                array_push($belum_absen, $mhsRow);
-                            }
+        $agenda = $this->agendaModel->find($this->request->getPost('id'));
+        $idMatkul = $agenda->id_matkul;
+        $mahasiswa = $this->mahasiswaMatkulModel->showMahasiswa($idMatkul);
+        $cekStatus = $this->mahasiswaAgendaModel->where('id_agenda', $agenda->id)->findAll();
+        $izin = [];
+        $terlambat = [];
+        $hadir = [];
+        $belum_absen = [];
+        if ($mahasiswa != null) {
+            foreach ($mahasiswa as $mhsRow) {
+                if ($cekStatus != null) {
+                    foreach ($cekStatus as $cekRow) {
+                        if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
+                            array_push($izin, $mhsRow);
+                        } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
+                            array_push($terlambat, $mhsRow);
+                        } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
+                            array_push($hadir, $mhsRow);
+                        } else {
+                            array_push($belum_absen, $mhsRow);
                         }
-                    } else {
-                        array_push($belum_absen, $mhsRow);
                     }
+                } else {
+                    array_push($belum_absen, $mhsRow);
                 }
             }
+        }
 
-            $data = [
-                'izin' => $izin,
-                'terlambat' => $terlambat,
-                'hadir' => $hadir,
-                'belum_absen' => $belum_absen,
-            ];
+        $data = [
+            'izin' => $izin,
+            'terlambat' => $terlambat,
+            'hadir' => $hadir,
+            'belum_absen' => $belum_absen,
+        ];
+
+        return $data;
+    }
+
+    public function statusPresent()
+    {
+        $data = $this->statusMahasiswa();
+        if ($this->request->isAJAX()) {
             $msg = [
                 'izin' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaIzin', $data),
                 'terlambat' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaTerlambat', $data),
@@ -465,6 +472,31 @@ class Matkul extends BaseController
             return view('Scanner/Thankyou/success', $data);
         } elseif ($mahasiswaAgenda->status == 2) {
             return view('Scanner/Thankyou/warning', $data);
+        }
+    }
+
+    public function listStatusMahasiswaIndex($id)
+    {
+        $agenda = $this->agendaModel->find($id);
+        if ($agenda == null) {
+            return redirect()->to('/agenda');
+        }
+        $data = [
+            'title' => 'Agenda | '.ucwords(strtolower($agenda->name)),
+            'breadcrumb' => 'List Mahasiswa',
+            'agenda' => $agenda,
+        ];
+        return view('Matkul/Agenda/Status/index', $data);
+    }
+
+    public function tableStatusMahasiswa()
+    {
+        if ($this->request->isAJAX()) {
+            $data = $this->statusMahasiswa();
+            $msg = [
+                'data' => view('Matkul/Agenda/Status/Table/tableStatus', $data)
+            ];
+            return json_encode($msg);
         }
     }
 

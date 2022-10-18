@@ -59,8 +59,10 @@ $routes->post('/matkul/agenda/table', 'Matkul::tableAgendaDosen');
 $routes->post('/matkul/agenda/simpan', 'Matkul::simpanAgenda');
 $routes->post('/matkul/agenda/delete', 'Matkul::deleteAgenda');
 $routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1');
-$routes->get('/matkul/qr/(:segment)', 'Matkul::indexQR/$1');
+$routes->get('/matkul/agenda/qr/(:segment)', 'Matkul::indexQR/$1');
 $routes->post('/matkul/qr', 'Matkul::statusPresent');
+$routes->get('/matkul/agenda/status/(:segment)', 'Matkul::listStatusMahasiswaIndex/$1');
+$routes->post('/matkul/agenda/status/table', 'Matkul::tableStatusMahasiswa');
 
 $routes->get('/matkul/list', 'Matkul::indexListMatkul');
 $routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
