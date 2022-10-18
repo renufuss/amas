@@ -3,7 +3,6 @@ const base_url = window.location.origin;
 
 // ==================================================================
 // For Dosen
-
 function datamatkul() {
   $.ajax({
       type: "get",
@@ -255,9 +254,9 @@ function tableMahasiswa(id){
   });
 }
 // begin::DeleteMHS
-function deleteMahasiswa(id) {
+function deleteMahasiswa(idMahasiswa,nama) {
   Swal.fire({
-    html: `Apakah kamu yakin ingin menghapus ${id} ?`,
+    html: `Apakah kamu yakin ingin menghapus ${nama} ?`,
     icon: "warning",
     buttonsStyling: false,
     showCancelButton: true,
@@ -272,7 +271,78 @@ function deleteMahasiswa(id) {
     if (result.isConfirmed) {
       $.ajax({
         type: "post",
-        url: base_url + "/matkul/deletemhs",
+        url: base_url + "/matkul/keluar",
+        data: {
+          idMahasiswa,idMatkul
+        },
+        dataType: "json",
+        success: function (response) {
+          toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toastr-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "1500",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          };
+          if(!response.error){
+            toastr.success(response.sukses, "Sukses");
+            tableMahasiswa();
+          }else{
+            toastr.error(response.error, "Error");
+          }
+        }
+      });
+    } 
+  });
+}
+// end::DeleteMHS
+
+// begin::Agenda
+function tableAgenda(id){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/table",
+    data: {
+      id:id,
+    },
+    dataType: "json",
+    success: function (response) {
+        $("#table-agenda").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+function deleteAgenda(id,nama){
+  Swal.fire({
+    html: `Apakah kamu yakin ingin menghapus ${nama} ?`,
+    icon: "warning",
+    buttonsStyling: false,
+    showCancelButton: true,
+    confirmButtonText: "Iya, Hapus",
+    cancelButtonText: 'Batal',
+    reverseButtons: true,
+    customClass: {
+      confirmButton: "btn btn-primary",
+      cancelButton: 'btn btn-danger'
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        type: "post",
+        url: base_url + "/matkul/agenda/delete",
         data: {id},
         dataType: "json",
         success: function (response) {
@@ -295,31 +365,13 @@ function deleteMahasiswa(id) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            dataTableMahasiswa();
+            tableAgenda();
           }else{
             toastr.error(response.error, "Error");
           }
         }
       });
     } 
-  });
-}
-// end::DeleteMHS
-
-function tableAgenda(id){
-  $.ajax({
-    type: "post",
-    url: base_url + "/matkul/agenda/table",
-    data: {
-      id:id,
-    },
-    dataType: "json",
-    success: function (response) {
-        $("#table-agenda").html(response.data);
-    },
-    error: function (xhr, thrownError) {
-      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
-    },
   });
 }
 
@@ -397,7 +449,7 @@ $('#btnSimpanAgenda').click(function (e) {
           $(`#${key}`).val('');
         });
         toastr.success(response.sukses, "Sukses");
-        tableAgenda();
+        tableAgenda(idMatkul);
       }
     },
     error: function (xhr, thrownError) {
@@ -405,6 +457,121 @@ $('#btnSimpanAgenda').click(function (e) {
     },
   });
 });
+
+function statusPresent(){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/qr",
+    data: {id},
+    dataType: "json",
+    success: function (response) {
+      $('#izin').html(response.izin);
+      $('#terlambat').html(response.terlambat);
+      $('#hadir').html(response.hadir);
+      $('#belumAbsen').html(response.belum_absen);
+    }
+  });
+}
+
+
+$('#btnUbahAgenda').click(function (e) { 
+  e.preventDefault();
+  $('#detailAgenda').addClass('d-none');
+  $('#formAgenda').removeClass('d-none');
+});
+
+$('#cancelSimpanAgenda').click(function (e) { 
+  e.preventDefault();
+  $('#formAgenda').addClass('d-none');
+  $('#detailAgenda').removeClass('d-none');
+});
+
+$('#btnSimpanUbahAgenda').click(function (e) { 
+  e.preventDefault();
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/simpan",
+    data: {
+      id : id,
+      name : $('#name').val(),
+      jam_masuk : $('#jam_masuk').val(),
+      jam_telat : $('#jam_telat').val(),
+      jam_selesai : $('#jam_selesai').val(),
+    },
+    dataType: "json",
+    beforeSend: function () {
+      $("#btnSimpanUbahAgenda").html(`
+              <div class="spinner-border text-primary m-1" role="status">
+              <span class="sr-only">Loading...</span>
+              </div>
+              `);
+      $("#btnSimpanUbahAgenda").prop('disabled', true);
+    },
+    complete: function () {
+      $("#btnSimpanUbahAgenda").html(`Simpan`);
+      $("#btnSimpanUbahAgenda").prop('disabled', false);
+    },
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      // Remove Feedback
+      form = {
+        name,
+        jam_masuk,
+        jam_telat,
+        jam_selesai,
+      };
+      Object.entries(form).forEach(entry => {
+        const [key, value] = entry;
+        $(`#${key}`).removeClass('is-invalid');
+        $(`#${key}-feedback`).html('');
+      });
+
+      if (response.error) {
+        // Add Feedback
+        Object.entries(response.error).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).addClass('is-invalid');
+          $(`#${key}-feedback`).html(value);
+        });
+
+        toastr.error(response.errormsg, "Error");
+      }
+
+      if (response.sukses) {
+        Object.entries(form).forEach(entry => {
+          const [key, value] = entry;
+          $(`#${key}`).val('');
+        });
+        toastr.success(response.sukses, "Sukses");
+        setTimeout(function () {
+          location.reload();
+        }, 1200);
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+  
+});
+// end::Agenda
 
 // =================================================================
 // For Mahasiswa
@@ -487,7 +654,7 @@ function tableMatkulSaya(){
   });
 }
 
-function hapusJoin(id,nama){
+function hapusJoin(idMatkul,nama){
   Swal.fire({
     html: `Apakah kamu yakin ingin keluar dari ${nama} ?`,
     icon: "warning",
@@ -505,7 +672,7 @@ function hapusJoin(id,nama){
       $.ajax({
         type: "post",
         url: base_url + "/matkul/keluar",
-        data: {id},
+        data: {idMatkul},
         dataType: "json",
         success: function (response) {
           toastr.options = {
@@ -536,4 +703,25 @@ function hapusJoin(id,nama){
     } 
   });
 }
+
+function tableAgendaSaya(){
+  $.ajax({
+    type: "get",
+    url: base_url + "/agenda/table",
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
+        if(response.redirect){
+          setTimeout(function () {
+            window.location.href = base_url +'/matkul/list';
+          }, 1200);
+        }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+
 

@@ -110,6 +110,9 @@
 		</div>
 		<!--end::App-->
 
+		<!--begin::ModalLogout-->
+		<?php include('modalLogout.php');?>
+		<!--end::ModalLogout-->
 		
 		<!--begin::Javascript-->
 		<!--begin::Global Javascript Bundle(used by all pages)-->

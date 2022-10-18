@@ -22,7 +22,7 @@
             <!-- end::Export Excel -->
         </div>
             </div>
-            <!--begin::Card header-->
+            <!--end::Card header-->
             <!--begin::Card body-->
             <div class="card-body p-9">
                <div id="table-mahasiswa"></div>
@@ -31,6 +31,9 @@
         </div>
 <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 
+<script type="text/javascript">
+    let idMatkul = <?= json_encode($matkul->id); ?>
+</script>
 <script>
     $(document).ready(function () {
         tableMahasiswa('<?= $matkul->id;?>');

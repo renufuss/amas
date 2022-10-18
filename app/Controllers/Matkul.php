@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\MahasiswaMatkulModel;
 use App\Models\MatkulModel;
 use App\Models\AgendaModel;
-
+use App\Models\MahasiswaAgenda;
 // QR Code
 use Endroid\QrCode\Color\Color;
 use Endroid\QrCode\Encoding\Encoding;
@@ -24,12 +24,14 @@ class Matkul extends BaseController
     protected $mahasiswaMatkulModel;
     protected $agendaModel;
     protected $urlEncryption;
+    protected $mahasiswaAgendaModel;
     public function __construct()
     {
         $this->matkulModel = new MatkulModel();
         $this->mahasiswaMatkulModel = new MahasiswaMatkulModel();
         $this->agendaModel = new AgendaModel();
         $this->urlEncryption = new UrlEncryption();
+        $this->mahasiswaAgendaModel = new MahasiswaAgenda();
     }
 
     // =====================================================================================
@@ -211,13 +213,15 @@ class Matkul extends BaseController
         return view('Matkul/Agenda/index', $data);
     }
 
-    public function tableAgenda()
+    public function tableAgendaDosen()
     {
         if ($this->request->isAJAX()) {
             $id = $this->request->getPost('id');
-
+            $data = [
+                'agenda' => $this->agendaModel->where('id_matkul', $id)->findAll(),
+            ];
             $msg = [
-                'data' => view('Matkul/Agenda/Table/tableAgenda')
+                'data' => view('Matkul/Agenda/Table/tableAgendaDosen', $data)
             ];
             echo json_encode($msg);
         }
@@ -226,6 +230,10 @@ class Matkul extends BaseController
     public function simpanAgenda()
     {
         if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('id');
+            if ($id != null || $id != '') {
+                $data['id'] = $id;
+            }
             $data = $this->request->getPost();
             if (!$this->validateData($data, $this->agendaModel->getValidationRules(), $this->agendaModel->getValidationMessages())) {
                 $msg = [
@@ -233,50 +241,60 @@ class Matkul extends BaseController
                     'errormsg'=> 'Gagal menambahkan agenda',
                 ];
             } else {
-                if ($data['jam_masuk']>$data['jam_telat']) {
+                if ($data['jam_masuk']>=$data['jam_telat']) {
                     $msg = [
-                        'error' => 'Jam masuk tidak boleh melebihi jam telat',
+                        'error' => [
+                            'jam_masuk' => 'Jam masuk tidak boleh melebihi jam telat',
+                        ],
                         'errormsg'=> 'Gagal menambahkan agenda',
                     ];
                     return json_encode($msg);
                 }
-                if ($data['jam_masuk']>$data['jam_selesai']) {
+                if ($data['jam_masuk']>=$data['jam_selesai']) {
                     $msg = [
-                        'error' => 'Jam masuk tidak boleh melebihi jam selesai',
+                        'error' => [
+                            'jam_masuk' => 'Jam masuk tidak boleh melebihi jam selesai',
+                        ],
                         'errormsg'=> 'Gagal menambahkan agenda',
                     ];
                     return json_encode($msg);
                 }
-                if ($data['jam_telat']>$data['jam_selesai']) {
+                if ($data['jam_telat']>=$data['jam_selesai']) {
                     $msg = [
-                        'error' => 'Jam telat tidak boleh melebihi jam selesai',
+                        'error' => [
+                            'jam_telat' => 'Jam telat tidak boleh melebihi jam selesai',
+                        ],
                         'errormsg'=> 'Gagal menambahkan agenda',
                     ];
                     return json_encode($msg);
                 }
                 $this->agendaModel->save($data);
+                $msg['sukses'] = 'Berhasil menyimpan agenda';
+
+                if ($id != null) { //kalau edit, tidak generate qr
+                    return json_encode($msg);
+                }
 
                 //generate QR
                 $writer = new PngWriter();
 
                 // Create QR code
-                $url = 'present/agenda';
-                $qrCode = QrCode::create(base_url($this->urlEncryption->encryptUrl($url).'/'.$this->urlEncryption->encryptUrl($this->agendaModel->getInsertID())))
+                $qrCode = QrCode::create($this->urlEncryption->encryptUrl($this->agendaModel->getInsertID()))
                     ->setEncoding(new Encoding('UTF-8'))
                     ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
-                    ->setSize(300)
-                    ->setMargin(10)
+                    ->setSize(800)
+                    ->setMargin(50)
                     ->setRoundBlockSizeMode(new RoundBlockSizeModeMargin())
-                    ->setForegroundColor(new Color(0, 0, 0))
-                    ->setBackgroundColor(new Color(255, 255, 255));
+                    ->setForegroundColor(new Color(22, 169, 248))
+                    ->setBackgroundColor(new Color(241, 250, 255));
 
                 // Create generic logo
-                $logo = Logo::create(FCPATH .'/assets/amas/ALogo.png')
-                    ->setResizeToWidth(50);
+                $logo = Logo::create(FCPATH .'/assets/amas/default_logo_qr.png')
+                    ->setResizeToWidth(200);
 
                 // Create generic label
                 $label = Label::create('Amas QrCode')
-                    ->setTextColor(new Color(2, 40, 123));
+                    ->setTextColor(new Color(22, 169, 248));
 
                 $result = $writer->write($qrCode, $logo, $label);
 
@@ -294,14 +312,161 @@ class Matkul extends BaseController
                     'qr' => $nameQR,
                 ];
                 $this->agendaModel->save($qr);
-
-                $msg['sukses'] = 'Berhasil menambahkan agenda';
             }
             return json_encode($msg);
         }
     }
 
+    public function deleteAgenda()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('id');
+            $matkul = $this->agendaModel->find($id);
+            if ($matkul != null) {
+                $this->agendaModel->delete($id);
+                $msg['sukses'] = 'Berhasil menghapus agenda';
+            } else {
+                $msg['error'] = 'Gagal menghapus agenda';
+            }
+            return json_encode($msg);
+        }
+    }
 
+    public function indexQR($id)
+    {
+        $agenda = $this->agendaModel->find($id);
+        if ($agenda == null) {
+            return redirect()->to('/agenda');
+        }
+        $data = [
+            'title' => 'Agenda | '.ucwords(strtolower($agenda->name)),
+            'breadcrumb' => 'QR Mata Kuliah',
+            'agenda' => $agenda,
+        ];
+        return view('Matkul/Agenda/QR/index', $data);
+    }
+
+    public function statusPresent()
+    {
+        if ($this->request->isAJAX()) {
+            $agenda = $this->agendaModel->find($this->request->getPost('id'));
+            $idMatkul = $agenda->id_matkul;
+            $mahasiswa = $this->mahasiswaMatkulModel->showMahasiswa($idMatkul);
+            $cekStatus = $this->mahasiswaAgendaModel->where('id_agenda', $agenda->id)->findAll();
+            $izin = [];
+            $terlambat = [];
+            $hadir = [];
+            $belum_absen = [];
+            if ($mahasiswa != null) {
+                foreach ($mahasiswa as $mhsRow) {
+                    if ($cekStatus != null) {
+                        foreach ($cekStatus as $cekRow) {
+                            if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
+                                array_push($izin, $mhsRow);
+                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
+                                array_push($terlambat, $mhsRow);
+                            } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
+                                array_push($hadir, $mhsRow);
+                            } else {
+                                array_push($belum_absen, $mhsRow);
+                            }
+                        }
+                    } else {
+                        array_push($belum_absen, $mhsRow);
+                    }
+                }
+            }
+
+            $data = [
+                'izin' => $izin,
+                'terlambat' => $terlambat,
+                'hadir' => $hadir,
+                'belum_absen' => $belum_absen,
+            ];
+            $msg = [
+                'izin' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaIzin', $data),
+                'terlambat' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaTerlambat', $data),
+                'hadir' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaHadir', $data),
+                'belum_absen' => view('Matkul/Agenda/QR/listMahasiswaStatus/listMahasiswaBelumAbsen', $data),
+            ];
+            return json_encode($msg);
+        }
+    }
+
+    public function changeStatus()
+    {
+        if ($this->request->isAJAX()) {
+            $idAgenda = $this->request->getPost('id');
+            $id = $this->urlEncryption->decryptUrl($idAgenda);
+            $agenda = $this->agendaModel->find($id);
+            if ($agenda != null) {
+                $cekJoinMatkul = $this->mahasiswaMatkulModel->where('id_matkul', $agenda->id_matkul)->where('id_user', user()->id)->first();
+                if ($cekJoinMatkul != null) {
+                    $cekStatusPresensi = $this->mahasiswaAgendaModel->where('id_mahasiswa_matkul', $cekJoinMatkul->id)->where('id_agenda', $agenda->id)->first();
+                    if ($cekStatusPresensi != null && $cekStatusPresensi->status != 4) {
+                        $data['id'] = $cekStatusPresensi->id;
+                    } elseif ($cekStatusPresensi != null && $cekStatusPresensi->status == 4) {
+                        $msg['error'] = 'Anda sudah melakukan presensi, anda tidak perlu mengulangi presensi...';
+                        return json_encode($msg);
+                    }
+                    if (date('Y-m-d H:i:s') < $agenda->jam_masuk) {
+                        $msg['error'] = 'Anda belum bisa melakukan presensi...';
+                        return json_encode($msg);
+                    } elseif (date('Y-m-d H:i:s') > $agenda->jam_telat && date('Y-m-d H:i:s') <= $agenda->jam_selesai) {
+                        $data['status'] = 2;
+                    } elseif (date('Y-m-d H:i:s') > $agenda->jam_selesai) {
+                        $msg['error'] = 'Anda tidak bisa melakukan presensi, karena waktu sudah berakhir...';
+                        return json_encode($msg);
+                    } elseif (date('Y-m-d H:i:s') >= $agenda->jam_masuk && date('Y-m-d H:i:s') < $agenda->jam_telat) {
+                        $data['status'] = 4;
+                    }
+                    $data['id_mahasiswa_matkul'] = $cekJoinMatkul->id;
+                    $data['id_agenda'] = $agenda->id;
+                    $msg['sukses'] = 'Berhasil melakukan presensi';
+                    $this->mahasiswaAgendaModel->save($data);
+
+                    $idMahasiswaAgenda = $this->urlEncryption->encryptUrl($this->mahasiswaAgendaModel->where('id_mahasiswa_matkul', $cekJoinMatkul->id)->where('id_agenda', $agenda->id)->first()->id);
+                    $msg = [
+                        'sukses' => 'Sukses melakukan presensi',
+                        'idAgenda' => $idAgenda,
+                        'idMahasiswaAgenda' => $idMahasiswaAgenda,
+                    ];
+                    return json_encode($msg);
+                } else {
+                    $msg['error'] = 'Gagal melakukan presensi, Agenda belum tergabung mata kuliah...';
+                    return json_encode($msg);
+                }
+            } else {
+                $msg['error'] = 'Gagal melakukan presensi, Agenda tidak ditemukan...';
+                return json_encode($msg);
+            }
+        }
+    }
+
+    public function thankyouIndex($idAgenda, $idMahasiswaAgenda)
+    {
+        $idAgenda = $this->urlEncryption->decryptUrl($idAgenda);
+        $idMahasiswaAgenda = $this->urlEncryption->decryptUrl($idMahasiswaAgenda);
+        $agenda = $this->agendaModel->find($idAgenda);
+        $mahasiswaAgenda = $this->mahasiswaAgendaModel->find($idMahasiswaAgenda);
+        if ($idAgenda == false || $idMahasiswaAgenda == false) {
+            return redirect()->to(base_url());
+        } else {
+            $cekJoinMatkul = $this->mahasiswaMatkulModel->where('id_matkul', $agenda->id_matkul)->where('id_user', user()->id)->first();
+            if ($cekJoinMatkul->id != $mahasiswaAgenda->id_mahasiswa_matkul) {
+                return redirect()->to(base_url());
+            }
+        }
+        $data = [
+            'agenda' => $agenda,
+            'mahasiswaAgenda' => $mahasiswaAgenda,
+        ];
+        if ($mahasiswaAgenda->status == 4) {
+            return view('Scanner/Thankyou/success', $data);
+        } elseif ($mahasiswaAgenda->status == 2) {
+            return view('Scanner/Thankyou/warning', $data);
+        }
+    }
 
 
     // =====================================================================================
@@ -340,9 +505,17 @@ class Matkul extends BaseController
                 $msg['error'] = 'Gagal join matkul';
                 return json_encode($msg);
             }
+            $cekJoin = $this->mahasiswaMatkulModel->where('id_user', user()->id)->where('id_matkul', $id)->withDeleted()->first();
+            if ($cekJoin != null) {
+                $idJoin = $cekJoin->id;
+            } else {
+                $idJoin = null;
+            }
             $data = [
+                'id' => $idJoin,
                 'id_user' => user()->id,
                 'id_matkul' => $id,
+                'deleted_at' => null,
             ];
             $this->mahasiswaMatkulModel->save($data);
             $msg['sukses'] = 'Berhasil bergabung dengan mata kuliah';
@@ -376,21 +549,70 @@ class Matkul extends BaseController
     public function keluarMatkul()
     {
         if ($this->request->isAJAX()) {
-            $id = $this->request->getPost('id');
-            $matkul = $this->matkulModel->find($id);
+            $idMatkul = $this->request->getPost('idMatkul');
+            $idMahasiswa = $this->request->getPost('idMahasiswa');
+            $dosen = true;
+            if ($idMahasiswa == null) {
+                $idMahasiswa = user()->id;
+                $dosen = false;
+            }
+            $matkul = $this->matkulModel->find($idMatkul);
 
             if ($matkul == null) {
                 $msg['error'] = 'Gagal keluar matkul';
                 return json_encode($msg);
             }
-            $joined = $this->mahasiswaMatkulModel->where('id_user', user()->id)->where('id_matkul', $matkul->id)->first();
+            $joined = $this->mahasiswaMatkulModel->where('id_user', $idMahasiswa)->where('id_matkul', $matkul->id)->first();
 
             if ($joined != null) {
                 $this->mahasiswaMatkulModel->delete($joined->id);
-                $msg['sukses'] = 'Berhasil keluar dari mata kuliah';
+                if ($dosen != true) {
+                    $msg['sukses'] = 'Berhasil keluar dari mata kuliah';
+                } else {
+                    $msg['sukses'] = 'Berhasil menghapus mahasiswa';
+                }
             } else {
                 $msg['error'] = 'Gagal keluar matkul';
             }
+            return json_encode($msg);
+        }
+    }
+
+    public function indexAgendaMahasiswa()
+    {
+        $data= [
+            'title' => 'Agenda',
+            'breadcrumb' => 'Agenda'
+        ];
+        return view('Matkul/Agenda/indexAgendaMahasiswa', $data);
+    }
+
+    public function tableAgendaMahasiswa()
+    {
+        if ($this->request->isAJAX()) {
+            $idUser = user()->id;
+            $findMatkul = $this->mahasiswaMatkulModel->where('id_user', $idUser)->findColumn('id_matkul');
+            $idMatkul = [];
+            if ($findMatkul != null) {
+                foreach ($findMatkul as $row) {
+                    array_push($idMatkul, $row);
+                }
+            } else {
+                $msg = [
+                    'data' => '<br><br><span>Anda belum bergabung ke mata kuliah manapun, Silahkan bergabung ke mata kuliah untuk menampilkan agenda</span><br><br>
+                    <span class = "text-danger">Sebentar lagi anda akan dialihkan ke halaman list mata kuliah...</span>',
+                    'redirect'=>true,
+                ];
+                return json_encode($msg);
+            }
+            $agenda = $this->agendaModel->showAgenda($idMatkul);
+
+            $data = [
+                'agenda' => $agenda,
+            ];
+            $msg = [
+                'data' => view('Matkul/Agenda/table/tableAgendaMahasiswa', $data)
+            ];
             return json_encode($msg);
         }
     }
