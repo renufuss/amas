@@ -114,8 +114,30 @@
         <!--end::Card-->
     </div>
 
+    <!-- Update Agenda -->
+    <div class="col-lg-12 col-12">
+        <!--begin::Card-->
+        <div class="card mb-5 mb-xl-8">
+            <!--begin::Card header-->
+            <div class="card-header">
+                <!--begin::Card title-->
+                <div class="card-title m-0">
+                    <h3 class="fw-bold m-0">Agenda</h3>
+                </div>
+                <!--end::Card title-->
+            </div>
+            <!--end::Card header-->
+            <!--begin::Card Body-->
+            <div class="card-body py-3">
+                <?php include('update/updateAgenda.php') ?>
+            </div>
+            <!--end::Card Body-->
+        </div>
+        <!--end::Card-->
+    </div>
+
 </div>
-</div>
+
 
 <script type="text/javascript">
     let id = <?= json_encode($agenda->id); ?>
