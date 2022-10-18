@@ -607,8 +607,14 @@ class Matkul extends BaseController
             }
             $agenda = $this->agendaModel->showAgenda($idMatkul);
 
+            $joinMatkul = $this->mahasiswaMatkulModel->where('id_user', user()->id)->whereIn('id_matkul', $idMatkul)->findAll();
+            foreach ($joinMatkul as $row) {
+                $idJoinMatkul[] = $row->id;
+            }
+
             $data = [
                 'agenda' => $agenda,
+                'cekAgenda' => $this->mahasiswaAgendaModel->whereIn('id_mahasiswa_matkul', $idJoinMatkul)->findAll(),
             ];
             $msg = [
                 'data' => view('Matkul/Agenda/table/tableAgendaMahasiswa', $data)

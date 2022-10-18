@@ -62,8 +62,14 @@ foreach($agenda as $row) :
             <td class="text-center desktop-only">
                 <?= $row->jam_selesai; ?>
             </td>
-            <?php if(date('Y-m-d H:i:s') <= $row->jam_selesai) : ?>
+            <?php $tes = false; ?>
+            <?php foreach($cekAgenda as $cek) : ?>
+                <?php if($cek->id_agenda == $row->id) : ?>
+                    <?php $tes = true; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
             <td class="text-center">
+                <?php if($tes != true) : ?>
                 <div class="d-flex justify-content-end flex-shrink-0">
                     <!-- QR -->
                     <a href="<?= base_url(); ?>/matkul/qr/<?= $row->id; ?>"
@@ -72,12 +78,10 @@ foreach($agenda as $row) :
                         </span>
                     </a>
                 </div>
+                <?php else : ?>
+                <i class="las la-minus la-3x"></i>
+                <?php endif; ?>
             </td>
-            <?php else: ?>
-                <td class="text-center">
-                -
-                </td>
-            <?php endif; ?>
         </tr>
         <?php endforeach; ?>
     </tbody>
