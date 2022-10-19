@@ -410,6 +410,8 @@ class Matkul extends BaseController
                     if ($absen == true) {
                         array_push($belum_absen, $mhsRow);
                     }
+                } else {
+                    array_push($belum_absen, $mhsRow);
                 }
             }
         }
