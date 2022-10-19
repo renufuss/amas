@@ -3,7 +3,7 @@
 <?php foreach($hadir as $row) : ?>
     <?php if($row->image_profile != null) : ?>
     <div class="symbol symbol-circle symbol-50px">
-        <img src="<?= base_url(); ?>/assets/media/avatars/300-6.jpg" alt="" />
+        <img src="<?= base_url(); ?>/assets/images/users/<?= $row->image_profile; ?>" alt="" />
     </div>
     <?php else: ?>
     <div class="symbol symbol-circle symbol-50px">
