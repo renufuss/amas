@@ -42,7 +42,6 @@ $('#btnAdd').click(function (e) {
       $("#btnAdd").prop('disabled', false);
     },
     success: function (response) {
-      console.log(response);
       toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -209,7 +208,6 @@ $('#btnSimpanMatkul').click(function (e) {
         $(`#${key}-feedback`).html('');
       });
 
-      console.log(response);
 
       if (response.error) {
         // Add Feedback

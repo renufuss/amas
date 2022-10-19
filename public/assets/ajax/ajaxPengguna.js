@@ -426,7 +426,6 @@ $('#btnSimpanPass').click(function (e) {
       $("#btnSimpanPass").html("Simpan");
     },
     success: function (response) {
-      console.log(response);
       toastr.options = {
         "closeButton": true,
         "debug": false,
