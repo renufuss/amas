@@ -54,4 +54,10 @@
 <script src="<?= base_url(); ?>/assets/ajax/ajaxPengguna.js"></script>
 <!-- end::Script -->
 
+<script>
+    $(document).ready(function () {
+        table();
+    });
+</script>
+
 <?= $this->endSection(); ?>

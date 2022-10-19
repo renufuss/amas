@@ -1,8 +1,5 @@
 const base_url = window.location.origin;
 
-$(document).ready(function () {
-  table();
-});
 
 // begin::btnAdd (Add Pengguna)
 $('#btnAdd').click(function (e) {
