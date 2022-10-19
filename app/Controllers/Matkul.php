@@ -397,7 +397,7 @@ class Matkul extends BaseController
                             array_push($menungguPersetujuan, $mahasiswaIzin);
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
                             array_push($hadir, $mhsRow);
-                        } else {
+                        } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 0) {
                             array_push($belum_absen, $mhsRow);
                         }
                     }
