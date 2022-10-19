@@ -30,7 +30,7 @@ foreach($agenda as $row) :
             <div class="d-flex align-items-center">
                     <div class="symbol symbol-50px me-5">
                         <?php if($row->image != null) : ?>
-                        <img src="<?= base_url(); ?>/assets/images/users/<?= $row->image; ?>" class="" alt="" />
+                        <img src="<?= base_url(); ?>/assets/images/matkul/<?= $row->image; ?>" class="" alt="" />
                         <?php else : ?>
                             <?php
                             $bg = ['success', 'primary', 'warning', 'danger'];
