@@ -721,7 +721,7 @@ class Matkul extends BaseController
                 'cekAgenda' => $this->mahasiswaAgendaModel->whereIn('id_mahasiswa_matkul', $idJoinMatkul)->findAll(),
             ];
             $msg = [
-                'data' => view('Matkul/Agenda/table/tableAgendaMahasiswa', $data)
+                'data' => view('Matkul/Agenda/Table/tableAgendaMahasiswa', $data)
             ];
             return json_encode($msg);
         }
