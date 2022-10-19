@@ -67,7 +67,7 @@
                         </svg>
                     </span>
                 </a>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" onclick="acceptIzin('<?= $row['idMahasiswaAgenda']; ?>')">
                     <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="-3 -3 30 30"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.3"
@@ -80,7 +80,7 @@
                         </svg>
                     </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"  onclick="tolakIzin('<?= $row['idMahasiswaAgenda']; ?>')">
                     <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24" viewBox="-3 -3 30 30"
                             fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path opacity="0.3"

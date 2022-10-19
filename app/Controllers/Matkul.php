@@ -374,6 +374,7 @@ class Matkul extends BaseController
                                 "badge"=> $mhsRow->badge,
                                 "keterangan" => $cekRow->keterangan,
                                 "bukti"=>$cekRow->bukti,
+                                "idMahasiswaAgenda"=>$cekRow->id,
                             ];
                             array_push($izin, $mahasiswaIzin);
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
@@ -391,6 +392,7 @@ class Matkul extends BaseController
                                 "badge"=> $mhsRow->badge,
                                 "keterangan" => $cekRow->keterangan,
                                 "bukti"=>$cekRow->bukti,
+                                "idMahasiswaAgenda"=>$cekRow->id,
                             ];
                             array_push($menungguPersetujuan, $mahasiswaIzin);
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
@@ -526,6 +528,46 @@ class Matkul extends BaseController
             $msg = [
                 'data' => view('Matkul/Agenda/Status/Table/tableStatus', $data)
             ];
+            return json_encode($msg);
+        }
+    }
+
+    public function statusIzin($status)
+    {
+        $idMahasiswaAgenda = $this->request->getPost('idMahasiswaAgenda');
+        $idAgenda = $this->request->getPost('idAgenda');
+        $mahasiswaAgenda = $this->mahasiswaAgendaModel->find($idMahasiswaAgenda);
+        if ($mahasiswaAgenda != null) {
+            if ($mahasiswaAgenda->id_agenda == $idAgenda) {
+                $data = [
+                    'id' => $mahasiswaAgenda->id,
+                    'status' => $status,
+                ];
+                $this->mahasiswaAgendaModel->save($data);
+                $msg['sukses'] = 'Berhasil mengupdate status presensi';
+            } else {
+                $msg['error'] = 'Gagal mengupdate status presensi';
+            }
+        } else {
+            $msg['error'] = 'Gagal mengupdate status presensi';
+        }
+
+        return $msg;
+    }
+
+    public function acceptIzin()
+    {
+        if ($this->request->isAJAX()) {
+            $msg = $this->statusIzin(1);
+
+            return json_encode($msg);
+        }
+    }
+    public function tolakIzin()
+    {
+        if ($this->request->isAJAX()) {
+            $msg = $this->statusIzin(0);
+
             return json_encode($msg);
         }
     }

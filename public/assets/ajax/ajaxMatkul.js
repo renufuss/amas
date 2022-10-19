@@ -757,6 +757,88 @@ function modalIzin(idAgenda){
   });
 }
 
+//accept izin
+function acceptIzin(idMahasiswaAgenda){
+  $.ajax({
+    type: "post",
+    url: base_url + "/agenda/izin/terima",
+    data: {
+      idMahasiswaAgenda : idMahasiswaAgenda,
+      idAgenda : id,
+    },
+    dataType: "json",
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
 
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        tableListPresent();
+      }else{
+        toastr.success(response.error, "Error");
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+};
+
+//tolak izin
+function tolakIzin(idMahasiswaAgenda){
+  $.ajax({
+    type: "post",
+    url: base_url + "/agenda/izin/tolak",
+    data: {
+      idMahasiswaAgenda : idMahasiswaAgenda,
+      idAgenda : id,
+    },
+    dataType: "json",
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        tableListPresent();
+      }else{
+        toastr.success(response.error, "Error");
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+};
 
 
