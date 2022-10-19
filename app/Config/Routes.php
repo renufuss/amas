@@ -37,53 +37,52 @@ $routes->set404Override();
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
 
-$routes->get('/pengguna', 'Pengguna::index');
-$routes->get('/pengguna/table', 'Pengguna::table');
-$routes->post('/pengguna/add', 'Pengguna::add');
-$routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1');
-$routes->post('/pengguna/login/(:segment)', 'Pengguna::editLogin/$1');
-$routes->post('/pengguna/reset/(:segment)', 'Pengguna::resetPassword/$1');
-$routes->post('/pengguna/delete', 'Pengguna::delete');
-$routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1');
-$routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1');
+$routes->get('/pengguna', 'Pengguna::index', ['filter' => 'role:Admin']);
+$routes->get('/pengguna/table', 'Pengguna::table', ['filter' => 'role:Admin']);
+$routes->post('/pengguna/add', 'Pengguna::add', ['filter' => 'role:Admin']);
+$routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1', ['filter' => 'role:Admin']);
+$routes->post('/pengguna/login/(:segment)', 'Pengguna::editLogin/$1', ['filter' => 'role:Admin']);
+$routes->post('/pengguna/reset/(:segment)', 'Pengguna::resetPassword/$1', ['filter' => 'role:Admin']);
+$routes->post('/pengguna/delete', 'Pengguna::delete', ['filter' => 'role:Admin']);
+$routes->get('/pengguna/detail/(:segment)', 'Pengguna::detail/$1', ['filter' => 'role:Admin']);
+$routes->get('/pengguna/pengaturan/(:segment)', 'Pengguna::pengaturan/$1', ['filter' => 'role:Admin']);
 
-$routes->get('/matkul', 'Matkul::index');
-$routes->get('/matkul/table', 'Matkul::tableMatkulDosen');
-$routes->post('/matkul/add', 'Matkul::add');
-$routes->post('/matkul/edit/(:segment)', 'Matkul::edit/$1');
-$routes->post('/matkul/delete', 'Matkul::delete');
-$routes->get('/matkul/mahasiswa/(:segment)', 'Matkul::mahasiswa/$1');
-$routes->post('/matkul/mahasiswa/table', 'Matkul::tableMahasiswa');
-$routes->get('/matkul/agenda/(:segment)', 'Matkul::agenda/$1');
-$routes->post('/matkul/agenda/table', 'Matkul::tableAgendaDosen');
-$routes->post('/matkul/agenda/simpan', 'Matkul::simpanAgenda');
-$routes->post('/matkul/agenda/delete', 'Matkul::deleteAgenda');
-$routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1');
-$routes->get('/matkul/agenda/qr/(:segment)', 'Matkul::indexQR/$1');
-$routes->post('/matkul/qr', 'Matkul::statusPresent');
-$routes->get('/matkul/agenda/status/(:segment)', 'Matkul::listStatusMahasiswaIndex/$1');
-$routes->post('/matkul/agenda/status/table', 'Matkul::tableStatusMahasiswa');
+$routes->get('/matkul', 'Matkul::index', ['filter' => 'role:Admin, Dosen']);
+$routes->get('/matkul/table', 'Matkul::tableMatkulDosen', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/add', 'Matkul::add', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/edit/(:segment)', 'Matkul::edit/$1', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/delete', 'Matkul::delete', ['filter' => 'role:Admin, Dosen']);
+$routes->get('/matkul/mahasiswa/(:segment)', 'Matkul::mahasiswa/$1', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/mahasiswa/table', 'Matkul::tableMahasiswa', ['filter' => 'role:Admin, Dosen']);
+$routes->get('/matkul/agenda/(:segment)', 'Matkul::agenda/$1', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/agenda/table', 'Matkul::tableAgendaDosen', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/agenda/simpan', 'Matkul::simpanAgenda', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/agenda/delete', 'Matkul::deleteAgenda', ['filter' => 'role:Admin, Dosen']);
+$routes->get('/matkul/pengaturan/(:segment)', 'Matkul::pengaturan/$1', ['filter' => 'role:Admin, Dosen']);
+$routes->get('/matkul/agenda/qr/(:segment)', 'Matkul::indexQR/$1', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/qr', 'Matkul::statusPresent', ['filter' => 'role:Admin, Dosen']);
+$routes->get('/matkul/agenda/status/(:segment)', 'Matkul::listStatusMahasiswaIndex/$1', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/matkul/agenda/status/table', 'Matkul::tableStatusMahasiswa', ['filter' => 'role:Admin, Dosen']);
 
-$routes->get('/matkul/list', 'Matkul::indexListMatkul');
-$routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa');
-$routes->post('/matkul/join', 'Matkul::joinMatkul');
+$routes->get('/matkul/list', 'Matkul::indexListMatkul', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->get('/matkul/list/table', 'Matkul::tableMatkulMahasiswa', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/matkul/join', 'Matkul::joinMatkul', ['filter' => 'role:Admin, Mahasiswa']);
 
-$routes->get('/matkul/saya', 'Matkul::indexMatkulSaya');
-$routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya');
-$routes->post('/matkul/keluar', 'Matkul::keluarMatkul');
-$routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
+$routes->get('/matkul/saya', 'Matkul::indexMatkulSaya', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/matkul/keluar', 'Matkul::keluarMatkul', ['filter' => 'role:Admin, Mahasiswa']);
 
-$routes->get('/agenda', 'Matkul::indexAgendaMahasiswa');
-$routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa');
-$routes->post('/agenda/izin', 'Matkul::modalIzin');
-$routes->post('/agenda/izin/save', 'Matkul::ajukanIzin');
-$routes->post('/agenda/izin/terima', 'Matkul::acceptIzin');
-$routes->post('/agenda/izin/tolak', 'Matkul::tolakIzin');
+$routes->get('/agenda', 'Matkul::indexAgendaMahasiswa', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/agenda/izin', 'Matkul::modalIzin', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/agenda/izin/save', 'Matkul::ajukanIzin', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/agenda/izin/terima', 'Matkul::acceptIzin', ['filter' => 'role:Admin, Dosen']);
+$routes->post('/agenda/izin/tolak', 'Matkul::tolakIzin', ['filter' => 'role:Admin, Dosen']);
 
 
-$routes->get('/scanner', 'Scanner::index');
-$routes->post('/scanner/present', 'Matkul::changeStatus');
-$routes->get('/thankyou/(:segment)/(:segment)', 'Matkul::thankyouIndex/$1/$2');
+$routes->get('/scanner', 'Scanner::index', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/scanner/present', 'Matkul::changeStatus', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->get('/thankyou/(:segment)/(:segment)', 'Matkul::thankyouIndex/$1/$2', ['filter' => 'role:Admin, Mahasiswa']);
 
 $routes->get('/profil/detail', 'Pengguna::profil');
 $routes->get('/profil/pengaturan', 'Pengguna::pengaturanprofil');
