@@ -37,7 +37,7 @@ class MahasiswaMatkulModel extends Model
     public function showMatkul($idUser)
     {
         $table = $this->db->table($this->table);
-        $query = $table->select('matkul.*')->join('matkul', 'matkul.id=mahasiswa_matkul.id_matkul', 'left')->where('mahasiswa_matkul.id_user', $idUser)->where('mahasiswa_matkul.deleted_at', null)->orderBy('matkul.nama', 'asc')->orderBy('mahasiswa_matkul.id', 'asc');
+        $query = $table->select('matkul.*')->join('matkul', 'matkul.id=mahasiswa_matkul.id_matkul', 'left')->join('users', 'matkul.id_user=users.id', 'left')->where('mahasiswa_matkul.id_user', $idUser)->where('users.deleted_at', null)->where('mahasiswa_matkul.deleted_at', null)->orderBy('matkul.nama', 'asc')->orderBy('mahasiswa_matkul.id', 'asc');
         $data = $query->get()->getResultObject();
 
         return $data;
