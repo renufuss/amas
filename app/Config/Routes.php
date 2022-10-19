@@ -40,7 +40,7 @@ $routes->get('/', 'Home::index');
 $routes->get('/pengguna', 'Pengguna::index', ['filter' => 'role:Admin']);
 $routes->get('/pengguna/table', 'Pengguna::table', ['filter' => 'role:Admin']);
 $routes->post('/pengguna/add', 'Pengguna::add', ['filter' => 'role:Admin']);
-$routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1', ['filter' => 'role:Admin']);
+$routes->post('/pengguna/edit/(:segment)', 'Pengguna::edit/$1');
 $routes->post('/pengguna/login/(:segment)', 'Pengguna::editLogin/$1', ['filter' => 'role:Admin']);
 $routes->post('/pengguna/reset/(:segment)', 'Pengguna::resetPassword/$1', ['filter' => 'role:Admin']);
 $routes->post('/pengguna/delete', 'Pengguna::delete', ['filter' => 'role:Admin']);
