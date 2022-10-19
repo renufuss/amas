@@ -360,6 +360,7 @@ class Matkul extends BaseController
         if ($mahasiswa != null) {
             foreach ($mahasiswa as $mhsRow) {
                 if ($cekStatus != null) {
+                    $absen = true;
                     foreach ($cekStatus as $cekRow) {
                         if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
                             $mahasiswaIzin = [
@@ -377,8 +378,10 @@ class Matkul extends BaseController
                                 "idMahasiswaAgenda"=>$cekRow->id,
                             ];
                             array_push($izin, $mahasiswaIzin);
+                            $absen = false;
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
                             array_push($terlambat, $mhsRow);
+                            $absen = false;
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 3) {
                             $mahasiswaIzin = [
                                 "idMahasiswaMatkul"=> $mhsRow->idMahasiswaMatkul,
@@ -395,14 +398,18 @@ class Matkul extends BaseController
                                 "idMahasiswaAgenda"=>$cekRow->id,
                             ];
                             array_push($menungguPersetujuan, $mahasiswaIzin);
+                            $absen = false;
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
                             array_push($hadir, $mhsRow);
-                        } else {
+                            $absen = false;
+                        } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul) {
                             array_push($belum_absen, $mhsRow);
+                            $absen = false;
                         }
                     }
-                } else {
-                    array_push($belum_absen, $mhsRow);
+                    if ($absen == true) {
+                        array_push($belum_absen, $mhsRow);
+                    }
                 }
             }
         }
