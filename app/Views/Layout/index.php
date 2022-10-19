@@ -3,6 +3,7 @@
 	<!--begin::Head-->
 	<head>
 		<title><?= $title; ?></title>
+		<link rel="icon" type="image/x-icon" href="<?= base_url(); ?>/assets/amas/favicon.ico">
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="Renufus" name="description"/>
