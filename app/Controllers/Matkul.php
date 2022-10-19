@@ -147,6 +147,9 @@ class Matkul extends BaseController
     public function pengaturan($id)
     {
         $matkul = $this->matkulModel->showMatkul($id);
+        if ($matkul->id_user != user()->id) {
+            return redirect()->to('/matkul');
+        }
         if ($matkul == null) {
             return redirect()->to('/matkul');
         }
@@ -167,6 +170,10 @@ class Matkul extends BaseController
     {
         $matkul = $this->matkulModel->showMatkul($id);
         if ($matkul == null) {
+            return redirect()->to('/matkul');
+        }
+
+        if ($matkul->id_user != user()->id) {
             return redirect()->to('/matkul');
         }
         $data = [
@@ -200,6 +207,9 @@ class Matkul extends BaseController
     {
         $matkul = $this->matkulModel->showMatkul($id);
         if ($matkul == null) {
+            return redirect()->to('/matkul');
+        }
+        if ($matkul->id_user != user()->id) {
             return redirect()->to('/matkul');
         }
         $data = [
@@ -337,6 +347,10 @@ class Matkul extends BaseController
         $agenda = $this->agendaModel->find($id);
         if ($agenda == null) {
             return redirect()->to('/agenda');
+        }
+        $matkul = $this->matkulModel->find($agenda->id_matkul);
+        if ($matkul->id_user != user()->id) {
+            return redirect()->to('/matkul');
         }
         $data = [
             'title' => 'Agenda | '.ucwords(strtolower($agenda->name)),
@@ -521,6 +535,10 @@ class Matkul extends BaseController
         $agenda = $this->agendaModel->find($id);
         if ($agenda == null) {
             return redirect()->to('/agenda');
+        }
+        $matkul = $this->matkulModel->find($agenda->id_matkul);
+        if ($matkul->id_user != user()->id) {
+            return redirect()->to('/matkul');
         }
         $data = [
             'title' => 'Agenda | '.ucwords(strtolower($agenda->name)),
