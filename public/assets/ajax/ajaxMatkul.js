@@ -363,7 +363,7 @@ function deleteAgenda(id,nama){
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            tableAgenda();
+            tableAgenda(idMatkul);
           }else{
             toastr.error(response.error, "Error");
           }
