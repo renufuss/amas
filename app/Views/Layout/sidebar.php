@@ -102,7 +102,7 @@
             </div>
             <!--end:Menu item-->
             <?php endif ?>
-            <?php if(in_groups('Dosen') || in_groups('Admin')) : ?> ?>
+            <?php if(in_groups('Dosen') || in_groups('Admin')) : ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -134,7 +134,7 @@
             </div>
             <!--end:Menu item-->
             <?php endif; ?>
-            <?php if(in_groups('Admin')) : ?> ?>
+            <?php if(in_groups('Admin')) : ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
