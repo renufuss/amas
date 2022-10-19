@@ -30,6 +30,8 @@
 </div>
 <!--end::Card-->
 
+<div class="modalIzin"></div>
+
 <!-- begin::Script -->
 <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 <!-- end::Script -->

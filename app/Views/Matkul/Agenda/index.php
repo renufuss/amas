@@ -29,10 +29,10 @@
             </div>
             <!--end::Card body-->
         </div>
-        <!-- begin::modalPengguna -->
+        <!-- begin::modalAgenda -->
         <?php include('Modal/modalAgenda.php'); ?>
-        <!-- end::modalPengguna -->
-<script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
+        <!-- end::modalAgenda -->
+    <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 
 <script type="text/javascript">
     let idMatkul = <?= json_encode($matkul->id); ?>

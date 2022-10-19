@@ -738,5 +738,25 @@ function tableAgendaSaya(){
   });
 }
 
+// izin
+function modalIzin(idAgenda){
+  $.ajax({
+    type: "post",
+    url: base_url + "/agenda/izin",
+    data: {idAgenda},
+    dataType: "json",
+    success: function (response) {
+      if (response.sukses) {
+        $(".modalIzin").html(response.sukses);
+        $("#modalIzin").modal("show");
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+
 
 

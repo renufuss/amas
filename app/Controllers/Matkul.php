@@ -354,6 +354,7 @@ class Matkul extends BaseController
         $cekStatus = $this->mahasiswaAgendaModel->where('id_agenda', $agenda->id)->findAll();
         $izin = [];
         $terlambat = [];
+        $menungguPersetujuan = [];
         $hadir = [];
         $belum_absen = [];
         if ($mahasiswa != null) {
@@ -361,9 +362,37 @@ class Matkul extends BaseController
                 if ($cekStatus != null) {
                     foreach ($cekStatus as $cekRow) {
                         if ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 1) {
-                            array_push($izin, $mhsRow);
+                            $mahasiswaIzin = [
+                                "idMahasiswaMatkul"=> $mhsRow->idMahasiswaMatkul,
+                                "id"=> $mhsRow->id,
+                                "email"=> $mhsRow->email,
+                                "username"=> $mhsRow->username,
+                                "first_name"=> $mhsRow->first_name,
+                                "last_name"=> $mhsRow->last_name,
+                                "image_profile"=> $mhsRow->image_profile,
+                                "npm"=> $mhsRow->npm,
+                                "badge"=> $mhsRow->badge,
+                                "keterangan" => $cekRow->keterangan,
+                                "bukti"=>$cekRow->bukti,
+                            ];
+                            array_push($izin, $mahasiswaIzin);
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 2) {
                             array_push($terlambat, $mhsRow);
+                        } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 3) {
+                            $mahasiswaIzin = [
+                                "idMahasiswaMatkul"=> $mhsRow->idMahasiswaMatkul,
+                                "id"=> $mhsRow->id,
+                                "email"=> $mhsRow->email,
+                                "username"=> $mhsRow->username,
+                                "first_name"=> $mhsRow->first_name,
+                                "last_name"=> $mhsRow->last_name,
+                                "image_profile"=> $mhsRow->image_profile,
+                                "npm"=> $mhsRow->npm,
+                                "badge"=> $mhsRow->badge,
+                                "keterangan" => $cekRow->keterangan,
+                                "bukti"=>$cekRow->bukti,
+                            ];
+                            array_push($menungguPersetujuan, $mahasiswaIzin);
                         } elseif ($mhsRow->idMahasiswaMatkul == $cekRow->id_mahasiswa_matkul && $cekRow->status == 4) {
                             array_push($hadir, $mhsRow);
                         } else {
@@ -380,6 +409,7 @@ class Matkul extends BaseController
             'izin' => $izin,
             'terlambat' => $terlambat,
             'hadir' => $hadir,
+            'menunggu_persetujuan' => $menungguPersetujuan,
             'belum_absen' => $belum_absen,
         ];
 
@@ -651,6 +681,101 @@ class Matkul extends BaseController
             $msg = [
                 'data' => view('Matkul/Agenda/table/tableAgendaMahasiswa', $data)
             ];
+            return json_encode($msg);
+        }
+    }
+
+    public function modalIzin()
+    {
+        if ($this->request->isAJAX()) {
+            $id = $this->request->getPost('idAgenda');
+            $agenda = $this->agendaModel->find($id);
+            if ($agenda != null) {
+                $data = [
+                    'agenda' => $agenda,
+                ];
+                $msg = [
+                    'sukses' => view('Matkul/Agenda/Modal/modalIzin', $data),
+                ];
+            } else {
+                $msg = [
+                    'error' => 'Tidak bisa mengajukan izin.'
+                ];
+            }
+            return json_encode($msg);
+        }
+    }
+
+    public function ajukanIzin()
+    {
+        if ($this->request->isAJAX()) {
+            $validation = \Config\Services::validation();
+            $idAgenda = $this->request->getPost('idAgenda');
+            $agenda = $this->agendaModel->find($idAgenda);
+            if ($agenda != null) {
+                $cekJoinMatkul = $this->mahasiswaMatkulModel->where('id_matkul', $agenda->id_matkul)->where('id_user', user()->id)->first();
+                if ($cekJoinMatkul != null) {
+                    $cekStatusPresensi = $this->mahasiswaAgendaModel->where('id_mahasiswa_matkul', $cekJoinMatkul->id)->where('id_agenda', $agenda->id)->first();
+                    if ($cekStatusPresensi != null) {
+                        $msg['error'] = 'Anda telah melakukan presensi pada agenda ini';
+                        $msg['errormsg'] = 'Gagal mengajukan izin';
+                    } else {
+                        $rules = [
+                            'keterangan' => [
+                                'rules' => 'required',
+                                'errors' => [
+                                    'required' => 'Keterangan tidak boleh kosong',
+                                ]
+                            ],
+                            'bukti' => [
+                                'rules' => 'max_size[bukti,1024]|is_image[bukti]|mime_in[bukti,image/jpg,image/jpeg,image/png]',
+                                'errors' => [
+                                    'max_size' => 'Ukuran gambar tidak boleh melebihi 1 MB',
+                                    'is_image' => 'Yang anda pilih bukan gambar',
+                                    'mime_in' => 'Yang anda pilih bukan gambar',
+                                ]
+                            ]
+                        ];
+
+                        $validation->setRules($rules);
+                        if ($validation->withRequest($this->request)->run()) {
+                            $fileBukti = $this->request->getFile('bukti');
+                            if ($fileBukti->getError() != 4) {
+                                $fileBukti->move('assets/buktiIzin', $fileBukti->getRandomName());
+                                $buktiNama = $fileBukti->getName();
+                                $data = [
+                                    'id_mahasiswa_matkul' => $cekJoinMatkul->id,
+                                    'id_agenda' => $agenda->id,
+                                    'keterangan' => $this->request->getPost('keterangan'),
+                                    'bukti' => $buktiNama,
+                                    'status' => 3,
+                                   ];
+
+                                $this->mahasiswaAgendaModel->save($data);
+
+                                $msg['sukses'] = 'Berhasil mengajukan izin';
+                            } else {
+                                $error = [
+                                    'bukti' => 'Bukti harus diupload',
+                                ];
+                                $msg = [
+                                    'error' => $error,
+                                    'errormsg' => 'Gagal mengajukan izin'
+                                ];
+                            }
+                        } else {
+                            $msg['error'] = $validation->getErrors();
+                            $msg['errormsg'] = 'Gagal mengajukan izin';
+                        }
+                    }
+                } else {
+                    $msg['error'] = 'Anda belum tergabung di mata kuliah';
+                    $msg['errormsg'] = 'Gagal mengajukan izin';
+                }
+            } else {
+                $msg['error'] = 'Agenda tidak ditemukan';
+                $msg['errormsg'] = 'Gagal mengajukan izin';
+            }
             return json_encode($msg);
         }
     }

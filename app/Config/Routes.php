@@ -75,6 +75,8 @@ $routes->post('/matkul/deletemhs', 'Matkul::deletemhs');
 
 $routes->get('/agenda', 'Matkul::indexAgendaMahasiswa');
 $routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa');
+$routes->post('/agenda/izin', 'Matkul::modalIzin');
+$routes->post('/agenda/izin/save', 'Matkul::ajukanIzin');
 
 
 $routes->get('/scanner', 'Scanner::index');
