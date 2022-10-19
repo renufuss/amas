@@ -85,8 +85,6 @@
                         class="las la-user-cog la-2x"></i></a>
             </div>
             <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/profil"><i
-                        class="las la-angle-double-left la-2x"></i></a>
             </div>
         </div>
 
@@ -100,12 +98,6 @@
             <!--begin::Nav item-->
             <li class="nav-item mt-2">
                 <a class="nav-link text-active-primary ms-0 me-10 py-5 <?=($navPengaturan) ? 'active' : '' ?>" href="<?= base_url(); ?>/profil/pengaturan/">Pengaturan</a>
-            </li>
-            <!--end::Nav item-->
-            <!--begin::Nav item-->
-            <li class="nav-item mt-2">
-                <a class="text-gray-500 text-hover-warning ms-0 me-10 py-5" href="<?= base_url(); ?>/">&laquo;
-                    Kembali</a>
             </li>
             <!--end::Nav item-->
         </ul>
