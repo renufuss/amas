@@ -294,7 +294,7 @@ function deleteMahasiswa(idMahasiswa,nama) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            tableMahasiswa();
+            tableMahasiswa(idMatkul);
           }else{
             toastr.error(response.error, "Error");
           }
