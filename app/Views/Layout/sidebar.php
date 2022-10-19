@@ -7,6 +7,7 @@
         <!--begin::Menu-->
         <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true"
             data-kt-menu-expand="false">
+            <?php if(in_groups('Mahasiswa') || in_groups('Admin')) : ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -17,7 +18,7 @@
             </div>
             <!--end:Menu item-->
             <!--begin:Menu item-->
-            <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+            <div data-kt-menu-trigger="click" class="menu-item menu-accordion <?= (uri_string() == 'agenda' || uri_string() == 'matkul/list' || uri_string() == 'matkul/saya') ? 'hover show' : ''; ?>">
                 <!--begin:Menu link-->
                 <span class="menu-link">
                     <span class="menu-icon">
@@ -38,11 +39,11 @@
                 <!--end:Menu link-->
                 <!--begin:Menu sub-->
                 <div class="menu-sub menu-sub-accordion" kt-hidden-height="161"
-                    style="display: none; overflow: hidden;">
+                    style="<?= (uri_string() == 'agenda' || uri_string() == 'matkul/list' || uri_string() == 'matkul/saya') ? '' : 'display: none; overflow: hidden;'; ?>">
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="<?= base_url('agenda'); ?>">
+                        <a class="menu-link <?= (uri_string() == 'agenda') ? 'active' : ''; ?>" href="<?= base_url('agenda'); ?>">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -54,7 +55,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="<?= base_url('matkul/list'); ?>">
+                        <a class="menu-link <?= (uri_string() == 'matkul/list') ? 'active' : ''; ?>" href="<?= base_url('matkul/list'); ?>">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -66,7 +67,7 @@
                     <!--begin:Menu item-->
                     <div class="menu-item">
                         <!--begin:Menu link-->
-                        <a class="menu-link" href="<?= base_url('matkul/saya'); ?>">
+                        <a class="menu-link <?= (uri_string() == 'matkul/saya') ? 'active' : ''; ?>" href="<?= base_url('matkul/saya'); ?>">
                             <span class="menu-bullet">
                                 <span class="bullet bullet-dot"></span>
                             </span>
@@ -82,7 +83,7 @@
             <!--begin:Menu item-->
             <div class="menu-item">
                 <!--begin:Menu link-->
-                <a class="menu-link" href="<?= base_url('scanner'); ?>">
+                <a class="menu-link <?= (uri_string() == 'scanner') ? 'active' : ''; ?>" href="<?= base_url('scanner'); ?>">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24"
                                 viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -100,7 +101,8 @@
                 <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
-
+            <?php endif ?>
+            <?php if(in_groups('Dosen') || in_groups('Admin')) : ?> ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -113,7 +115,7 @@
             <!--begin:Menu item-->
             <div class="menu-item">
                 <!--begin:Menu link-->
-                <a class="menu-link" href="<?= base_url('matkul'); ?>">
+                <a class="menu-link <?= (uri_string() == 'matkul' || url_is('matkul/mahasiswa*') || url_is('matkul/agenda*') || url_is('matkul/pengaturan*')) ? 'active' : ''; ?>" href="<?= base_url('matkul'); ?>">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24"
                                 viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -131,6 +133,8 @@
                 <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
+            <?php endif; ?>
+            <?php if(in_groups('Admin')) : ?> ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -143,7 +147,7 @@
             <!--begin:Menu item-->
             <div class="menu-item">
                 <!--begin:Menu link-->
-                <a class="menu-link" href="<?= base_url('pengguna'); ?>">
+                <a class="menu-link <?= (url_is('pengguna*')) ? 'active' : ''; ?>" href="<?= base_url('pengguna'); ?>">
                     <span class="menu-icon">
                         <span class="svg-icon svg-icon-muted svg-icon-2hx"><svg width="24" height="24"
                                 viewBox="-3 -3 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -163,6 +167,7 @@
                 <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
+            <?php endif; ?>
         </div>
         <!--end::Menu-->
     </div>

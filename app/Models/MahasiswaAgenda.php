@@ -14,7 +14,7 @@ class MahasiswaAgenda extends Model
     protected $returnType     = 'object';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['id_mahasiswa_matkul','id_agenda','status'];
+    protected $allowedFields = ['id_mahasiswa_matkul','id_agenda','status','keterangan', 'bukti'];
 
     protected $useTimestamps = true;
     protected $createdField  = 'created_at';

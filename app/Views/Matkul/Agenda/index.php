@@ -4,7 +4,7 @@
 
 <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
             <!--begin::Card header-->
-            <div class="card-header cursor-pointer">
+            <div class="card-header">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
                     <h3 class="fw-bold m-0">Agenda</h3>
@@ -29,10 +29,10 @@
             </div>
             <!--end::Card body-->
         </div>
-        <!-- begin::modalPengguna -->
+        <!-- begin::modalAgenda -->
         <?php include('Modal/modalAgenda.php'); ?>
-        <!-- end::modalPengguna -->
-<script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
+        <!-- end::modalAgenda -->
+    <script src="<?= base_url(); ?>/assets/ajax/ajaxMatkul.js"></script>
 
 <script type="text/javascript">
     let idMatkul = <?= json_encode($matkul->id); ?>

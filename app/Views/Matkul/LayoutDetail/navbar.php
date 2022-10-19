@@ -79,16 +79,20 @@
         <!--begin::Navs-->
         <!-- mobile -->
         <div class="row fs-5 text-gray-500 fw-bold mobile-only" style="padding-left:15px">
-            <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="<?= base_url(); ?>/pengguna/detail/"><i
-                        class="las la-user la-2x"></i></a>
+            <div class="col-md-3 col-3 mt-2">
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?= ($navMahasiswa) ? 'active' : ''; ?>" href="<?= base_url(); ?>/matkul/mahasiswa/<?= $matkul->id; ?>"><i
+                        class="las la-book la-2x"></i></a>
             </div>
-            <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna/pengaturan/"><i
-                        class="las la-user-cog la-2x"></i></a>
+            <div class="col-md-3 col-3 mt-2">
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?= ($navAgenda) ? 'active' : ''; ?>" href="<?= base_url(); ?>/matkul/agenda/<?= $matkul->id; ?>"><i
+                        class="las la-bookmark la-2x"></i></a>
             </div>
-            <div class="col-md-4 col-4 mt-2">
-                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/pengguna"><i
+            <div class="col-md-3 col-3 mt-2">
+                <a class="nav-link text-active-primary ms-0 me-10 py-5 <?= ($navPengaturan) ? 'active' : ''; ?>" href="<?= base_url(); ?>/matkul/pengaturan/<?= $matkul->id; ?>"><i
+                        class="las la-cog la-2x"></i></a>
+            </div>
+            <div class="col-md-3 col-3 mt-2">
+                <a class="nav-link text-active-primary ms-0 me-10 py-5" href="<?= base_url(); ?>/matkul"><i
                         class="las la-angle-double-left la-2x"></i></a>
             </div>
         </div>

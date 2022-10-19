@@ -4,7 +4,7 @@
 
 <div class="card mb-5 mb-xl-10" id="kt_profile_details_view">
             <!--begin::Card header-->
-            <div class="card-header cursor-pointer">
+            <div class="card-header">
                 <!--begin::Card title-->
                 <div class="card-title m-0">
                     <h3 class="fw-bold m-0">Detail Pengguna</h3>

@@ -42,7 +42,6 @@ $('#btnAdd').click(function (e) {
       $("#btnAdd").prop('disabled', false);
     },
     success: function (response) {
-      console.log(response);
       toastr.options = {
         "closeButton": true,
         "debug": false,
@@ -209,7 +208,6 @@ $('#btnSimpanMatkul').click(function (e) {
         $(`#${key}-feedback`).html('');
       });
 
-      console.log(response);
 
       if (response.error) {
         // Add Feedback
@@ -473,6 +471,21 @@ function statusPresent(){
   });
 }
 
+function tableListPresent(){
+  $.ajax({
+    type: "post",
+    url: base_url + "/matkul/agenda/status/table",
+    data: {id},
+    dataType: "json",
+    success: function (response) {
+        $("#table").html(response.data);
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
 
 $('#btnUbahAgenda').click(function (e) { 
   e.preventDefault();
@@ -723,5 +736,107 @@ function tableAgendaSaya(){
   });
 }
 
+// izin
+function modalIzin(idAgenda){
+  $.ajax({
+    type: "post",
+    url: base_url + "/agenda/izin",
+    data: {idAgenda},
+    dataType: "json",
+    success: function (response) {
+      if (response.sukses) {
+        $(".modalIzin").html(response.sukses);
+        $("#modalIzin").modal("show");
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+}
+
+//accept izin
+function acceptIzin(idMahasiswaAgenda){
+  $.ajax({
+    type: "post",
+    url: base_url + "/agenda/izin/terima",
+    data: {
+      idMahasiswaAgenda : idMahasiswaAgenda,
+      idAgenda : id,
+    },
+    dataType: "json",
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        tableListPresent();
+      }else{
+        toastr.success(response.error, "Error");
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+};
+
+//tolak izin
+function tolakIzin(idMahasiswaAgenda){
+  $.ajax({
+    type: "post",
+    url: base_url + "/agenda/izin/tolak",
+    data: {
+      idMahasiswaAgenda : idMahasiswaAgenda,
+      idAgenda : id,
+    },
+    dataType: "json",
+    success: function (response) {
+      toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toastr-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "1500",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+      };
+
+      if (response.sukses) {
+        toastr.success(response.sukses, "Sukses");
+        tableListPresent();
+      }else{
+        toastr.success(response.error, "Error");
+      }
+    },
+    error: function (xhr, thrownError) {
+      alert(xhr.status + "\n" + xhr.responseText + "\n" + thrownError);
+    },
+  });
+};
 
 
