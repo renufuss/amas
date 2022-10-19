@@ -7,6 +7,7 @@
         <!--begin::Menu-->
         <div class="menu menu-column menu-rounded menu-sub-indention px-3" id="#kt_app_sidebar_menu" data-kt-menu="true"
             data-kt-menu-expand="false">
+            <?php if(in_groups('Mahasiswa') || in_groups('Admin')) : ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -100,7 +101,8 @@
                 <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
-
+            <?php endif ?>
+            <?php if(in_groups('Dosen') || in_groups('Admin')) : ?> ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -131,6 +133,8 @@
                 <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
+            <?php endif; ?>
+            <?php if(in_groups('Admin')) : ?> ?>
             <!--begin:Menu item-->
             <div class="menu-item pt-5">
                 <!--begin:Menu content-->
@@ -163,6 +167,7 @@
                 <!--end:Menu link-->
             </div>
             <!--end:Menu item-->
+            <?php endif; ?>
         </div>
         <!--end::Menu-->
     </div>
