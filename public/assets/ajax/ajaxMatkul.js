@@ -463,10 +463,12 @@ function statusPresent(){
     data: {id},
     dataType: "json",
     success: function (response) {
-      $('#izin').html(response.izin);
-      $('#terlambat').html(response.terlambat);
-      $('#hadir').html(response.hadir);
-      $('#belumAbsen').html(response.belum_absen);
+      setTimeout(function () {
+        $('#izin').html(response.izin);
+        $('#terlambat').html(response.terlambat);
+        $('#hadir').html(response.hadir);
+        $('#belumAbsen').html(response.belum_absen);
+      }, 1200);
     }
   });
 }
