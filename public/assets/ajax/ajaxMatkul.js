@@ -463,7 +463,7 @@ function statusPresent(){
     data: {id},
     dataType: "json",
     success: function (response) {
-      setTimeout(function () {
+      setInterval(function () {
         $('#izin').html(response.izin);
         $('#terlambat').html(response.terlambat);
         $('#hadir').html(response.hadir);
