@@ -294,7 +294,7 @@ function deleteMahasiswa(idMahasiswa,nama) {
           };
           if(!response.error){
             toastr.success(response.sukses, "Sukses");
-            tableMahasiswa();
+            tableMahasiswa(idMatkul);
           }else{
             toastr.error(response.error, "Error");
           }
@@ -463,10 +463,12 @@ function statusPresent(){
     data: {id},
     dataType: "json",
     success: function (response) {
-      $('#izin').html(response.izin);
-      $('#terlambat').html(response.terlambat);
-      $('#hadir').html(response.hadir);
-      $('#belumAbsen').html(response.belum_absen);
+      setTimeout(function () {
+        $('#izin').html(response.izin);
+        $('#terlambat').html(response.terlambat);
+        $('#hadir').html(response.hadir);
+        $('#belumAbsen').html(response.belum_absen);
+      }, 1200);
     }
   });
 }

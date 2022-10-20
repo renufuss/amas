@@ -70,7 +70,7 @@ $routes->post('/matkul/join', 'Matkul::joinMatkul', ['filter' => 'role:Admin, Ma
 
 $routes->get('/matkul/saya', 'Matkul::indexMatkulSaya', ['filter' => 'role:Admin, Mahasiswa']);
 $routes->get('/matkul/saya/table', 'Matkul::tableMatkulSaya', ['filter' => 'role:Admin, Mahasiswa']);
-$routes->post('/matkul/keluar', 'Matkul::keluarMatkul', ['filter' => 'role:Admin, Mahasiswa']);
+$routes->post('/matkul/keluar', 'Matkul::keluarMatkul');
 
 $routes->get('/agenda', 'Matkul::indexAgendaMahasiswa', ['filter' => 'role:Admin, Mahasiswa']);
 $routes->get('/agenda/table', 'Matkul::tableAgendaMahasiswa', ['filter' => 'role:Admin, Mahasiswa']);

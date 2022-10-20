@@ -52,7 +52,7 @@ class MatkulModel extends Model
     public function showMatkul($id = null)
     {
         $table = $this->db->table($this->table);
-        $query = $table->select('matkul.*, users.*, matkul.id as id')->join('users', 'users.id=matkul.id_user', 'left')->orderBy('matkul.nama', 'asc')->where('matkul.deleted_at', null);
+        $query = $table->select('matkul.*, users.*, matkul.id as id')->join('users', 'users.id=matkul.id_user', 'left')->orderBy('matkul.nama', 'asc')->where('users.deleted_at', null)->where('matkul.deleted_at', null);
         if ($id != null) {
             $data = $query->where('matkul.id', $id)->get()->getFirstRow();
         } else {

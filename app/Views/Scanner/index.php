@@ -25,10 +25,10 @@
         <!--end::Camera container-->
         <div class="btn-group btn-group-toggle mb-5 mobile-only" data-toggle="buttons">
             <label class="btn btn-primary active">
-                <input type="radio" name="options" value="2" autocomplete="off"> Back Camera
+                <input type="radio" name="options" value="2" autocomplete="off" checked> Back Camera
             </label>
             <label class="btn btn-secondary">
-                <input type="radio" name="options" value="1" autocomplete="off" checked> Front Camera
+                <input type="radio" name="options" value="1" autocomplete="off"> Front Camera
             </label>
         </div>
     </div>
